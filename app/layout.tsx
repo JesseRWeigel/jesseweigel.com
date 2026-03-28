@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { TerminalProvider } from '@/components/terminal-provider'
 import { Nav } from '@/components/nav'
 import { Footer } from '@/components/footer'
+import { Terminal } from '@/components/terminal'
 import './globals.css'
 
 const geistSans = Geist({
@@ -40,6 +41,7 @@ export default function RootLayout({
           <Nav />
           <div className="pt-14">{children}</div>
           <Footer />
+          <Terminal />
         </TerminalProvider>
       </body>
     </html>
