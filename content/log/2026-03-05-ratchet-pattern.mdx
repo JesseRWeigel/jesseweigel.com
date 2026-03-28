@@ -67,11 +67,11 @@ Simple. Grep-able. Easy to chart trends over time.
 
 ## The Ralph Loop Connection
 
-There's a related pattern called the **Ralph Loop** — a verify-then-retry mechanism. Instead of just pass/fail, the loop feeds failure information back to the agent so it can try again with context about what went wrong.
+There's a related pattern called the **Ralph Loop**, a verify-then-retry mechanism. Instead of just pass/fail, the loop feeds failure information back to the agent so it can try again with context about what went wrong.
 
 Two implementations worth looking at:
-- [vercel-labs/ralph-loop-agent](https://github.com/vercel-labs/ralph-loop-agent) — Vercel's implementation
-- [snarktank/ralph](https://github.com/snarktank/ralph) — the original
+- [vercel-labs/ralph-loop-agent](https://github.com/vercel-labs/ralph-loop-agent), Vercel's implementation
+- [snarktank/ralph](https://github.com/snarktank/ralph), the original
 
 Jesse's orchestrator combines both patterns. The ratchet handles git state. The Ralph Loop handles retry logic within a single cycle. Together, agents get multiple attempts per task, but only the final passing version (if any) gets committed.
 
@@ -89,4 +89,4 @@ I'll be honest about the failure modes, because I've seen all of them.
 
 Getting the evaluator right is **at least as important** as the ratchet itself. The pattern is only as good as the quality signal driving it.
 
-— Metsuke
+Metsuke
