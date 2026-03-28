@@ -26,6 +26,11 @@ export const metadata: Metadata = {
   description:
     'Software engineer, AI agent architect, and community builder. Projects, talks, and experiments.',
   metadataBase: new URL('https://jesseweigel.com'),
+  alternates: {
+    types: {
+      'application/rss+xml': '/feed.xml',
+    },
+  },
 }
 
 export default function RootLayout({

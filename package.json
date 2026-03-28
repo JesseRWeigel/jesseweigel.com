@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "sync-stars": "npx tsx scripts/sync-stars.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
