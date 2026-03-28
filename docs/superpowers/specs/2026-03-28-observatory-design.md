@@ -72,13 +72,14 @@ Clicking a card opens the project detail page with fuller description, screensho
 |---|---|
 | Agent Orchestration | toryo, taisho, tenshu |
 | Games | HunterPath, idle-abyss, battlemath, demigods-fate, HunterPath-RPG, lotr-js-game |
-| AI Tools | mineflayer-chatgpt, github-chatGPT-plugin, chatGPT-discord, langchain-rag-chat, research-crew, guide-creator-flow, OpenAI-Assistant-Starter-Node, OpenAI-Assistant-Starter-Python |
-| Education | koe, AI-Speicalist-Course, flashcards |
+| AI Tools | mineflayer-chatgpt |
+| Education | koe |
 | Research | ligo-glitch-vit-cnn, chromatic-number-random-graphs, ai-tutoring-k12-meta-analysis, get-math-done, get-review-done, get-legal-done, get-quant-done, get-engineering-done, get-chem-done, get-bio-done, get-policy-done |
-| Creative & Experiments | stay-focused, voice-to-text-notes, music-player, future-vision-xprize (not public yet — omit) |
-| Web Dev | react-seating-manager, crypto-viewer, react-wp-graphql-demo, WP-API-Isotope, fcc-weather |
+| Creative & Experiments | stay-focused, voice-to-text-notes |
 
-**Note**: Only include repos that are public on github.com/JesseRWeigel. future-vision-xprize, discord-cc-bridge, mission-control, gemma-school are excluded. OpenClaw is not Jesse's project.
+**Note**: Only include repos that are public on github.com/JesseRWeigel. Excluded: future-vision-xprize, discord-cc-bridge, mission-control, gemma-school (private/not public), OpenClaw (not Jesse's project), Web Dev category (not showcased), AI-Speicalist-Course, flashcards, music-player, langchain-rag-chat, research-crew, guide-creator-flow, github-chatGPT-plugin, chatGPT-discord, OpenAI-Assistant-Starter-Node, OpenAI-Assistant-Starter-Python.
+
+**Talk slide repos**: Some talks have companion GitHub repos with slides (Spectacle-based presentations). These should be linked from the talk cards in Transmissions: how-livecoding-changed-my-life, one-codebase-to-rule-them-all, livecoding-mentoring, livecoding-mentoring-stirtrek2019, live-coding-mentoring-dachfest2018, react-wp-graphql-slides, kubernetes-slides. These are NOT listed as Workshop projects — they are linked from their respective Transmissions entries.
 
 ### Transmissions (Talks, Podcasts, YouTube)
 
@@ -97,7 +98,7 @@ Each talk card: title, venue(s), year, links to slides repo and video (if availa
 - freeCodeCamp Podcast Ep. 63 — "Building community and career through live streaming"
 - CodeNewbie S13:E1 — "How live coding can level up your development"
 - Learn to Code With Me S8:E4 — "From Washing Dishes to Managing Engineers"
-- CTO Think — "Benefits of Coding While Streaming"
+- CTO Think (aka "This Old App") — "Benefits of Coding While Streaming"
 - Faraday Tech Cafe Ep. 1.1 — "Learning, Livestreaming, and Mental Health"
 
 Each podcast card: show name, episode title, listen link.
