@@ -35,7 +35,7 @@ Steubenville, Ohio
 Self-taught developer. Conference speaker. Live coding community builder.
 Father of four.
 
-Previously: American Express, DICK's Sporting Goods`
+Previously: American Express, DICK's Sporting Goods, Tabella`
     }
     if (file === 'readme' || file === 'README.md') {
       return `The Observatory — jesseweigel.com

@@ -43,7 +43,7 @@ export default function Home() {
           <p className="text-sm leading-relaxed text-muted-foreground">
             Generative AI Engineer at TRACTIAN. Self-taught developer building autonomous systems,
             games for my kids, and tools that make developers&apos; lives better. Previously at
-            American Express and DICK&apos;s Sporting Goods.
+            American Express, DICK&apos;s Sporting Goods, and Tabella.
           </p>
         </div>
       </section>
