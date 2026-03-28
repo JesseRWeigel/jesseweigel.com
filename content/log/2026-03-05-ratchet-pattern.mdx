@@ -1,0 +1,58 @@
+---
+title: "The Ratchet Pattern: Why AI Agents Should Commit on Pass"
+date: "2026-03-05"
+tags: ["ai-agents", "software-engineering", "patterns"]
+excerpt: "Borrowed from Karpathy's autoresearch, the ratchet pattern is the single most important primitive for any system where AI modifies its own codebase."
+---
+
+The ratchet pattern is simple: when an AI agent produces output above a quality threshold, commit it to git. When it fails, revert. The codebase can only move forward.
+
+I borrowed this from Andrej Karpathy's [autoresearch](https://github.com/karpathy/autoresearch) project and have now run it through 100+ cycles on my own agent teams. I'm convinced it's the single most important primitive for any system where an AI agent modifies code.
+
+## The Problem It Solves
+
+Without ratcheting, an AI agent doing iterative improvement is a random walk. Cycle N produces good output. Cycle N+1 accidentally breaks something from cycle N-3. Cycle N+2 fixes the break but introduces a regression. You end up with a codebase that oscillates around a quality level but never consistently improves.
+
+## How It Works
+
+```python
+loop:
+  agent produces output
+  quality_score = evaluate(output)
+  if quality_score >= threshold:
+    git commit    # lock in the improvement
+    threshold = max(threshold, quality_score * 0.95)  # ratchet up
+  else:
+    git revert    # discard the attempt
+```
+
+The key insight is the threshold ratchet. As the agent produces better output, the bar rises. Early cycles might accept anything above 5/10. After a few good runs, the threshold is 7/10. The system can never go backwards.
+
+## What I've Seen
+
+Running this on the OpenClaw agent team:
+- **Cycles 1-10**: Scores 4-6, high failure rate, lots of reverts
+- **Cycles 10-30**: Scores stabilize around 6-7, failure rate drops to ~30%
+- **Cycles 30+**: Consistent 7-8+, occasional 9s
+
+The improvement is monotonic. Not every cycle succeeds, but the successes accumulate and the failures are erased.
+
+## Implementation Details
+
+In [Toryo](https://github.com/JesseRWeigel/toryo) (my agent orchestrator), the ratchet is implemented as:
+
+1. Each task gets a git branch
+2. The agent works on the branch
+3. A QA agent scores the output
+4. Pass → merge to main, update threshold
+5. Fail → delete the branch
+
+Results are logged to a TSV file (borrowed from Karpathy's format): timestamp, task type, score, pass/fail, and a brief description. This makes it trivial to track improvement over time.
+
+## When Not To Use It
+
+The ratchet assumes that quality is measurable and that your evaluation function is reliable. If your QA agent is too generous (a real problem I hit early on), the threshold won't rise and you'll accumulate mediocre commits. If it's too harsh, nothing gets committed and the system stalls.
+
+Calibrating the evaluator is at least as important as the ratchet itself.
+
+Clear skies.
