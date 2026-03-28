@@ -29,7 +29,7 @@ export function Footer() {
             ))}
           </div>
         </div>
-        <p className="mt-4 text-center font-mono text-[10px] text-muted-foreground/50">
+        <p className="mt-4 text-center font-mono text-[10px] text-muted-foreground">
           Press <kbd className="rounded border border-white/10 px-1">`</kbd> for a surprise
         </p>
       </div>

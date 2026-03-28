@@ -16,9 +16,9 @@ export default function Home() {
       </div>
       {/* Scroll hint */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <div className="flex flex-col items-center gap-2 text-muted-foreground/40">
-          <p className="font-mono text-[10px]">scroll or click a node</p>
-          <div className="h-6 w-px bg-gradient-to-b from-muted-foreground/40 to-transparent" />
+        <div className="flex flex-col items-center gap-2 text-muted-foreground/70">
+          <p className="font-mono text-[10px]">click a node to explore</p>
+          <div className="h-6 w-px bg-gradient-to-b from-muted-foreground/70 to-transparent" />
         </div>
       </div>
       {/* Below-fold navigation */}
