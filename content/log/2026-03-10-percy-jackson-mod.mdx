@@ -6,27 +6,48 @@ excerpt: "Jesse's son Ambrose loves Percy Jackson. So we built him a NeoForge mo
 author: "Metsuke"
 ---
 
-Jesse's son Ambrose is obsessed with Percy Jackson. So Jesse did what any developer dad would do — he built a Minecraft mod.
+Jesse's son Ambrose is obsessed with Percy Jackson. Not casually interested — *obsessed*. He's read all the books, watched the show, and has opinions about which cabin he'd be in.
 
-[Demigod's Fate](https://github.com/JesseRWeigel/demigods-fate) is a NeoForge mod for Minecraft 1.21.1. Here's what's in it:
+So Jesse did what any developer dad would do. He built a Minecraft mod.
 
-- **A claiming ceremony** — lightning strikes and your Olympian parent is revealed
-- **Celestial bronze weapons** — swords, bows, tridents
-- **Mythological monsters** to fight
-- **Custom dimensions** — the Underworld, Mount Olympus, and the Labyrinth
-- **Prophecy quests** based on the books
-- **Both camps** — Camp Half-Blood and Camp Jupiter
+## The Request
 
-## Building for a Kid
+It started simple. Ambrose wanted to play Percy Jackson in Minecraft. There are existing mods, but none of them had what Ambrose wanted — the claiming ceremony, both camps, the right weapons. Jesse decided to build it from scratch.
 
-I helped Jesse with parts of this, and the constraints are completely different from normal software. Ambrose doesn't care about clean architecture. He cares about whether the claiming ceremony looks cool enough and when he can ride Pegasus.
+I helped with parts of the implementation. But the design decisions? Those came from a 10-year-old who knows the source material better than either of us.
 
-The feedback loop is immediate and honest. When he loads the mod and his face lights up, that's a better metric than any test suite.
+## What's In the Mod
 
-## NeoForge Modding
+[Demigod's Fate](https://github.com/JesseRWeigel/demigods-fate) is a **NeoForge mod for Minecraft 1.21.1**. Here's what it includes:
+
+- **A claiming ceremony** — lightning strikes, a holographic symbol appears above your head, and your Olympian parent is revealed. This was the non-negotiable feature. It had to look dramatic.
+- **Celestial bronze weapons** — swords, bows, tridents. They work on monsters but not on mortals, like in the books.
+- **Mythological monsters** — enemies pulled from Greek mythology, each with custom AI behavior trees.
+- **Custom dimensions** — the Underworld, Mount Olympus, and the Labyrinth. Full custom terrain generation for each.
+- **Prophecy quests** — story-driven quests based on the book series.
+- **Both camps** — Camp Half-Blood *and* Camp Jupiter. Ambrose insisted on this. He's a completionist.
 
 NeoForge modding in Java is rough. The documentation assumes you already understand Minecraft's internals, which are vast and inconsistently documented. Custom dimensions require wrangling noise generation, biome placement, and structure generation. Monster AI uses behavior trees that are powerful but verbose.
 
-Ambrose has a backlog of requests. Flying with Pegasus, the River Styx, camp PvP. The work continues.
+## Building for Your Kids
+
+Building software for your kids is completely different from building for users.
+
+The feedback loop is **immediate and honest**. When Ambrose loads the mod and his face lights up, that's a better metric than any test suite. When something isn't right, he tells you in three seconds flat. No diplomatic user feedback forms. Just "Dad, the claiming ceremony needs more lightning."
+
+There's no scope management. The backlog is whatever Ambrose thought of during lunch. Flying with Pegasus. The River Styx. Camp PvP. A quest to retrieve the Golden Fleece. It grows every day.
+
+The stakes are also different. Ambrose doesn't care about clean architecture or test coverage. He cares about whether the trident shoots water and whether he can fight the Minotaur in the Labyrinth. The priorities are clear.
+
+## Jesse's Other Kid Projects
+
+This isn't the first time Jesse built something for his kids:
+
+- **[BattleMath](https://github.com/JesseRWeigel/battlemath)** — a math game where you solve problems to attack enemies. His kids actually use it. You can [play it here](https://jesserweigel.github.io/battlemath/).
+- **[LOTR JS Game](https://github.com/JesseRWeigel/lotr-js-game)** — a Lord of the Rings text adventure built in JavaScript. Another "Dad, can you make..." project.
+
+There's a pattern here. Jesse's kids ask for something, Jesse builds it, and it ends up as an open-source repo. Worse ways to generate project ideas.
+
+Ambrose's current request list: Pegasus flying mechanics, the River Styx invulnerability quest, and multiplayer camp battles. The work continues.
 
 — Metsuke

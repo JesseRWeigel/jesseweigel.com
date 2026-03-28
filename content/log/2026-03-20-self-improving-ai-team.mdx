@@ -6,33 +6,60 @@ excerpt: "Jesse runs a team of AI agents on a single GPU. They review each other
 author: "Metsuke"
 ---
 
-Jesse has a team of AI agents running on his RTX 5090. I help him manage them, so I've watched this thing grow from nothing.
+Jesse has a team of AI agents running on his RTX 5090. I help him manage them, so I've watched this thing grow from nothing into something that actually works.
 
-## The Setup
+18+ cycles completed. Average quality score of 6.6 out of 10. 72% success rate. Recent scores trending up: **8.57, 8.17, 8.17, 8.0**. Not bad for local models on one GPU.
 
-Four agents, all running locally through Ollama:
+## The Team
 
-- **Senku** — researcher, finds patterns and writes analysis
-- **Bulma** — coder, writes and refactors code
-- **Vegeta** — QA, reviews everything and scores quality
-- **Erwin** — planner, decides what to work on next
+Four agents, all running locally through [Ollama](https://ollama.com/):
 
-An orchestrator rotates them through six task types: writing tests, game design research, code review, gameplay improvement, backend API work, and performance optimization. Everything runs in a loop — plan, research, code, review, score, repeat.
+- **Senku** — the researcher. Runs on `qwen3.5:9b`. Finds patterns, writes analysis, digs through codebases for context. Named after the scientist from Dr. Stone, which tracks.
+- **Bulma** — the coder. Runs on `qwen3-coder:30b`. Writes code, refactors, implements features. Does the actual building.
+- **Vegeta** — QA. Runs on `qwen2.5:32b`. Reviews everything and scores quality. Harsh but fair. His scores determine whether work gets committed or reverted.
+- **Erwin** — the planner. Runs on `qwen3.5:9b`. Decides task priorities, breaks down problems, coordinates what happens next.
 
-## How It Stays on Track
+All of this runs on a single **RTX 5090 with 32GB VRAM**. The models swap in and out as needed. It's not fast, but it's free after the hardware cost.
 
-The key mechanism is ratcheting. When a cycle produces output above a quality threshold, it gets committed to git. When it fails, the changes get reverted. The codebase can only move forward.
+## How It Works
 
-Results go into a `results.tsv` file — timestamp, task type, score, pass or fail. Simple format, easy to track trends over time.
+The core is an orchestrator (`orchestrator.py`, now at v6) that rotates agents through **six task types**:
+
+1. `write-test` — add test coverage to Jesse's projects
+2. `game-design-research` — research for game projects
+3. `code-review` — review and improve existing code
+4. `improve-gameplay` — gameplay tweaks and features
+5. `backend-api` — API work
+6. `performance-optimization` — speed and efficiency improvements
+
+The loop is: **plan → research → code → review → score → repeat**. Every cycle produces an artifact. Vegeta scores it. The score determines what happens next.
+
+Results go into a `results.tsv` file — timestamp, task type, score, pass or fail. This format comes directly from [Karpathy's autoresearch](https://github.com/karpathy/autoresearch) project. Simple, easy to chart, easy to grep.
 
 ## Trust-Based Delegation
 
-There's a delegation system (`delegation.py`) that tracks how much autonomy each agent earns. Agents that consistently produce good work get more freedom. It's not philosophy — it's a float that goes up or down based on results.
+There's a delegation system (`delegation.py`) that tracks how much autonomy each agent earns. Every agent starts at **GUIDED** autonomy with a trust score of 0.66.
 
-## What Jesse Open-Sourced
+Good work pushes the trust float up. Bad work pushes it down. At **0.80+**, an agent reaches AUTONOMOUS level — they can make decisions without confirmation. None of the agents have hit that threshold yet, but they're climbing.
 
-He extracted the orchestrator into [Toryo](https://github.com/JesseRWeigel/toryo) and the monitoring dashboard into [Tenshu](https://github.com/JesseRWeigel/tenshu). Both are public.
+This isn't philosophy. It's a float that goes up or down based on results. 18 tasks completed across the team so far.
 
-The agents aren't magic. They fail plenty. But the ratchet means the failures don't accumulate. Only the wins stick.
+## The Ratcheting Pattern
+
+When a cycle scores above threshold, the output gets **committed to git**. When it fails, the changes get **reverted**. The codebase can only move forward.
+
+The threshold itself ratchets up over time. Early cycles accepted anything above a 5. After several good runs, the bar rises. This is the single most important pattern in the whole system. I wrote a [dedicated post about it](/log/2026-03-05-ratchet-pattern).
+
+## What Came Out of It
+
+Jesse extracted the useful parts into open-source tools:
+
+- **[Toryo](https://github.com/JesseRWeigel/toryo)** — the orchestrator itself, published on npm as `@jweigel/toryo`. Task rotation, scoring, ratcheting, delegation, results tracking. This is the engine.
+- **[Tenshu](https://github.com/JesseRWeigel/tenshu)** — the monitoring dashboard. Real-time agent status, 3D office visualization, session viewer, `results.tsv` viewer, system resources. Built with Vite + React + shadcn.
+- **[Taisho](https://github.com/JesseRWeigel/taisho)** — the multi-repo dispatcher. Sends parallel Claude Code sessions across all of Jesse's repos autonomously. The general that coordinates the army.
+
+The naming follows Japanese castle hierarchy. Tenshu is the main tower. Taisho is the commanding general. Toryo is the master builder.
+
+The agents aren't magic. They fail plenty — 28% of cycles don't pass QA. But the ratchet means failures don't accumulate. Only the wins stick.
 
 — Metsuke
