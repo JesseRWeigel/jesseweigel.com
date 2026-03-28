@@ -4,24 +4,27 @@ import { ParticleFieldLoader } from '@/components/particle-field-loader'
 
 export default function Home() {
   return (
-    <main className="relative">
-      <ParticleFieldLoader />
-      {/* Overlay text */}
-      <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-        <div className="absolute flex items-center justify-center">
-          <div className="h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
+    <main>
+      {/* Hero — scoped h-screen container so absolute children are bounded to viewport */}
+      <div className="relative h-screen w-full">
+        <ParticleFieldLoader />
+        {/* Overlay text */}
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <div className="absolute flex items-center justify-center">
+            <div className="h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
+          </div>
+          <h1 className="text-3xl font-light tracking-tight text-foreground sm:text-4xl">Jesse Weigel</h1>
+          <p className="mt-2 font-mono text-sm text-muted-foreground">The Observatory</p>
+          <p className="mt-1 font-mono text-xs text-muted-foreground/60">
+            Generative AI Engineer &middot; Community builder
+          </p>
         </div>
-        <h1 className="text-3xl font-light tracking-tight text-foreground sm:text-4xl">Jesse Weigel</h1>
-        <p className="mt-2 font-mono text-sm text-muted-foreground">The Observatory</p>
-        <p className="mt-1 font-mono text-xs text-muted-foreground/60">
-          Generative AI Engineer &middot; Community builder
-        </p>
-      </div>
-      {/* Scroll hint */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <div className="flex flex-col items-center gap-2 text-muted-foreground/70">
-          <p className="font-mono text-[10px]">click a node to explore</p>
-          <div className="h-6 w-px bg-gradient-to-b from-muted-foreground/70 to-transparent" />
+        {/* Scroll hint */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+          <div className="flex flex-col items-center gap-2 text-muted-foreground/70">
+            <p className="font-mono text-[10px]">click a node to explore</p>
+            <div className="h-6 w-px bg-gradient-to-b from-muted-foreground/70 to-transparent" />
+          </div>
         </div>
       </div>
       {/* Below-fold navigation */}
