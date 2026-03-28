@@ -4,6 +4,7 @@ import { TerminalProvider } from '@/components/terminal-provider'
 import { Nav } from '@/components/nav'
 import { Footer } from '@/components/footer'
 import { Terminal } from '@/components/terminal'
+import { ZenMode } from '@/components/zen-mode'
 import './globals.css'
 
 const geistSans = Geist({
@@ -42,6 +43,7 @@ export default function RootLayout({
           <div className="pt-14">{children}</div>
           <Footer />
           <Terminal />
+          <ZenMode />
         </TerminalProvider>
       </body>
     </html>

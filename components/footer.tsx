@@ -30,7 +30,7 @@ export function Footer() {
           </div>
         </div>
         <p className="mt-4 text-center font-mono text-[10px] text-muted-foreground">
-          Press <kbd className="rounded border border-white/10 px-1">`</kbd> for a surprise
+          Press <kbd className="rounded border border-white/10 px-1">`</kbd> for terminal · <kbd className="rounded border border-white/10 px-1">z</kbd> for zen
         </p>
       </div>
     </footer>
