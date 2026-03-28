@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { TerminalProvider } from '@/components/terminal-provider'
+import { Nav } from '@/components/nav'
+import { Footer } from '@/components/footer'
 import './globals.css'
 
 const geistSans = Geist({
@@ -34,7 +36,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
-        <TerminalProvider>{children}</TerminalProvider>
+        <TerminalProvider>
+          <Nav />
+          <div className="pt-14">{children}</div>
+          <Footer />
+        </TerminalProvider>
       </body>
     </html>
   )
