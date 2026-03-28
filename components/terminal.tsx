@@ -40,6 +40,12 @@ export function Terminal() {
     setCmdHistory((prev) => [input, ...prev])
     setCmdIndex(-1)
     if (result === 'CLEAR') { setHistory([]); setInput(''); return }
+    if (result === 'EXIT') {
+      setHistory((prev) => [...prev, { input, output: "You can check out any time you like, but you can never leave." }])
+      setInput('')
+      setTimeout(() => toggle(), 1200)
+      return
+    }
     if (result.startsWith('NAVIGATE:')) {
       const path = result.slice('NAVIGATE:'.length)
       setHistory((prev) => [...prev, { input, output: `Navigating to ${path}...` }])

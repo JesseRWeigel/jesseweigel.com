@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { NavLogo } from '@/components/nav-logo'
 
 const links = [
   { href: '/workshop', label: 'Workshop' },
@@ -12,12 +13,7 @@ export function Nav() {
     <nav className="fixed top-0 z-40 w-full border-b border-white/5 bg-background/80 backdrop-blur-md">
       <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-        <Link
-          href="/"
-          className="font-mono text-sm tracking-wider text-primary transition-opacity hover:opacity-80"
-        >
-          JW
-        </Link>
+        <NavLogo />
         <div className="flex gap-4 sm:gap-6">
           {links.map(({ href, label }) => (
             <Link

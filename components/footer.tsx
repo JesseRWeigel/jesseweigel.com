@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { FooterName } from '@/components/footer-name'
 
 const socials = [
   { href: 'https://github.com/JesseRWeigel', label: 'GitHub' },
@@ -13,7 +14,7 @@ export function Footer() {
       <div className="mx-auto max-w-5xl px-6">
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
           <p className="font-mono text-xs text-muted-foreground">
-            Jesse Weigel &middot; The Observatory
+            <FooterName /> &middot; The Observatory
           </p>
           <div className="flex gap-4">
             {socials.map(({ href, label }) => (
