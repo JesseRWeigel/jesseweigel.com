@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useMemo, useCallback, useState } from 'react'
+import { useRef, useMemo, useCallback, useState, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
@@ -100,17 +100,19 @@ function DustParticles({ count = 200 }: { count?: number }) {
   )
 }
 
-function NodeSphere({ position, label, onClick }: { position: [number, number, number]; label: string; onClick: () => void }) {
+function NodeSphere({ position, label, selected, onClick }: { position: [number, number, number]; label: string; selected: boolean; onClick: () => void }) {
   const ref = useRef<THREE.Mesh>(null!)
   const glowRef = useRef<THREE.Mesh>(null!)
   const [hovered, setHovered] = useState(false)
+  const active = hovered || selected
 
   useFrame((state) => {
     if (!ref.current) return
     const t = state.clock.elapsedTime
     ref.current.position.y = position[1] + Math.sin(t * 0.3 + position[0]) * 0.08
-    // Gentle scale pulse
-    const pulse = 1 + Math.sin(t * 1.5 + position[0] * 2) * 0.05
+    // Gentle scale pulse, slightly larger when active
+    const baseScale = active ? 1.3 : 1
+    const pulse = baseScale + Math.sin(t * 1.5 + position[0] * 2) * 0.05
     ref.current.scale.setScalar(pulse)
     if (glowRef.current) {
       glowRef.current.position.copy(ref.current.position)
@@ -122,7 +124,7 @@ function NodeSphere({ position, label, onClick }: { position: [number, number, n
     <group>
       <mesh ref={glowRef} position={position}>
         <sphereGeometry args={[0.18, 16, 16]} />
-        <meshBasicMaterial color="#f59e0b" transparent opacity={hovered ? 0.15 : 0.06} />
+        <meshBasicMaterial color="#f59e0b" transparent opacity={active ? 0.25 : 0.06} />
       </mesh>
       <mesh
         ref={ref}
@@ -140,7 +142,7 @@ function NodeSphere({ position, label, onClick }: { position: [number, number, n
       >
         <sphereGeometry args={[0.06, 16, 16]} />
         <meshBasicMaterial color="#f59e0b" />
-        {hovered && (
+        {active && (
           <Html center style={{ pointerEvents: 'none' }}>
             <div className="whitespace-nowrap rounded-md border border-primary/30 bg-background/90 px-3 py-1.5 font-mono text-xs text-primary backdrop-blur-sm">
               {label}
@@ -152,7 +154,7 @@ function NodeSphere({ position, label, onClick }: { position: [number, number, n
   )
 }
 
-function Scene() {
+function Scene({ selectedIndex }: { selectedIndex: number }) {
   const { camera } = useThree()
   useFrame((state) => {
     const t = state.clock.elapsedTime
@@ -167,11 +169,12 @@ function Scene() {
   return (
     <>
       <DustParticles />
-      {NODE_DATA.map((node) => (
+      {NODE_DATA.map((node, i) => (
         <NodeSphere
           key={node.label}
           position={[node.x, node.y, node.z]}
           label={node.label}
+          selected={selectedIndex === i}
           onClick={() => handleNodeClick(node.href)}
         />
       ))}
@@ -180,6 +183,29 @@ function Scene() {
 }
 
 export function ParticleField() {
+  const [selectedIndex, setSelectedIndex] = useState(-1)
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault()
+        setSelectedIndex((i) => (i + 1) % NODE_DATA.length)
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault()
+        setSelectedIndex((i) => (i - 1 + NODE_DATA.length) % NODE_DATA.length)
+      } else if (e.key === 'Enter' && selectedIndex >= 0) {
+        window.location.href = NODE_DATA[selectedIndex].href
+      } else if (e.key === 'Escape') {
+        setSelectedIndex(-1)
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [selectedIndex])
+
   return (
     <div className="h-screen w-full">
       <Canvas
@@ -187,7 +213,7 @@ export function ParticleField() {
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
       >
-        <Scene />
+        <Scene selectedIndex={selectedIndex} />
       </Canvas>
     </div>
   )
