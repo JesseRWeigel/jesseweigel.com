@@ -5,6 +5,7 @@ import { Nav } from '@/components/nav'
 import { Footer } from '@/components/footer'
 import { Terminal } from '@/components/terminal'
 import { ZenMode } from '@/components/zen-mode'
+import { SearchProvider } from '@/components/search-provider'
 import './globals.css'
 
 const geistSans = Geist({
@@ -44,6 +45,7 @@ export default function RootLayout({
           <Footer />
           <Terminal />
           <ZenMode />
+          <SearchProvider />
         </TerminalProvider>
       </body>
     </html>
