@@ -2,7 +2,7 @@ import { getProjects } from '@/lib/content'
 import { WorkshopClient } from './workshop-client'
 
 export const metadata = {
-  title: 'Workshop | Jesse Weigel',
+  title: 'Workshop',
   description: 'Projects, experiments, and things built in the open.',
 }
 
