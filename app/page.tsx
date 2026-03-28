@@ -11,7 +11,7 @@ export default function Home() {
         <h1 className="text-4xl font-light tracking-tight text-foreground">Jesse Weigel</h1>
         <p className="mt-2 font-mono text-sm text-muted-foreground">The Observatory</p>
         <p className="mt-1 font-mono text-xs text-muted-foreground/60">
-          Software engineer &middot; AI agent architect &middot; Community builder
+          Generative AI Engineer &middot; Community builder
         </p>
       </div>
       {/* Scroll hint */}
@@ -41,9 +41,9 @@ export default function Home() {
         </div>
         <div className="mt-16 text-center">
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Self-taught developer turned AI agent architect. Building autonomous systems, games for my kids, and tools
-            that make developers&apos; lives better. Previously at American Express, The Motley Fool, and DICK&apos;s
-            Sporting Goods.
+            Generative AI Engineer at TRACTIAN. Self-taught developer building autonomous systems,
+            games for my kids, and tools that make developers&apos; lives better. Previously at
+            American Express and DICK&apos;s Sporting Goods.
           </p>
         </div>
       </section>

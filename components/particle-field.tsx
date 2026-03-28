@@ -1,7 +1,8 @@
 'use client'
 
-import { useRef, useMemo, useCallback } from 'react'
+import { useRef, useMemo, useCallback, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 
 const NODE_DATA = [
@@ -44,9 +45,10 @@ function DustParticles({ count = 80 }: { count?: number }) {
   )
 }
 
-function NodeSphere({ position, onClick }: { position: [number, number, number]; onClick: () => void }) {
+function NodeSphere({ position, label, onClick }: { position: [number, number, number]; label: string; onClick: () => void }) {
   const ref = useRef<THREE.Mesh>(null!)
   const glowRef = useRef<THREE.Mesh>(null!)
+  const [hovered, setHovered] = useState(false)
 
   useFrame((state) => {
     if (!ref.current) return
@@ -59,7 +61,7 @@ function NodeSphere({ position, onClick }: { position: [number, number, number];
     <group>
       <mesh ref={glowRef} position={position}>
         <sphereGeometry args={[0.18, 16, 16]} />
-        <meshBasicMaterial color="#f59e0b" transparent opacity={0.06} />
+        <meshBasicMaterial color="#f59e0b" transparent opacity={hovered ? 0.15 : 0.06} />
       </mesh>
       <mesh
         ref={ref}
@@ -67,14 +69,23 @@ function NodeSphere({ position, onClick }: { position: [number, number, number];
         onClick={onClick}
         onPointerOver={(e) => {
           e.stopPropagation()
+          setHovered(true)
           document.body.style.cursor = 'pointer'
         }}
         onPointerOut={() => {
+          setHovered(false)
           document.body.style.cursor = 'default'
         }}
       >
         <sphereGeometry args={[0.06, 16, 16]} />
         <meshBasicMaterial color="#f59e0b" />
+        {hovered && (
+          <Html center style={{ pointerEvents: 'none' }}>
+            <div className="whitespace-nowrap rounded-md border border-primary/30 bg-background/90 px-3 py-1.5 font-mono text-xs text-primary backdrop-blur-sm">
+              {label}
+            </div>
+          </Html>
+        )}
       </mesh>
     </group>
   )
@@ -99,6 +110,7 @@ function Scene() {
         <NodeSphere
           key={node.label}
           position={[node.x, node.y, node.z]}
+          label={node.label}
           onClick={() => handleNodeClick(node.href)}
         />
       ))}

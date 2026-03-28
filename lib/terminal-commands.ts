@@ -33,9 +33,9 @@ Generative AI Engineer @ TRACTIAN
 Steubenville, Ohio
 
 Self-taught developer. Conference speaker. Live coding community builder.
-AI agent architect. Father of four.
+Father of four.
 
-Previously: American Express, The Motley Fool, DICK's Sporting Goods`
+Previously: American Express, DICK's Sporting Goods`
     }
     if (file === 'readme' || file === 'README.md') {
       return `The Observatory — jesseweigel.com
