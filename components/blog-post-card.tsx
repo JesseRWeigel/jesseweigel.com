@@ -14,7 +14,7 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
     <article className="group border-b border-white/5 py-6 first:pt-0 last:border-0">
       <Link href={`/log/${post.slug}`} className="block">
         <p className="font-mono text-xs text-muted-foreground">
-          ★ {toStardate(post.date)} &middot; {post.readingTime}
+          <span className="text-primary">★</span> {toStardate(post.date)} &middot; {post.readingTime}
         </p>
         <h3 className="mt-1 text-xl font-medium text-foreground transition-colors group-hover:text-primary">
           {post.title}

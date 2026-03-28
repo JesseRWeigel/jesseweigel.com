@@ -8,7 +8,10 @@ export default function Home() {
       <ParticleFieldLoader />
       {/* Overlay text */}
       <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-        <h1 className="text-4xl font-light tracking-tight text-foreground">Jesse Weigel</h1>
+        <div className="absolute flex items-center justify-center">
+          <div className="h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
+        </div>
+        <h1 className="text-3xl font-light tracking-tight text-foreground sm:text-4xl">Jesse Weigel</h1>
         <p className="mt-2 font-mono text-sm text-muted-foreground">The Observatory</p>
         <p className="mt-1 font-mono text-xs text-muted-foreground/60">
           Generative AI Engineer &middot; Community builder
@@ -32,7 +35,7 @@ export default function Home() {
             <Link
               key={href}
               href={href}
-              className="group rounded-xl border border-white/5 bg-white/[0.02] px-6 py-5 transition-all duration-500 hover:border-primary/20 hover:bg-white/[0.04]"
+              className="group rounded-xl border border-white/5 bg-white/[0.02] px-6 py-5 transition-all duration-700 hover:border-primary/20 hover:bg-white/[0.04] hover:shadow-[0_0_40px_-10px] hover:shadow-primary/20"
             >
               <p className="font-medium text-foreground transition-colors group-hover:text-primary">{label}</p>
               <p className="mt-1 text-sm text-muted-foreground">{desc}</p>

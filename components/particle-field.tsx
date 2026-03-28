@@ -11,8 +11,10 @@ const NODE_DATA = [
   { label: 'Log', href: '/log', x: 0.3, y: -1.5, z: -0.3 },
 ]
 
-function DustParticles({ count = 80 }: { count?: number }) {
+function DustParticles({ count = 200 }: { count?: number }) {
   const ref = useRef<THREE.Points>(null!)
+  const linesRef = useRef<THREE.LineSegments>(null!)
+
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3)
     for (let i = 0; i < count; i++) {
@@ -23,25 +25,78 @@ function DustParticles({ count = 80 }: { count?: number }) {
     return arr
   }, [count])
 
+  // Pre-allocate line geometry — max pairs we'll ever draw
+  const maxLines = count * 4
+  const linePositions = useMemo(() => new Float32Array(maxLines * 2 * 3), [maxLines])
+  const lineGeometry = useMemo(() => {
+    const geo = new THREE.BufferGeometry()
+    geo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3))
+    return geo
+  }, [linePositions])
+
   useFrame((state) => {
     if (!ref.current) return
     const time = state.clock.elapsedTime * 0.05
     const pos = ref.current.geometry.attributes.position
+    const arr = pos.array as Float32Array
+
+    // Mouse influence — pointer is normalized -1..1
+    const mx = state.pointer.x * 6
+    const my = state.pointer.y * 4
+
     for (let i = 0; i < count; i++) {
       const ix = i * 3
-      ;(pos.array as Float32Array)[ix + 1] += Math.sin(time + i * 0.1) * 0.0003
-      ;(pos.array as Float32Array)[ix] += Math.cos(time + i * 0.15) * 0.0002
+      // Gentle drift
+      arr[ix + 1] += Math.sin(time + i * 0.1) * 0.0003
+      arr[ix] += Math.cos(time + i * 0.15) * 0.0002
+
+      // Mouse repulsion — soft push away within radius 2
+      const dx = arr[ix] - mx
+      const dy = arr[ix + 1] - my
+      const dist = Math.sqrt(dx * dx + dy * dy)
+      if (dist < 2 && dist > 0.001) {
+        const force = (2 - dist) / 2 * 0.003
+        arr[ix] += (dx / dist) * force
+        arr[ix + 1] += (dy / dist) * force
+      }
     }
     pos.needsUpdate = true
+
+    // Connection lines — find close pairs and write into pre-allocated buffer
+    if (!linesRef.current) return
+    const lineBuf = linesRef.current.geometry.attributes.position.array as Float32Array
+    let lineIdx = 0
+    for (let i = 0; i < count && lineIdx < maxLines * 2 - 2; i++) {
+      for (let j = i + 1; j < count && lineIdx < maxLines * 2 - 2; j++) {
+        const ax = arr[i * 3], ay = arr[i * 3 + 1], az = arr[i * 3 + 2]
+        const bx = arr[j * 3], by = arr[j * 3 + 1], bz = arr[j * 3 + 2]
+        const d2 = (ax - bx) ** 2 + (ay - by) ** 2 + (az - bz) ** 2
+        if (d2 < 1.5 * 1.5) {
+          lineBuf[lineIdx * 3] = ax; lineBuf[lineIdx * 3 + 1] = ay; lineBuf[lineIdx * 3 + 2] = az
+          lineIdx++
+          lineBuf[lineIdx * 3] = bx; lineBuf[lineIdx * 3 + 1] = by; lineBuf[lineIdx * 3 + 2] = bz
+          lineIdx++
+        }
+      }
+    }
+    // Zero out unused slots
+    for (let k = lineIdx * 3; k < maxLines * 2 * 3; k++) lineBuf[k] = 0
+    linesRef.current.geometry.setDrawRange(0, lineIdx)
+    linesRef.current.geometry.attributes.position.needsUpdate = true
   })
 
   return (
-    <points ref={ref}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-      </bufferGeometry>
-      <pointsMaterial size={0.015} color="#f59e0b" transparent opacity={0.4} sizeAttenuation />
-    </points>
+    <>
+      <points ref={ref}>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+        </bufferGeometry>
+        <pointsMaterial size={0.015} color="#f59e0b" transparent opacity={0.4} sizeAttenuation />
+      </points>
+      <lineSegments ref={linesRef} geometry={lineGeometry}>
+        <lineBasicMaterial color="#f59e0b" transparent opacity={0.06} />
+      </lineSegments>
+    </>
   )
 }
 
@@ -54,7 +109,13 @@ function NodeSphere({ position, label, onClick }: { position: [number, number, n
     if (!ref.current) return
     const t = state.clock.elapsedTime
     ref.current.position.y = position[1] + Math.sin(t * 0.3 + position[0]) * 0.08
-    if (glowRef.current) glowRef.current.position.copy(ref.current.position)
+    // Gentle scale pulse
+    const pulse = 1 + Math.sin(t * 1.5 + position[0] * 2) * 0.05
+    ref.current.scale.setScalar(pulse)
+    if (glowRef.current) {
+      glowRef.current.position.copy(ref.current.position)
+      glowRef.current.scale.setScalar(pulse)
+    }
   })
 
   return (

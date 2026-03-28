@@ -14,7 +14,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="flex flex-col gap-3 rounded-lg border border-white/5 bg-white/[0.02] p-5 backdrop-blur-sm transition-colors hover:border-primary/20">
+    <div className="relative overflow-hidden flex flex-col gap-3 rounded-lg border border-white/5 bg-white/[0.02] p-5 backdrop-blur-sm transition-colors hover:border-primary/20 before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-primary/40 before:to-transparent before:opacity-0 before:transition-opacity hover:before:opacity-100">
       <div className="flex items-start justify-between gap-2">
         <Link
           href={`/workshop/${project.slug}`}
