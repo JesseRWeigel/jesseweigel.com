@@ -58,3 +58,20 @@ export interface BlogPost extends BlogPostFrontmatter {
   content: string
   readingTime: string
 }
+
+export interface ArchiveFrontmatter {
+  title: string
+  description: string
+  date: string
+  category: 'paper' | 'analysis' | 'report'
+  links: {
+    pdf?: string
+    github?: string
+    arxiv?: string
+  }
+}
+
+export interface ArchiveEntry extends ArchiveFrontmatter {
+  slug: string
+  content: string
+}

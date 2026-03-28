@@ -3,28 +3,32 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { search, buildSearchIndex, type SearchResult } from '@/lib/search'
-import type { Project, Transmission, BlogPost } from '@/lib/types'
+import type { Project, Transmission, BlogPost, ArchiveEntry } from '@/lib/types'
 
 const typeLabels: Record<string, string> = {
   project: 'Project',
   transmission: 'Transmission',
   post: 'Log',
+  archive: 'Archive',
 }
 
 const typeColors: Record<string, string> = {
   project: 'text-emerald-400',
   transmission: 'text-blue-400',
   post: 'text-amber-400',
+  archive: 'text-violet-400',
 }
 
 export function SearchOverlay({
   projects,
   transmissions,
   posts,
+  archiveEntries = [],
 }: {
   projects: Project[]
   transmissions: Transmission[]
   posts: BlogPost[]
+  archiveEntries?: ArchiveEntry[]
 }) {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -33,8 +37,8 @@ export function SearchOverlay({
   const router = useRouter()
 
   const index = useMemo(
-    () => buildSearchIndex(projects, transmissions, posts),
-    [projects, transmissions, posts]
+    () => buildSearchIndex(projects, transmissions, posts, archiveEntries),
+    [projects, transmissions, posts, archiveEntries]
   )
 
   const results = useMemo(() => search(query, index), [query, index])

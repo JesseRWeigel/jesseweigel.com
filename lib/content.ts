@@ -6,6 +6,7 @@ import type {
   Project, ProjectFrontmatter,
   Transmission, TransmissionFrontmatter,
   BlogPost, BlogPostFrontmatter,
+  ArchiveEntry, ArchiveFrontmatter,
 } from './types'
 
 const CONTENT_DIR = path.join(process.cwd(), 'content')
@@ -86,6 +87,22 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     })
   }
   return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+}
+
+export async function getArchiveEntries(): Promise<ArchiveEntry[]> {
+  const dir = path.join(CONTENT_DIR, 'archive')
+  const files = await getFilesFromDir(dir)
+  const entries: ArchiveEntry[] = []
+  for (const file of files) {
+    const raw = await fs.readFile(file, 'utf-8')
+    const { data, content } = matter(raw)
+    entries.push({
+      ...(data as ArchiveFrontmatter),
+      slug: slugFromPath(file),
+      content,
+    })
+  }
+  return entries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {

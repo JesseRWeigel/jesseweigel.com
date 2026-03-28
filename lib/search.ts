@@ -1,7 +1,7 @@
-import type { Project, Transmission, BlogPost } from './types'
+import type { Project, Transmission, BlogPost, ArchiveEntry } from './types'
 
 export interface SearchResult {
-  type: 'project' | 'transmission' | 'post'
+  type: 'project' | 'transmission' | 'post' | 'archive'
   title: string
   description: string
   href: string
@@ -10,7 +10,8 @@ export interface SearchResult {
 export function buildSearchIndex(
   projects: Project[],
   transmissions: Transmission[],
-  posts: BlogPost[]
+  posts: BlogPost[],
+  archiveEntries: ArchiveEntry[] = []
 ): SearchResult[] {
   const results: SearchResult[] = []
 
@@ -39,6 +40,15 @@ export function buildSearchIndex(
       title: post.title,
       description: post.excerpt,
       href: `/log/${post.slug}`,
+    })
+  }
+
+  for (const entry of archiveEntries) {
+    results.push({
+      type: 'archive',
+      title: entry.title,
+      description: entry.description,
+      href: `/archive`,
     })
   }
 

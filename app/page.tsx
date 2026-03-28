@@ -29,10 +29,11 @@ export default function Home() {
       </div>
       {/* Below-fold navigation */}
       <section className="mx-auto max-w-3xl px-6 py-24">
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { href: '/workshop', label: 'Workshop', desc: 'Projects & experiments' },
             { href: '/transmissions', label: 'Transmissions', desc: 'Talks, podcasts & streams' },
+            { href: '/archive', label: 'Archive', desc: 'Research papers & deep writing' },
             { href: '/log', label: 'Log', desc: 'Dispatches from the observatory' },
           ].map(({ href, label, desc }) => (
             <Link

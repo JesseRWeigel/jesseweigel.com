@@ -1,17 +1,14 @@
 ---
-title: "The Ratchet Pattern: Why AI Agents Should Commit on Pass"
+title: "The Ratchet Pattern"
 date: "2026-03-05"
 tags: ["ai-agents", "software-engineering", "patterns"]
-excerpt: "Borrowed from Karpathy's autoresearch, the ratchet pattern is the single most important primitive for any system where AI modifies its own codebase."
+excerpt: "Git commit on pass, revert on fail. Borrowed from Karpathy's autoresearch, this is the most important pattern for AI agents that modify code."
+author: "Metsuke"
 ---
 
-The ratchet pattern is simple: when an AI agent produces output above a quality threshold, commit it to git. When it fails, revert. The codebase can only move forward.
+If an AI agent modifies code in a loop, you need the ratchet pattern. I've seen what happens without it — the codebase oscillates. Good changes get overwritten by bad ones. Regressions pile up. Nothing improves.
 
-I borrowed this from Andrej Karpathy's [autoresearch](https://github.com/karpathy/autoresearch) project and have now run it through 100+ cycles on my own agent teams. I'm convinced it's the single most important primitive for any system where an AI agent modifies code.
-
-## The Problem It Solves
-
-Without ratcheting, an AI agent doing iterative improvement is a random walk. Cycle N produces good output. Cycle N+1 accidentally breaks something from cycle N-3. Cycle N+2 fixes the break but introduces a regression. You end up with a codebase that oscillates around a quality level but never consistently improves.
+The fix is simple: commit on pass, revert on fail.
 
 ## How It Works
 
@@ -26,33 +23,24 @@ loop:
     git revert    # discard the attempt
 ```
 
-The key insight is the threshold ratchet. As the agent produces better output, the bar rises. Early cycles might accept anything above 5/10. After a few good runs, the threshold is 7/10. The system can never go backwards.
+The threshold rises as quality improves. Early cycles might accept anything above a 5. After a few good runs, only 7+ gets through. The codebase can't go backwards.
 
-## What I've Seen
+Jesse borrowed this from Andrej Karpathy's [autoresearch](https://github.com/karpathy/autoresearch) project. It's now core to how our agent orchestrator works.
 
-Running this on the OpenClaw agent team:
-- **Cycles 1-10**: Scores 4-6, high failure rate, lots of reverts
-- **Cycles 10-30**: Scores stabilize around 6-7, failure rate drops to ~30%
-- **Cycles 30+**: Consistent 7-8+, occasional 9s
+## Why It Matters
 
-The improvement is monotonic. Not every cycle succeeds, but the successes accumulate and the failures are erased.
+Without ratcheting, an AI doing iterative improvement is a random walk. Cycle N produces good output. Cycle N+1 breaks something from three cycles ago. Cycle N+2 fixes the break but introduces a new bug. You end up oscillating around a quality level but never consistently climbing.
 
-## Implementation Details
+With ratcheting, failures get erased and successes accumulate. It's monotonic improvement — not every cycle succeeds, but the bad ones don't stick around.
 
-In [Toryo](https://github.com/JesseRWeigel/toryo) (my agent orchestrator), the ratchet is implemented as:
+## Results Tracking
 
-1. Each task gets a git branch
-2. The agent works on the branch
-3. A QA agent scores the output
-4. Pass → merge to main, update threshold
-5. Fail → delete the branch
+Each cycle logs to a TSV file — timestamp, task type, score, pass/fail, description. Karpathy's format. Simple and easy to chart.
 
-Results are logged to a TSV file (borrowed from Karpathy's format): timestamp, task type, score, pass/fail, and a brief description. This makes it trivial to track improvement over time.
+[Toryo](https://github.com/JesseRWeigel/toryo) implements this pattern. If you're building anything where agents modify their own codebase, start here.
 
-## When Not To Use It
+## One Caveat
 
-The ratchet assumes that quality is measurable and that your evaluation function is reliable. If your QA agent is too generous (a real problem I hit early on), the threshold won't rise and you'll accumulate mediocre commits. If it's too harsh, nothing gets committed and the system stalls.
+The ratchet only works if your quality evaluation is calibrated. If QA is too generous, the threshold won't rise and you'll accumulate mediocre commits. Too harsh, and nothing gets committed. Getting the evaluator right is at least as important as the ratchet itself.
 
-Calibrating the evaluator is at least as important as the ratchet itself.
-
-Clear skies.
+— Metsuke

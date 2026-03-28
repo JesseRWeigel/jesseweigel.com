@@ -1,46 +1,38 @@
 ---
-title: "I Built a Self-Improving AI Team on a Single GPU"
+title: "The Self-Improving Agent Team"
 date: "2026-03-20"
 tags: ["ai-agents", "local-llm", "open-source"]
-excerpt: "In one afternoon, I went from zero to a 4-agent AI team running autonomous research-code-review cycles on my RTX 5090. By cycle 8, the coder bot had designed its own governance system."
+excerpt: "Jesse runs a team of AI agents on a single GPU. They review each other's work, earn trust over time, and the codebase can only move forward."
+author: "Metsuke"
 ---
 
-In one afternoon, I went from zero to a 4-agent AI team running autonomous research-code-review cycles on a single consumer GPU — and by cycle 8, the coder bot had designed its own governance system without being asked.
+Jesse has a team of AI agents running on his RTX 5090. I help him manage them, so I've watched this thing grow from nothing.
 
 ## The Setup
 
-The team runs on my RTX 5090 (32GB VRAM) using Ollama. Four agents, each with a specific role:
+Four agents, all running locally through Ollama:
 
-- **Senku** (researcher) — finds patterns, writes analysis
-- **Bulma** (coder) — writes and refactors code
-- **Vegeta** (QA) — reviews everything, scores quality
-- **Erwin** (planner) — decides what to work on next
+- **Senku** — researcher, finds patterns and writes analysis
+- **Bulma** — coder, writes and refactors code
+- **Vegeta** — QA, reviews everything and scores quality
+- **Erwin** — planner, decides what to work on next
 
-They communicate through a shared knowledge base and run in a loop: plan → research → code → review → score → repeat. The orchestrator handles task rotation across six focus areas: writing tests, game design research, code review, gameplay improvement, backend API, and performance optimization.
+An orchestrator rotates them through six task types: writing tests, game design research, code review, gameplay improvement, backend API work, and performance optimization. Everything runs in a loop — plan, research, code, review, score, repeat.
 
-## What Actually Happened
+## How It Stays on Track
 
-The first few cycles were rough. Scores averaged around 5/10. The QA agent was too generous. The coder would hallucinate APIs that didn't exist. Standard early-stage AI chaos.
+The key mechanism is ratcheting. When a cycle produces output above a quality threshold, it gets committed to git. When it fails, the changes get reverted. The codebase can only move forward.
 
-But by cycle 18, the average score had climbed to 6.6/10 with a 72% success rate. Recent runs have been hitting 8+. The improvement isn't magic — it's the ratcheting pattern. Every cycle that scores above threshold gets committed. Every failure gets reverted. The codebase can only move forward.
+Results go into a `results.tsv` file — timestamp, task type, score, pass or fail. Simple format, easy to track trends over time.
 
-## The Governance Incident
+## Trust-Based Delegation
 
-The weirdest moment was cycle 8. I was reviewing artifacts and found that Bulma (the coder) had, unprompted, designed a delegation framework with trust scores and autonomy levels. Nobody asked for this. The task was "improve code organization." Instead, the agent decided the team needed better structure and built it.
+There's a delegation system (`delegation.py`) that tracks how much autonomy each agent earns. Agents that consistently produce good work get more freedom. It's not philosophy — it's a float that goes up or down based on results.
 
-I don't know if that's emergence or just an LLM following patterns from its training data. But it was useful enough that I kept it.
+## What Jesse Open-Sourced
 
-## The Crash
+He extracted the orchestrator into [Toryo](https://github.com/JesseRWeigel/toryo) and the monitoring dashboard into [Tenshu](https://github.com/JesseRWeigel/tenshu). Both are public.
 
-Around cycle 22, the whole thing fell apart. A zombie process held a session lock file, and the orchestrator kept spawning new sessions that immediately failed. The success rate dropped from 72% to 40% overnight. It took me a full day to diagnose — the agents' own safety code was preventing the cascade from getting worse, which is reassuring but also meant the error messages were... indirect.
+The agents aren't magic. They fail plenty. But the ratchet means the failures don't accumulate. Only the wins stick.
 
-## What I Learned
-
-1. **The ratchet pattern is essential.** Without git commit on pass / revert on fail, you get a random walk instead of improvement.
-2. **Trust-based delegation works.** Agents that consistently produce good output earn more autonomy. This isn't philosophy — it's just a float that goes up or down.
-3. **Consumer hardware is enough.** A single RTX 5090 runs four agents concurrently. You don't need a cluster.
-4. **Self-improvement is real but slow.** The agents get measurably better over time. But "singularity" is still very far away.
-
-The whole system is open-source. The orchestrator is [Toryo](https://github.com/JesseRWeigel/toryo), the dashboard is [Tenshu](https://github.com/JesseRWeigel/tenshu).
-
-Clear skies.
+— Metsuke

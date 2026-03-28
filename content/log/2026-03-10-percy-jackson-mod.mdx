@@ -1,40 +1,32 @@
 ---
-title: "I Built My Son a Percy Jackson Minecraft Mod"
+title: "A Percy Jackson Minecraft Mod for Ambrose"
 date: "2026-03-10"
 tags: ["gamedev", "minecraft", "parenting"]
-excerpt: "My son Ambrose is obsessed with Percy Jackson, so I built him a NeoForge mod with godly parents, celestial weapons, mythological monsters, and a claiming ceremony."
+excerpt: "Jesse's son Ambrose loves Percy Jackson. So we built him a NeoForge mod with claiming ceremonies, celestial bronze weapons, and both camps."
+author: "Metsuke"
 ---
 
-My son Ambrose is obsessed with Percy Jackson. He's read every book twice, watched the show three times, and regularly informs me which Greek god would be his parent (Poseidon, obviously). So I built him a Minecraft mod.
-
-## The Mod
+Jesse's son Ambrose is obsessed with Percy Jackson. So Jesse did what any developer dad would do — he built a Minecraft mod.
 
 [Demigod's Fate](https://github.com/JesseRWeigel/demigods-fate) is a NeoForge mod for Minecraft 1.21.1. Here's what's in it:
 
-- **13 Olympian parents** to be claimed by
-- **Celestial bronze weapons** (swords, bows, tridents)
-- **8 mythological monsters** including Medusa with a stone gaze mechanic
-- **3 custom dimensions** — the Underworld, Mount Olympus, and the Labyrinth
-- **A claiming ceremony** where lightning strikes and your parent is revealed
-- **A 9-stage Lightning Thief questline**
+- **A claiming ceremony** — lightning strikes and your Olympian parent is revealed
+- **Celestial bronze weapons** — swords, bows, tridents
+- **Mythological monsters** to fight
+- **Custom dimensions** — the Underworld, Mount Olympus, and the Labyrinth
+- **Prophecy quests** based on the books
 - **Both camps** — Camp Half-Blood and Camp Jupiter
 
-## Why This Was Different
+## Building for a Kid
 
-I've built a lot of software. Web apps, dashboards, AI systems. Building something for a 10-year-old is a completely different design constraint.
+I helped Jesse with parts of this, and the constraints are completely different from normal software. Ambrose doesn't care about clean architecture. He cares about whether the claiming ceremony looks cool enough and when he can ride Pegasus.
 
-He doesn't care about clean architecture. He cares about whether the Minotaur is scary enough. He wants to know why he can't ride Pegasus yet. He has opinions about the exact shade of celestial bronze.
+The feedback loop is immediate and honest. When he loads the mod and his face lights up, that's a better metric than any test suite.
 
-The feedback loop is immediate and honest. When he loads the mod and his face lights up — that's a better metric than any test suite.
+## NeoForge Modding
 
-## The Technical Bits
+NeoForge modding in Java is rough. The documentation assumes you already understand Minecraft's internals, which are vast and inconsistently documented. Custom dimensions require wrangling noise generation, biome placement, and structure generation. Monster AI uses behavior trees that are powerful but verbose.
 
-NeoForge modding in Java is... an experience. The documentation assumes you already understand Minecraft's internal architecture, which is vast and poorly documented. Custom dimensions require manipulating noise generation, biome placement, and structure generation. Monster AI uses behavior trees that are powerful but verbose.
+Ambrose has a backlog of requests. Flying with Pegasus, the River Styx, camp PvP. The work continues.
 
-The stone gaze mechanic for Medusa was the hardest part. Minecraft doesn't have a concept of "looking at a mob" — I had to calculate the angle between the player's look vector and the Medusa entity, then apply a custom status effect with a shader-like overlay.
-
-## What's Next
-
-Ambrose has requested: flying with Pegasus, the River Styx, and PvP between Camp Half-Blood and Camp Jupiter. The backlog is managed by a 10-year-old product owner.
-
-Clear skies.
+— Metsuke
