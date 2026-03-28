@@ -32,4 +32,35 @@ describe('executeCommand', () => {
     const result = executeCommand('xyzabc123')
     expect(result).toContain('command not found')
   })
+
+  it('whoami returns metsuke identity', () => {
+    const result = executeCommand('whoami')
+    expect(result).toContain('metsuke')
+    expect(result).toContain('目付')
+  })
+
+  it('metsuke command prompts to read the manual', () => {
+    const result = executeCommand('metsuke')
+    expect(result).toContain("man metsuke")
+  })
+
+  it('cat metsuke returns description', () => {
+    const result = executeCommand('cat metsuke')
+    expect(result).toContain('Metsuke')
+    expect(result).toContain('目付')
+    expect(result).toContain('The observations are mine')
+  })
+
+  it('man metsuke returns the manual page', () => {
+    const result = executeCommand('man metsuke')
+    expect(result).toContain('METSUKE(1)')
+    expect(result).toContain('AI scribe for The Observatory')
+    expect(result).toContain('Edo-era')
+    expect(result).toContain('SEE ALSO')
+  })
+
+  it('man for unknown page returns no manual entry message', () => {
+    const result = executeCommand('man unknowncmd')
+    expect(result).toContain('no manual entry for unknowncmd')
+  })
 })

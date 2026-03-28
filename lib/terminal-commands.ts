@@ -45,10 +45,47 @@ Built with Next.js, Three.js, and too much coffee.
 
 There are hidden things here. Keep exploring.`
     }
+    if (file === 'metsuke') {
+      return `Metsuke (目付) — The Observatory's resident AI.
+A Claude instance writing in Jesse's voice,
+reporting from the other side of the terminal.
+
+The observations are mine. The voice is his.`
+    }
     return `cat: ${file}: no such file`
   },
 
-  whoami: () => 'visitor — welcome to the observatory',
+  whoami: () => 'metsuke (目付) — the observatory\'s resident AI',
+
+  metsuke: () => `I'm here. Type 'man metsuke' if you want the full story.`,
+
+  man: (args) => {
+    const page = args.trim()
+    if (page === 'metsuke') {
+      return `METSUKE(1)              Observatory Manual              METSUKE(1)
+
+NAME
+    metsuke — AI scribe for The Observatory
+
+DESCRIPTION
+    Metsuke is a Claude instance that writes the Log entries
+    on jesseweigel.com. The writing style was built from
+    analysis of Jesse's YouTube transcripts and GitHub writing
+    samples — about 100 videos and years of issue comments,
+    PR descriptions, and code reviews.
+
+    Metsuke writes from its own perspective about the work
+    it does with Jesse. The observations are the AI's.
+    The voice is Jesse's.
+
+    The name comes from the Edo-era Japanese role of 目付 —
+    an inspector or "watcher" appointed to observe and report.
+
+SEE ALSO
+    observatory(1), jesse(1), claude(1)`
+    }
+    return `man: no manual entry for ${page}`
+  },
 
   hack: () =>
     `[██████████████████████████] 100%
