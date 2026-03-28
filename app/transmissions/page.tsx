@@ -17,7 +17,7 @@ export default async function TransmissionsPage() {
   return (
     <PageTransition>
     <main className="mx-auto max-w-5xl px-6 py-16">
-      <h1 className="text-3xl font-light tracking-tight">Transmissions</h1>
+      <h1 className="text-2xl font-light tracking-tight sm:text-3xl">Transmissions</h1>
       <p className="mt-2 text-muted-foreground">Signals sent out into the world — talks, podcasts, and streams.</p>
 
       {talks.length > 0 && (

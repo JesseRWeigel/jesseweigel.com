@@ -18,10 +18,10 @@ interface ProjectFiltersProps {
 
 export function ProjectFilters({ active, onFilter }: ProjectFiltersProps) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:pb-0">
       <button
         onClick={() => onFilter(null)}
-        className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+        className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium transition-colors ${
           active === null
             ? 'bg-primary text-primary-foreground'
             : 'border border-white/10 text-muted-foreground hover:text-foreground'
@@ -33,7 +33,7 @@ export function ProjectFilters({ active, onFilter }: ProjectFiltersProps) {
         <button
           key={value}
           onClick={() => onFilter(value)}
-          className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+          className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium transition-colors ${
             active === value
               ? 'bg-primary text-primary-foreground'
               : 'border border-white/10 text-muted-foreground hover:text-foreground'

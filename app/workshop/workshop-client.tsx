@@ -17,7 +17,7 @@ export function WorkshopClient({ projects }: WorkshopClientProps) {
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        <h1 className="text-3xl font-light tracking-tight">Workshop</h1>
+        <h1 className="text-2xl font-light tracking-tight sm:text-3xl">Workshop</h1>
         <p className="text-sm text-muted-foreground">
           Projects, experiments, and things built in the open.
         </p>

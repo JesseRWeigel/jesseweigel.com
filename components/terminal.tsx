@@ -70,7 +70,7 @@ export function Terminal() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 border-t border-primary/20 bg-background/95 backdrop-blur-md">
-      <div className="mx-auto max-w-5xl px-6 py-4">
+      <div className="mx-auto max-w-5xl px-4 py-3 sm:px-6 sm:py-4">
         <div className="flex items-center justify-between">
           <p className="font-mono text-xs text-primary">observatory terminal</p>
           <button onClick={toggle} className="font-mono text-xs text-muted-foreground hover:text-foreground">[esc]</button>

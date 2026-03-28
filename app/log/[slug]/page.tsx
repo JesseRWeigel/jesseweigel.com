@@ -35,7 +35,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <Link href="/log" className="text-xs text-muted-foreground transition-colors hover:text-primary">&larr; Log</Link>
         <header className="mt-6">
           <p className="font-mono text-xs text-muted-foreground">★ {toStardate(post.date)} &middot; {post.readingTime}</p>
-          <h1 className="mt-2 text-3xl font-light tracking-tight">{post.title}</h1>
+          <h1 className="mt-2 text-2xl font-light tracking-tight sm:text-3xl">{post.title}</h1>
         </header>
         <div className="mt-8">
           <MdxContent source={post.content} />

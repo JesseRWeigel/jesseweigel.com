@@ -17,12 +17,12 @@ export function Nav() {
         >
           JW
         </Link>
-        <div className="flex gap-6">
+        <div className="flex gap-4 sm:gap-6">
           {links.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground sm:text-sm"
             >
               {label}
             </Link>

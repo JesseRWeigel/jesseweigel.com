@@ -12,7 +12,7 @@ export default async function LogPage() {
   return (
     <PageTransition>
       <main className="mx-auto max-w-3xl px-6 py-16">
-        <h1 className="text-3xl font-light tracking-tight">Log</h1>
+        <h1 className="text-2xl font-light tracking-tight sm:text-3xl">Log</h1>
         <p className="mt-2 text-muted-foreground">Dispatches from the observatory.</p>
         <div className="mt-10">
           {posts.map((post) => <BlogPostCard key={post.slug} post={post} />)}
