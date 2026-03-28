@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
@@ -104,4 +105,73 @@
   html {
     @apply font-sans;
   }
+}
+
+/* MDX content styling — explicit rules since prose modifiers are unreliable in v4 */
+.mdx-content h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--foreground);
+}
+
+.mdx-content h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--foreground);
+}
+
+.mdx-content p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+.mdx-content a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: color-mix(in oklch, var(--primary) 50%, transparent);
+  transition: text-decoration-color 0.2s;
+}
+
+.mdx-content a:hover {
+  text-decoration-color: var(--primary);
+}
+
+.mdx-content strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.mdx-content code:not(pre code) {
+  font-family: var(--font-mono);
+  color: var(--primary);
+  font-size: 0.875em;
+}
+
+.mdx-content ul, .mdx-content ol {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.mdx-content li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.mdx-content pre {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.mdx-content blockquote {
+  border-left-color: var(--primary);
+  color: var(--muted-foreground);
 }
