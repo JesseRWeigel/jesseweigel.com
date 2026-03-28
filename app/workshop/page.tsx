@@ -1,5 +1,6 @@
 import { getProjects } from '@/lib/content'
 import { WorkshopClient } from './workshop-client'
+import { PageTransition } from '@/components/page-transition'
 
 export const metadata = {
   title: 'Workshop',
@@ -9,8 +10,10 @@ export const metadata = {
 export default async function WorkshopPage() {
   const projects = await getProjects()
   return (
-    <main className="mx-auto max-w-5xl px-6 py-24">
-      <WorkshopClient projects={projects} />
-    </main>
+    <PageTransition>
+      <main className="mx-auto max-w-5xl px-6 py-24">
+        <WorkshopClient projects={projects} />
+      </main>
+    </PageTransition>
   )
 }

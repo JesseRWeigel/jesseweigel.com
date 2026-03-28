@@ -1,5 +1,6 @@
 import { getTransmissions } from '@/lib/content'
 import { TransmissionCard } from '@/components/transmission-card'
+import { PageTransition } from '@/components/page-transition'
 
 export const metadata = {
   title: 'Transmissions',
@@ -13,6 +14,7 @@ export default async function TransmissionsPage() {
   const youtube = all.filter((t) => t.type === 'youtube')
 
   return (
+    <PageTransition>
     <main className="mx-auto max-w-5xl px-6 py-16">
       <h1 className="text-3xl font-light tracking-tight">Transmissions</h1>
       <p className="mt-2 text-muted-foreground">Signals sent out into the world — talks, podcasts, and streams.</p>
@@ -38,5 +40,6 @@ export default async function TransmissionsPage() {
         </section>
       )}
     </main>
+    </PageTransition>
   )
 }

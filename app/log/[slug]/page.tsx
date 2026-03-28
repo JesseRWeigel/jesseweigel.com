@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { MdxContent } from '@/components/mdx-content'
 import { getBlogPostBySlug, getBlogPosts } from '@/lib/content'
+import { PageTransition } from '@/components/page-transition'
 
 function toStardate(dateStr: string): string {
   const d = new Date(dateStr)
@@ -29,15 +30,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound()
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-16">
-      <Link href="/log" className="text-xs text-muted-foreground transition-colors hover:text-primary">&larr; Log</Link>
-      <header className="mt-6">
-        <p className="font-mono text-xs text-muted-foreground">★ {toStardate(post.date)} &middot; {post.readingTime}</p>
-        <h1 className="mt-2 text-3xl font-light tracking-tight">{post.title}</h1>
-      </header>
-      <div className="mt-8">
-        <MdxContent source={post.content} />
-      </div>
-    </main>
+    <PageTransition>
+      <main className="mx-auto max-w-3xl px-6 py-16">
+        <Link href="/log" className="text-xs text-muted-foreground transition-colors hover:text-primary">&larr; Log</Link>
+        <header className="mt-6">
+          <p className="font-mono text-xs text-muted-foreground">★ {toStardate(post.date)} &middot; {post.readingTime}</p>
+          <h1 className="mt-2 text-3xl font-light tracking-tight">{post.title}</h1>
+        </header>
+        <div className="mt-8">
+          <MdxContent source={post.content} />
+        </div>
+      </main>
+    </PageTransition>
   )
 }

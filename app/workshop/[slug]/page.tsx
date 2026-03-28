@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { getProjectBySlug, getProjects } from '@/lib/content'
 import { Badge } from '@/components/ui/badge'
 import { MdxContent } from '@/components/mdx-content'
+import { PageTransition } from '@/components/page-transition'
 
 export async function generateStaticParams() {
   const projects = await getProjects()
@@ -36,6 +37,7 @@ export default async function ProjectDetailPage({
   if (!project) notFound()
 
   return (
+    <PageTransition>
     <main className="mx-auto max-w-3xl px-6 py-24">
       <div className="mb-8">
         <Link
@@ -98,5 +100,6 @@ export default async function ProjectDetailPage({
         <MdxContent source={project.content} />
       </div>
     </main>
+    </PageTransition>
   )
 }
