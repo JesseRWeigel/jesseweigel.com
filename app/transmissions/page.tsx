@@ -23,7 +23,19 @@ export default async function TransmissionsPage() {
       {talks.length > 0 && (
         <section className="mt-12">
           <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Conference Talks</h2>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">{talks.map((t) => <TransmissionCard key={t.slug} transmission={t} />)}</div>
+          <div className="mt-4 grid gap-6 sm:grid-cols-2">
+            {talks.map((t) => {
+              const hasVideo = t.links.watch && (t.links.watch.includes('watch?v=') || t.links.watch.includes('youtu.be/'))
+              return (
+                <div key={t.slug} className="space-y-3">
+                  {hasVideo && t.links.watch && (
+                    <YouTubeEmbed url={t.links.watch} title={t.title} />
+                  )}
+                  <TransmissionCard transmission={t} />
+                </div>
+              )
+            })}
+          </div>
         </section>
       )}
 
@@ -41,7 +53,7 @@ export default async function TransmissionsPage() {
           </h2>
           <div className="mt-4 grid gap-6 sm:grid-cols-2">
             {youtube.map((t) => {
-              const isPlayableVideo = t.links.watch?.includes('watch?v=')
+              const isPlayableVideo = t.links.watch?.includes('watch?v=') || t.links.watch?.includes('youtu.be/')
               return (
                 <div key={t.slug} className="space-y-3">
                   {isPlayableVideo && t.links.watch && (
