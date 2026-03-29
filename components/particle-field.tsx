@@ -6,10 +6,10 @@ import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 
 const NODE_DATA = [
-  { label: 'Workshop', href: '/workshop', x: -1.8, y: 1.0, z: 0 },
-  { label: 'Transmissions', href: '/transmissions', x: 1.6, y: 0.6, z: 0.3 },
-  { label: 'Log', href: '/log', x: 0.2, y: -1.2, z: -0.2 },
-  { label: 'Archive', href: '/archive', x: -0.8, y: -0.6, z: 0.2 },
+  { label: 'Workshop', href: '/workshop', x: -0.8, y: 0.9, z: 0 },
+  { label: 'Transmissions', href: '/transmissions', x: 0.9, y: 0.5, z: 0.3 },
+  { label: 'Log', href: '/log', x: 0.6, y: -0.8, z: -0.2 },
+  { label: 'Archive', href: '/archive', x: -0.7, y: -0.5, z: 0.2 },
 ]
 
 function DustParticles({ count = 200 }: { count?: number }) {
