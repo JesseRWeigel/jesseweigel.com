@@ -6,9 +6,10 @@ import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 
 const NODE_DATA = [
-  { label: 'Workshop', href: '/workshop', x: -2.5, y: 1.2, z: 0 },
-  { label: 'Transmissions', href: '/transmissions', x: 2.2, y: 0.8, z: 0.5 },
-  { label: 'Log', href: '/log', x: 0.3, y: -1.5, z: -0.3 },
+  { label: 'Workshop', href: '/workshop', x: -1.8, y: 1.0, z: 0 },
+  { label: 'Transmissions', href: '/transmissions', x: 1.6, y: 0.6, z: 0.3 },
+  { label: 'Log', href: '/log', x: 0.2, y: -1.2, z: -0.2 },
+  { label: 'Archive', href: '/archive', x: -0.8, y: -0.6, z: 0.2 },
 ]
 
 function DustParticles({ count = 200 }: { count?: number }) {
@@ -209,7 +210,7 @@ export function ParticleField() {
   return (
     <div className="h-screen w-full">
       <Canvas
-        camera={{ position: [0, 0, 5], fov: 50 }}
+        camera={{ position: [0, 0, 5.5], fov: 55 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
       >

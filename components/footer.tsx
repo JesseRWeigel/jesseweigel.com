@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { FooterName } from '@/components/footer-name'
+import { TerminalTrigger } from '@/components/terminal-trigger'
 
 const socials = [
   { href: 'https://github.com/JesseRWeigel', label: 'GitHub' },
@@ -30,9 +31,12 @@ export function Footer() {
             ))}
           </div>
         </div>
-        <p className="mt-4 text-center font-mono text-[10px] text-muted-foreground">
-          Press <kbd className="rounded border border-white/10 px-1">`</kbd> for terminal · <kbd className="rounded border border-white/10 px-1">z</kbd> for zen · <kbd className="rounded border border-white/10 px-1">/</kbd> to search
-        </p>
+        <div className="mt-4 flex items-center justify-center gap-3">
+          <p className="text-center font-mono text-[10px] text-muted-foreground">
+            Press <kbd className="rounded border border-white/10 px-1">`</kbd> for terminal · <kbd className="rounded border border-white/10 px-1">z</kbd> for zen · <kbd className="rounded border border-white/10 px-1">/</kbd> to search
+          </p>
+          <TerminalTrigger />
+        </div>
       </div>
     </footer>
   )
