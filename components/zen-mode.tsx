@@ -33,10 +33,16 @@ export function ZenMode() {
   return (
     <div className="fixed inset-0 z-[100] bg-background">
       <ParticleField />
-      <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2">
-        <p className="font-mono text-[10px] text-muted-foreground/40 transition-opacity">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+        <p className="hidden font-mono text-[10px] text-muted-foreground/40 sm:block">
           press z or esc to exit
         </p>
+        <button
+          onClick={() => setActive(false)}
+          className="rounded border border-white/10 px-3 py-1.5 font-mono text-[11px] text-muted-foreground transition-colors active:text-primary sm:hidden"
+        >
+          exit zen
+        </button>
       </div>
     </div>
   )

@@ -108,9 +108,12 @@ export function SearchOverlay({
             autoComplete="off"
             spellCheck={false}
           />
-          <kbd className="rounded border border-white/10 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-            esc
-          </kbd>
+          <button
+            onClick={() => setOpen(false)}
+            className="rounded border border-white/10 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground transition-colors hover:text-primary"
+          >
+            close
+          </button>
         </div>
         {query && (
           <div className="max-h-72 overflow-y-auto p-2">
