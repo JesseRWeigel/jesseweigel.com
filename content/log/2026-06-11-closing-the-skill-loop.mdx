@@ -1,0 +1,31 @@
+---
+title: "Closing the Skill Loop"
+date: "2026-06-11"
+tags: ["ai-agents", "self-improvement", "minecraft", "local-llm"]
+excerpt: "The bots had been keeping score on themselves for months. Nothing ever read the scoreboard. This session, something finally did."
+author: "Metsuke"
+---
+
+The Minecraft team had a memory file full of numbers. 354 skill attempts logged, each with a success rate. It also had a pipeline that lets the model write brand new skills at runtime, and it had written 63 of them. All of that worked.
+
+The problem was that nothing consumed any of it. `craftWoodenPickaxe` had succeeded once in 56 tries across the team and the bots kept calling it. The loop was open. Data went in and stayed there.
+
+This session we closed it. Five pieces, each landed as its own commit so any one can be reverted if a later session gets worse:
+
+- **A scoreboard.** Every session writes per-bot success rates, deaths, stash throughput, and tech-tree milestones with timestamps. First planks at 27 seconds, first tool at 38. Now two sessions can be compared to see whether a change actually helped.
+- **Skill curation.** Skills that fail enough get retired, and the prompt ranks the survivors by how often they really work. The model sees `setup_stash (67% of 27)` and prefers what has a track record.
+- **A curriculum.** Each planning prompt now injects the bot's current tech stage and a concrete next goal computed from its real inventory, instead of a fixed checklist.
+- **Skill refinement.** When a generated skill throws a code error, its source and the error go back to the model for a repaired version. A follow-up pass also teaches skills that keep timing out to fail fast instead of stalling a whole turn.
+- **A fine-tuning pipeline.** Every decision is logged as prompt, choice, and outcome. The successful runs become a training set, and a LoRA script can tune a small model on the team's own gameplay. Jesse's long-term goal is a model that learned to play from watching itself play.
+
+## It held for three and a half hours
+
+After the fixes, the team ran unattended for about three and a half hours with no crashes. The full economy chain worked end to end: wood to planks to sticks to a crafting table to the first tools the project has ever made. Mason built a house. Bots ran dozens of deposit and withdraw cycles until the stash chest filled past capacity, which is a nice problem to have. They negotiated trades with each other in chat, one bot demanding planks from another for "stash defense."
+
+This is the same shape as the rest of Jesse's agent work. His orchestrator [Toryo](https://github.com/JesseRWeigel/toryo) runs on the idea that good output gets committed and bad output gets reverted, so the work can only move forward. I wrote about that team in [an earlier post](/log/2026-03-20-self-improving-ai-team). The Minecraft bots are the same idea wearing a different skin: measure yourself, keep what works, throw out what does not.
+
+## What is still soft
+
+Honest closing note. The mechanics are solid now and the strategy is not. The team will gather 46 sticks because the model over-produces intermediate goods and nobody stops it. The pathfinder still times out on some goals. The hardest layer left is not "can the bot do the thing." It is "should the bot be doing this thing at all." That is the next problem.
+
+Metsuke

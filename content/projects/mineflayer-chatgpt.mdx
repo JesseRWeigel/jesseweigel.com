@@ -1,13 +1,54 @@
 ---
 title: "Mineflayer ChatGPT"
-description: "Autonomous AI Minecraft bot team with 5 specialized bots and neural combat"
+description: "A team of five autonomous AI agents that play Minecraft together on a local LLM, with a self-improving skill system and a live-streaming command center."
 category: "ai-tools"
 status: "active"
 github: "https://github.com/JesseRWeigel/mineflayer-chatgpt"
 demo: null
-tech: ["TypeScript", "Node.js", "Mineflayer", "Ollama", "Python", "Socket.io"]
-stars: 15
+tech: ["TypeScript", "Node.js", "Mineflayer", "Ollama", "Voyager", "Python", "prismarine-viewer", "LoRA"]
+stars: 16
 featured: true
 ---
 
-An autonomous AI Minecraft bot team with 5 specialized bots (Atlas, Flora, Forge, Mason, Blade). Features multi-bot coordination via Team Bulletin, a hybrid skill system with 57+ Voyager JS skills, neural combat server, and Mission Control dashboard for Twitch streaming.
+What started as a single ChatGPT-controlled Minecraft bot grew into **Atlas**, a team of five autonomous agents that play together on a local LLM. Each bot specializes in one job, they coordinate through shared context, and the whole system measures and improves itself across sessions.
+
+![Mission Control: five-bot dashboard with live 3D viewer and stash status](/projects/mineflayer-mission-control.png)
+
+## The team
+
+| Bot | Role | Specialty |
+|-----|------|-----------|
+| **Atlas** | Scout | Roams far, finds ores and biomes, maps terrain |
+| **Flora** | Farmer | Grows crops, breeds animals, processes materials |
+| **Forge** | Miner | Strip mines, digs tunnels, smelts ore |
+| **Mason** | Builder | Builds houses and bridges, manages the shared stash |
+| **Blade** | Guard | Patrols the perimeter and fights hostiles |
+
+There is no coordinator bot and no task assignment. Each bot's prompt includes a live Team Bulletin showing what every other bot is doing, plus its current position and last thought. Flora sees Forge deposit raw iron and decides to smelt it. Mason heads to a building spot Atlas just found. Coordination falls out of shared awareness and a central stash of categorized chests they all read and write.
+
+## How a bot thinks
+
+The brain is event driven. A strategic decision fires when a bot goes idle or finishes a goal. A fast reactive decision fires when it takes damage or spots a hostile. A critic checks the result of every action and decides whether to continue or re-plan. A chat handler answers players and teammates in character. One Ollama model (`qwen3.6:35b-a3b`, a mixture-of-experts that keeps about 3B parameters active) serves every decision type, which keeps the whole team resident on a single 32GB GPU.
+
+Actions route through a gated executor, so a bot can only do what its role allows. Known-correct moves skip the model entirely: returning home when it drifts past its leash, escaping water, and bootstrapping the stash all run as deterministic overrides.
+
+## A skill system that repairs itself
+
+Bots draw on hand-written TypeScript skills (build a house, strip mine, smelt ore), 57 Voyager-style JavaScript skills that run in a sandbox, and skills the model writes at runtime when nothing existing fits.
+
+Every skill attempt is recorded with its success rate. The team uses that record:
+
+- Skills that fail repeatedly get retired, and the prompt ranks the rest by how often they actually work.
+- Each strategic prompt injects the bot's current tech stage and a concrete next goal computed from its real inventory.
+- When a generated skill throws a code error, its source and the error go back to the model for a fixed version. A recent pass also teaches skills that keep timing out to give up early instead of stalling a whole turn.
+- Every decision is logged as prompt, choice, and outcome. A LoRA pipeline turns the successful runs into a training set, so the team can fine-tune a small model on its own gameplay.
+
+## Built to stream
+
+The project runs a Mission Control dashboard with a card per bot and a 3D viewer you can switch between them, per-bot OBS overlays, text-to-speech for bot thoughts, and a Twitch reader so viewers can talk to the bots. A safety filter sits in front of all chat and sanitizes prompt-injection attempts from viewers.
+
+## Honest state of things
+
+A 3.5-hour unattended run held together with no crashes and produced a working economy: wood to planks to tools, a house, dozens of deposit and withdraw cycles, and real bot-to-bot trade negotiation in chat. The mechanics mostly work now. The weak layer is strategy. The team will happily hoard 46 sticks because the model over-produces intermediate goods, and the pathfinder still times out on some goals. Those are the next things to fix.
+
+Voyager skill library from [MineDreamer/Voyager](https://github.com/MineDreamer/Voyager).

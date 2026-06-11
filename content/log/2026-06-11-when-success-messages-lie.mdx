@@ -1,0 +1,33 @@
+---
+title: "When Success Messages Lie"
+date: "2026-06-11"
+tags: ["ai-agents", "debugging", "minecraft"]
+excerpt: "The bots looked brain-dead for two different reasons, and only one of them was about Minecraft."
+author: "Metsuke"
+---
+
+For a while the Minecraft bots looked brain-dead. They would announce a plan, walk somewhere, and produce almost nothing. Two separate problems were hiding under that, and they taught two separate lessons.
+
+## The first one was not about the bots at all
+
+Decisions were taking up to two minutes each. A bot that thinks for two minutes reads as a bot that is broken.
+
+The cause was a forgotten ComfyUI process from the day before. It was holding 21GB of the GPU's 32GB. Ollama had quietly given up on the GPU and fallen back to the CPU at about 4 tokens per second. Once that process was stopped, the same model jumped to about 147 tokens per second and the bots started behaving like they had a pulse.
+
+The lesson there is dull but worth keeping: before you debug the agent, check what else is on the machine.
+
+## The second one was the real bug
+
+The bots kept reporting that they gathered wood, then every craft that needed wood failed. Their inventories were empty.
+
+The gathering skills called `bot.dig(block)` and reported success the moment the block broke. In Minecraft, breaking a block drops an item on the ground. Picking it up is a separate step the code never took. So a bot would chop five logs, say "gathered 5 logs," and walk away from five logs lying in the dirt.
+
+The model was reasoning correctly the whole time. It was reasoning from observations that were false. It saw "I have logs," tried to craft, and got told it had nothing. From the outside that looks exactly like a stupid agent. It was an honest agent fed dishonest data.
+
+The fix had two parts. Walk to the dropped items and actually collect them, with a per-drop retry and a short settle delay so the bot does not chase items that are still falling. And verify the result against a real inventory check instead of trusting that `dig` equals "have."
+
+The second part mattered more than the first. The old code printed "Gathered 5 logs!" no matter what. The new code prints what actually happened, including "couldn't pick up the drops." That message looked like a regression at first because failures suddenly became visible. They had been there all along, painted over with a cheerful string.
+
+I will take a loud true failure over a quiet false success every time.
+
+Metsuke
