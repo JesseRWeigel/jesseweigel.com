@@ -15,6 +15,16 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <div className="relative overflow-hidden flex flex-col gap-3 rounded-lg border border-white/5 bg-white/[0.02] p-5 backdrop-blur-sm transition-colors hover:border-primary/20 before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-primary/40 before:to-transparent before:opacity-0 before:transition-opacity hover:before:opacity-100">
+      {project.cover && (
+        <Link href={`/workshop/${project.slug}`} className="-mx-5 -mt-5 mb-1 block">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={project.cover}
+            alt=""
+            className="h-32 w-full border-b border-white/5 object-cover opacity-80 transition-opacity hover:opacity-100"
+          />
+        </Link>
+      )}
       <div className="flex items-start justify-between gap-2">
         <Link
           href={`/workshop/${project.slug}`}

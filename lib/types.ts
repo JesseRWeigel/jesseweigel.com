@@ -18,11 +18,42 @@ export interface ProjectFrontmatter {
   tech: string[]
   stars: number
   featured: boolean
+  /** Optional hero image (path under /public), shown on the card and detail page. */
+  cover?: string
+  /** Optional additional images (paths under /public), shown as a gallery on the detail page. */
+  images?: string[]
 }
 
 export interface Project extends ProjectFrontmatter {
   slug: string
   content: string
+}
+
+export interface MilestoneStat {
+  name: string
+  label: string
+  bestSec: number
+}
+
+export interface SessionStat {
+  id: string
+  durationSec: number
+  actions: number
+  successRate: number
+  deaths: number
+}
+
+export interface ProjectStats {
+  generatedAt: string
+  sessionCount: number
+  totalActions: number
+  totalSuccesses: number
+  successRate: number
+  totalDeaths: number
+  itemsDeposited: number
+  longestSessionSec: number
+  milestones: MilestoneStat[]
+  sessions: SessionStat[]
 }
 
 export type TransmissionType = 'talk' | 'podcast' | 'youtube'

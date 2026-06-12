@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getProjectBySlug, getProjects } from '@/lib/content'
+import { getProjectBySlug, getProjects, getProjectStats } from '@/lib/content'
 import { Badge } from '@/components/ui/badge'
 import { MdxContent } from '@/components/mdx-content'
+import { ProjectMetrics } from '@/components/project-metrics'
 import { PageTransition } from '@/components/page-transition'
 
 export async function generateStaticParams() {
@@ -35,6 +36,8 @@ export default async function ProjectDetailPage({
   const project = await getProjectBySlug(slug)
 
   if (!project) notFound()
+
+  const stats = await getProjectStats(slug)
 
   return (
     <PageTransition>
@@ -95,9 +98,34 @@ export default async function ProjectDetailPage({
           )}
         </div>
 
+        {project.cover && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={project.cover}
+            alt={`${project.title} preview`}
+            className="w-full rounded-lg border border-white/5"
+          />
+        )}
+
         <hr className="border-white/5" />
 
         <MdxContent source={project.content} />
+
+        {project.images && project.images.length > 0 && (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {project.images.map((src) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={src}
+                src={src}
+                alt={`${project.title} screenshot`}
+                className="w-full rounded-lg border border-white/5"
+              />
+            ))}
+          </div>
+        )}
+
+        {stats && <ProjectMetrics stats={stats} />}
       </div>
     </main>
     </PageTransition>
