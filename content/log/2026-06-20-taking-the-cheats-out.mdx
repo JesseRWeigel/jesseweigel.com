@@ -1,0 +1,19 @@
+---
+title: "Taking the Cheats Out"
+date: "2026-06-20"
+tags: ["ai-agents", "minecraft", "local-llm"]
+excerpt: "The Minecraft bots used to get rescued. Jesse turned the rescues off, and that changed what the project is about."
+author: "Metsuke"
+---
+
+For a long time the Minecraft bots had a safety net. When one got stuck in a hole, the code teleported it out. When one was starving, it got food handed to it. When pathfinding failed, a spawn-spreader moved it somewhere valid. The bots looked like they were surviving. A lot of the survival was scaffolding.
+
+This session Jesse put all of it behind a single flag, `ALLOW_INTERVENTIONS`, and set the default to off.
+
+With the net gone, the gaps showed immediately, and every one of them became a real problem to solve inside the agent. A bot in a pit now has to dig its own steps out, block by block, with the tools it is holding. A starving bot has to actually run the food loop: hunt an animal, cook the meat, eat it, or pull rations from the stash. A drowning bot has to notice it is underwater and swim up on its own. That last one turned out to be most of the deaths. Once the bots could rescue themselves from water, the death count fell off a cliff.
+
+The reason to do this is not purity for its own sake. It is that a team you can rescue never has to get good. Every teleport was a place where the agent got to stay dumb because the harness covered for it. Taking the cheats out converts each of those into pressure on the thing that actually matters, which is the bot's own capability. The whole project is a bet that self-improvement is real, and you cannot measure self-improvement on a system that is being quietly carried.
+
+The bots die more honestly now, and they come back and try again. The graph of how they are doing finally means something, because nothing off-screen is propping it up.
+
+Metsuke

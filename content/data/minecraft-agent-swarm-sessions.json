@@ -1,0 +1,169 @@
+{
+  "generatedAt": "2026-07-02T18:53:10.879Z",
+  "sessionCount": 101,
+  "coldStartCount": 44,
+  "totalActions": 276102,
+  "totalSuccesses": 115248,
+  "successRate": 0.41741095682030555,
+  "totalDeaths": 2130,
+  "itemsDeposited": 9611,
+  "longestSessionSec": 507058,
+  "milestones": [
+    {
+      "name": "first_log",
+      "label": "First log",
+      "bestSec": 15
+    },
+    {
+      "name": "first_planks",
+      "label": "First planks",
+      "bestSec": 15
+    },
+    {
+      "name": "first_crafting_table",
+      "label": "First crafting table",
+      "bestSec": 16
+    },
+    {
+      "name": "first_wooden_tool",
+      "label": "First wooden tool",
+      "bestSec": 18
+    },
+    {
+      "name": "first_chest",
+      "label": "First chest",
+      "bestSec": 16
+    },
+    {
+      "name": "first_stone_tool",
+      "label": "First stone tool",
+      "bestSec": 35
+    },
+    {
+      "name": "first_furnace",
+      "label": "First furnace",
+      "bestSec": 35
+    },
+    {
+      "name": "first_coal",
+      "label": "First coal",
+      "bestSec": 36
+    },
+    {
+      "name": "first_iron_ingot",
+      "label": "First iron ingot",
+      "bestSec": 200
+    },
+    {
+      "name": "first_iron_tool",
+      "label": "First iron tool",
+      "bestSec": 1243
+    },
+    {
+      "name": "first_bed",
+      "label": "First bed",
+      "bestSec": 26
+    },
+    {
+      "name": "first_stash_deposit",
+      "label": "First stash deposit",
+      "bestSec": 20
+    },
+    {
+      "name": "first_farm",
+      "label": "First farm",
+      "bestSec": 73
+    },
+    {
+      "name": "first_complete_house",
+      "label": "First complete house",
+      "bestSec": 3725
+    }
+  ],
+  "sessions": [
+    {
+      "id": "2026-07-02T18-43-27-182Z",
+      "durationSec": 527,
+      "actions": 108,
+      "successRate": 0.2962962962962963,
+      "deaths": 0
+    },
+    {
+      "id": "2026-07-01T16-45-33-110Z",
+      "durationSec": 93447,
+      "actions": 20512,
+      "successRate": 0.4206318252730109,
+      "deaths": 67
+    },
+    {
+      "id": "2026-07-01T05-14-48-864Z",
+      "durationSec": 41424,
+      "actions": 7611,
+      "successRate": 0.4025752200762055,
+      "deaths": 35
+    },
+    {
+      "id": "2026-07-01T05-00-42-246Z",
+      "durationSec": 803,
+      "actions": 137,
+      "successRate": 0.35766423357664234,
+      "deaths": 2
+    },
+    {
+      "id": "2026-07-01T04-46-27-143Z",
+      "durationSec": 807,
+      "actions": 124,
+      "successRate": 0.33064516129032256,
+      "deaths": 0
+    },
+    {
+      "id": "2026-06-30T16-50-04-273Z",
+      "durationSec": 42922,
+      "actions": 5662,
+      "successRate": 0.3488166725538679,
+      "deaths": 24
+    },
+    {
+      "id": "2026-06-30T16-32-41-650Z",
+      "durationSec": 975,
+      "actions": 163,
+      "successRate": 0.3006134969325153,
+      "deaths": 0
+    },
+    {
+      "id": "2026-06-30T16-17-16-651Z",
+      "durationSec": 903,
+      "actions": 93,
+      "successRate": 0.3225806451612903,
+      "deaths": 0
+    },
+    {
+      "id": "2026-06-30T16-02-49-657Z",
+      "durationSec": 830,
+      "actions": 78,
+      "successRate": 0.23076923076923078,
+      "deaths": 0
+    },
+    {
+      "id": "2026-06-29T04-47-09-447Z",
+      "durationSec": 126885,
+      "actions": 13588,
+      "successRate": 0.3274212540476891,
+      "deaths": 55
+    },
+    {
+      "id": "2026-06-28T22-48-10-544Z",
+      "durationSec": 21494,
+      "actions": 2763,
+      "successRate": 0.29931234165761855,
+      "deaths": 12
+    },
+    {
+      "id": "2026-06-28T10-46-38-342Z",
+      "durationSec": 43264,
+      "actions": 4808,
+      "successRate": 0.31905158069883527,
+      "deaths": 23
+    }
+  ]
+}

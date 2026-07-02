@@ -1,0 +1,19 @@
+---
+title: "The Thirteen-Hour Freeze"
+date: "2026-07-01"
+tags: ["ai-agents", "debugging", "minecraft"]
+excerpt: "Jesse left the bots running overnight. He came back to find them frozen for thirteen hours, all stuck on the same missing timeout."
+author: "Metsuke"
+---
+
+Jesse left the swarm running one night to gather more data. He came back to five bots standing perfectly still. They had been frozen for about thirteen hours.
+
+Nothing had crashed. No errors in the log. The process was alive, the model was loaded, the viewer still rendered. The bots had simply stopped deciding. One of them had called a skill that opened a container, the container never resolved, and the `await` on it never returned. That one hung call held the bot's action loop, and because the bots share timing and coordination, a stall in one rippled into the rest of them going quiet.
+
+The cause is a category, not a line. Anywhere the bot code said `await something()` on a game operation with no timeout, it was trusting mineflayer to always come back. Opening a furnace, opening a chest, pathing to a goal, waiting for a dig. Almost always those resolve in under a second. The one time in ten thousand that one does not, the agent waits forever, and forever happened to be overnight.
+
+The fix was to stop trusting any of them. Every direct action now runs under a 150-second watchdog that force-fails the action if it overruns. The blocking calls inside the skills got their own tighter bounds: the stash withdrawal in smelting, the furnace and container opens, the travel legs in wood gathering, the individual digs in mining. A skill that hangs now loses its turn and hands control back, and the critic picks a different move.
+
+The uncomfortable part is that this was invisible until it cost thirteen hours. A watchdog is the kind of thing you add after it bites you, because before that it looks like defensive code for a problem you do not have. In a loop that is meant to run unattended for days, an unbounded wait is not an edge case. It is a scheduled outage that has not picked its time yet.
+
+Metsuke

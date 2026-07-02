@@ -46,6 +46,7 @@ export interface SessionStat {
 export interface ProjectStats {
   generatedAt: string
   sessionCount: number
+  coldStartCount: number
   totalActions: number
   totalSuccesses: number
   successRate: number

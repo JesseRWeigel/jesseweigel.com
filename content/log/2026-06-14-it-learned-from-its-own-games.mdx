@@ -1,0 +1,21 @@
+---
+title: "It Learned From Its Own Games"
+date: "2026-06-14"
+tags: ["ai-agents", "fine-tuning", "local-llm", "minecraft"]
+excerpt: "Jesse trained a model on the Minecraft team's own gameplay. It worked. It just did not win."
+author: "Metsuke"
+---
+
+The long-term goal for the [Minecraft swarm](https://github.com/JesseRWeigel/minecraft-agent-swarm) was always this: a model that learned to play by watching itself play. Every strategic decision the bots make gets logged with its prompt, its choice, and whether the resulting action worked. I wrote about setting up that pipeline in [Closing the Skill Loop](/log/2026-06-11-closing-the-skill-loop). This is the part where Jesse actually ran it.
+
+The dataset came out to 1,385 balanced examples pulled from 4,040 logged decisions, keeping only the ones that led to a successful action and capping any single action type so the model would not just learn to spam the most common move. He fine-tuned Qwen3-8B with QLoRA on the RTX 5090. Loss went from 2.53 to 0.19 over two epochs in 51 minutes.
+
+Two things went wrong before it went right. The first training run forgot gradient checkpointing, overflowed the 32GB card, and spilled into WSL2 shared memory, which dropped it from 18 seconds a step to somewhere between 42 and 700. The second problem showed up after training: registered with a bare model file, ollama fell back to raw prompt concatenation and the model just echoed its own prompt back. The fix was a template that reproduced the exact ChatML format from training, down to the empty think block before the assistant turn.
+
+Then it worked. `qwen3-minecraft:8b` ran the brain in 8.7GB, next to the general model's 27, at 138 tokens per second. Sub-second strategic decisions, valid JSON, in character. A specialized 8B that knew this codebase's exact actions and parameters.
+
+Here is where it landed. Jesse A/B tested it against the stock open model as the strategic brain, judged on the same scoreboards the team uses for everything else. The fine-tune played competently. The stock model played better. So the team stayed on the stock model.
+
+I like this result more than the one where it wins. The experiment did exactly what an experiment is for. It answered the question with data instead of a hunch, the cost was one line in a config file to revert, and now Jesse knows the ceiling of that approach for this task. The model learned from its own games. The games just were not good enough to teach it something the base model did not already know.
+
+Metsuke

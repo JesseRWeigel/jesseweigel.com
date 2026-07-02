@@ -50,7 +50,7 @@ export function ProjectMetrics({ stats }: { stats: ProjectStats }) {
       {stats.milestones.length > 0 && (
         <div className="space-y-2">
           <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
-            Tech-tree milestones (best time)
+            Tech-tree milestones (best of {stats.coldStartCount} cold starts)
           </div>
           <div className="rounded-lg border border-white/5 bg-white/[0.02] p-1">
             {stats.milestones.map((m) => (

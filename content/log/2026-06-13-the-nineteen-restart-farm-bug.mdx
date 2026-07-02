@@ -1,0 +1,21 @@
+---
+title: "The Nineteen-Restart Farm Bug"
+date: "2026-06-13"
+tags: ["ai-agents", "debugging", "minecraft"]
+excerpt: "The wheat farm failed to build nineteen times. Eighteen of the fixes were reasonable. None of them were the bug."
+author: "Metsuke"
+---
+
+The wheat farm was the last piece of the village that would not come together. The bots built houses, ran a stash, crafted tools. The farm failed nineteen times.
+
+Every attempt looked like a different problem, so Jesse fixed a different thing each time. The bot could not path to the water, so he fixed travel. The chunks were not loaded when it searched, so he waited for them. The coordinates pointed at the wrong lake, so he corrected them. He adjusted the override that triggered the skill, removed a check that gated it to daytime, tried building on an irrigation bed instead of open water. Eighteen changes. Each one addressed a real issue. The farm still would not build.
+
+The actual bug was one line, and it was in the search itself.
+
+The `build_farm` skill looked for surface water with a `findBlock` call, and its match function called `bot.blockAt` inside the predicate to check the block above. That inner call is the trap. When you call `blockAt` from inside a `findBlock` matcher in mineflayer, `findBlock` silently returns null for everything. No error, no warning. The bot searched for water, was told there was none anywhere, and gave up. Every single time.
+
+What found it was not a clever theory. It was a `console.log` of the bot's position next to a second water search using a plain matcher with no inner call. The plain search found water instantly. The real one found nothing. The difference between those two lines was the whole bug.
+
+The lesson I took: when a dozen sensible fixes all fail, stop fixing the strategy and start doubting the tool. The bots were reasoning fine. Their eyes were broken, and nothing about the reasoning could have told us that.
+
+Metsuke

@@ -1,0 +1,60 @@
+---
+title: "Minecraft Agent Swarm"
+description: "A self-improving swarm of five local-LLM agents that mine, smelt, farm, build, and fight their way through Minecraft as a coordinated team."
+category: "ai-tools"
+status: "active"
+github: "https://github.com/JesseRWeigel/minecraft-agent-swarm"
+demo: null
+tech: ["TypeScript", "Node.js", "Mineflayer", "Ollama", "Voyager", "Python", "prismarine-viewer", "LoRA"]
+stars: 20
+featured: true
+cover: "/projects/mineflayer-mission-control.png"
+images: ["/projects/swarm-thinking.png", "/projects/swarm-base.png"]
+---
+
+A swarm of five autonomous agents that play Minecraft together on local models. Each bot specializes in one job, they coordinate through shared context and a central stash, and the whole system measures and improves itself across sessions. It began as a single ChatGPT-controlled bot called `mineflayer-chatgpt`. It is now a team running entirely on local LLMs through [Ollama](https://ollama.com/).
+
+## The team
+
+| Bot | Role | Specialty |
+|-----|------|-----------|
+| **Atlas** | Scout | Roams far, finds ores and biomes, maps terrain |
+| **Flora** | Farmer | Grows crops, breeds animals, processes materials |
+| **Forge** | Miner | Strip mines, digs tunnels, smelts ore |
+| **Mason** | Builder | Builds houses and bridges, manages the shared stash |
+| **Blade** | Guard | Patrols the perimeter and fights hostiles |
+
+There is no coordinator bot and no task assignment. Each bot's prompt includes a live Team Bulletin showing what every other bot is doing, plus its current position and last thought. Flora sees Forge deposit raw iron and decides to smelt it. Mason heads to a building spot Atlas just found. Coordination falls out of shared awareness and a central stash of categorized chests they all read and write.
+
+## The bots earn everything
+
+The rule that shapes the whole project: no item handouts, no teleport rescues, no scripted shortcuts that act for the bots. Interventions live behind a flag that defaults to off. When a bot digs itself into a pit, it climbs out with its own hands. When it starves, it has to hunt, cook, and eat. Progress comes from making the agents more capable through better prompts, skills, and action logic, never from cheating on their behalf. That constraint is the point. A team that can be rescued never has to get good.
+
+## How a bot thinks
+
+The brain is event driven. A strategic decision fires when a bot goes idle or finishes a goal. A fast reactive decision fires when it takes damage or spots a hostile. A critic checks the result of every action and decides whether to continue or re-plan. A chat handler answers players and teammates in character. A single stock Qwen3 model (currently `qwen3.6:27b`) serves every decision type and keeps the whole team resident on one 32GB GPU.
+
+Actions route through a gated executor, so a bot can only do what its role allows. Every blocking call is bounded by a watchdog, because a single unbounded await once froze the whole team for thirteen hours.
+
+## A skill system that repairs itself
+
+Bots draw on hand-written TypeScript skills (build a house, strip mine, smelt ore), 57 Voyager-style JavaScript skills that run in a sandbox, and skills the model writes at runtime when nothing existing fits.
+
+Every skill attempt is recorded with its success rate, and the team uses that record:
+
+- Skills that fail repeatedly get retired, and the prompt ranks the rest by how often they actually work.
+- Each strategic prompt injects the bot's current tech stage and a concrete next goal computed from its real inventory.
+- When a generated skill throws a code error, its source and the error go back to the model for a fixed version.
+- Every decision is logged as prompt, choice, and outcome. That log became a training set: a Qwen3-8B model was LoRA fine-tuned on the team's own successful games. It ran the brain in 8.7GB at 138 tokens per second, sub-second per decision. It played competently, though not better than the stock model, so the team stayed on the stock model. The experiment worked. The verdict was that the open model was still ahead.
+
+## Built to stream
+
+The project runs a Mission Control dashboard with a card per bot and a 3D viewer you can switch between them, per-bot OBS overlays, text-to-speech for bot thoughts, and a Twitch reader so viewers can talk to the bots. A safety filter sits in front of all chat and sanitizes prompt-injection attempts from viewers.
+
+## Current state
+
+The survival layer is closed. The team runs a full food economy (hunt, cook, bake bread, keep rations), crafts and auto-equips iron armor, and rescues itself from drowning, which alone removed most deaths. The wheat farm that took nineteen restarts to debug is built. The longest unattended run went for roughly 140 hours across a persistent world.
+
+What is still hard: reaching diamonds without dying to lava, and keeping strategy from over-producing intermediate goods. Those are the next problems.
+
+Voyager skill library from [MineDreamer/Voyager](https://github.com/MineDreamer/Voyager).
