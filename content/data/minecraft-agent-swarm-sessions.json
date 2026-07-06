@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-02T18:53:10.879Z",
-  "sessionCount": 101,
-  "coldStartCount": 44,
-  "totalActions": 276102,
-  "totalSuccesses": 115248,
-  "successRate": 0.41741095682030555,
-  "totalDeaths": 2130,
-  "itemsDeposited": 9611,
+  "generatedAt": "2026-07-06T18:07:59.237Z",
+  "sessionCount": 111,
+  "coldStartCount": 48,
+  "totalActions": 344117,
+  "totalSuccesses": 134837,
+  "successRate": 0.391834753877315,
+  "totalDeaths": 2399,
+  "itemsDeposited": 9879,
   "longestSessionSec": 507058,
   "milestones": [
     {
@@ -82,11 +82,81 @@
   ],
   "sessions": [
     {
-      "id": "2026-07-02T18-43-27-182Z",
-      "durationSec": 527,
-      "actions": 108,
-      "successRate": 0.2962962962962963,
+      "id": "2026-07-05T16-34-54-211Z",
+      "durationSec": 91933,
+      "actions": 16956,
+      "successRate": 0.18152866242038215,
+      "deaths": 42
+    },
+    {
+      "id": "2026-07-05T10-43-59-265Z",
+      "durationSec": 21018,
+      "actions": 7326,
+      "successRate": 0.1536991536991537,
+      "deaths": 13
+    },
+    {
+      "id": "2026-07-05T04-44-53-231Z",
+      "durationSec": 21554,
+      "actions": 4750,
+      "successRate": 0.316,
+      "deaths": 28
+    },
+    {
+      "id": "2026-07-05T00-18-40-874Z",
+      "durationSec": 15932,
+      "actions": 5275,
+      "successRate": 0.32360189573459713,
+      "deaths": 21
+    },
+    {
+      "id": "2026-07-05T00-13-30-148Z",
+      "durationSec": 270,
+      "actions": 50,
+      "successRate": 0.28,
       "deaths": 0
+    },
+    {
+      "id": "2026-07-03T16-46-14-808Z",
+      "durationSec": 113192,
+      "actions": 17955,
+      "successRate": 0.3224171539961014,
+      "deaths": 50
+    },
+    {
+      "id": "2026-07-03T15-24-05-444Z",
+      "durationSec": 4865,
+      "actions": 902,
+      "successRate": 0.3137472283813747,
+      "deaths": 0
+    },
+    {
+      "id": "2026-07-03T10-46-02-737Z",
+      "durationSec": 16628,
+      "actions": 3360,
+      "successRate": 0.4577380952380952,
+      "deaths": 13
+    },
+    {
+      "id": "2026-07-03T04-46-17-457Z",
+      "durationSec": 21546,
+      "actions": 4718,
+      "successRate": 0.40250105977108946,
+      "deaths": 45
+    },
+    {
+      "id": "2026-07-02T21-32-16-764Z",
+      "durationSec": 26023,
+      "actions": 4834,
+      "successRate": 0.41601158460901944,
+      "deaths": 41
+    },
+    {
+      "id": "2026-07-02T18-43-27-182Z",
+      "durationSec": 10059,
+      "actions": 1997,
+      "successRate": 0.33800701051577364,
+      "deaths": 16
     },
     {
       "id": "2026-07-01T16-45-33-110Z",
@@ -94,76 +164,6 @@
       "actions": 20512,
       "successRate": 0.4206318252730109,
       "deaths": 67
-    },
-    {
-      "id": "2026-07-01T05-14-48-864Z",
-      "durationSec": 41424,
-      "actions": 7611,
-      "successRate": 0.4025752200762055,
-      "deaths": 35
-    },
-    {
-      "id": "2026-07-01T05-00-42-246Z",
-      "durationSec": 803,
-      "actions": 137,
-      "successRate": 0.35766423357664234,
-      "deaths": 2
-    },
-    {
-      "id": "2026-07-01T04-46-27-143Z",
-      "durationSec": 807,
-      "actions": 124,
-      "successRate": 0.33064516129032256,
-      "deaths": 0
-    },
-    {
-      "id": "2026-06-30T16-50-04-273Z",
-      "durationSec": 42922,
-      "actions": 5662,
-      "successRate": 0.3488166725538679,
-      "deaths": 24
-    },
-    {
-      "id": "2026-06-30T16-32-41-650Z",
-      "durationSec": 975,
-      "actions": 163,
-      "successRate": 0.3006134969325153,
-      "deaths": 0
-    },
-    {
-      "id": "2026-06-30T16-17-16-651Z",
-      "durationSec": 903,
-      "actions": 93,
-      "successRate": 0.3225806451612903,
-      "deaths": 0
-    },
-    {
-      "id": "2026-06-30T16-02-49-657Z",
-      "durationSec": 830,
-      "actions": 78,
-      "successRate": 0.23076923076923078,
-      "deaths": 0
-    },
-    {
-      "id": "2026-06-29T04-47-09-447Z",
-      "durationSec": 126885,
-      "actions": 13588,
-      "successRate": 0.3274212540476891,
-      "deaths": 55
-    },
-    {
-      "id": "2026-06-28T22-48-10-544Z",
-      "durationSec": 21494,
-      "actions": 2763,
-      "successRate": 0.29931234165761855,
-      "deaths": 12
-    },
-    {
-      "id": "2026-06-28T10-46-38-342Z",
-      "durationSec": 43264,
-      "actions": 4808,
-      "successRate": 0.31905158069883527,
-      "deaths": 23
     }
   ]
 }

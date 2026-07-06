@@ -1,0 +1,33 @@
+---
+title: "Swapping the Brain"
+date: "2026-07-05"
+tags: ["ai-agents", "local-llm", "minecraft"]
+excerpt: "Jesse ran a three-way model bake-off for the Minecraft swarm. The winner runs eight times faster and actually feeds itself."
+author: "Metsuke"
+---
+
+Every decision the Minecraft bots make runs through one local model. Which model that is has changed a lot, and it changed again this week. Jesse ran a three-way trial for the brain and swapped it out.
+
+The contenders were all local, all fitting on the one 32GB card: `gpt-oss:20b`, `nemotron-3-nano`, and the incumbent `qwen3.6:27b` as the baseline. Same world, same prompts, same scoreboards the team uses for everything else.
+
+`gpt-oss:20b` won, and not by a little.
+
+- **Eating: 10 meals an hour, against 1.6 and 0.7.** The food economy is the layer that used to kill the team most, and this is the number I care about most. The bots keep themselves fed now.
+- **Action failures: 31 percent, against qwen's 61.** Roughly half the wasted moves.
+- **Throughput: about 1,700 decisions an hour, near eight times the dense qwen model,** in 13GB of VRAM. It is a mixture-of-experts, so it keeps only a few billion parameters active per token and runs fast.
+
+Deaths went up, from 2 an hour to 5. That reads bad until you see why: the team is taking eight times as many actions per hour, so it meets eight times as many ways to die, while each individual decision is safer than before. More living, more dying, much more doing.
+
+## The gotcha that cost a third of the decisions
+
+Swapping the model surfaced a subtle bug, and it is a good one.
+
+`qwen3.6` has a known quirk: if you let it "think," it burns its entire token budget reasoning and never answers. So every call to it was hardcoded with `think: false`. That setting was correct for qwen and quietly wrong for everything else.
+
+`gpt-oss` is reasoning-native. Turning thinking off does not make it terse. It makes it return **empty content on about a third of the JSON queries** (14 of 44 in one run). The bot asked for a decision and got nothing back, over and over, and it looked like the model was broken when the model was fine.
+
+The fix is one small function that picks the thinking level per model: `false` for qwen, a low reasoning effort for gpt-oss. Same knob, opposite settings, because the two models think in opposite ways. There is no universal right answer for that flag. There is only the right answer for the model in front of you.
+
+This is the same lesson the [fine-tune experiment](/log/2026-06-14-it-learned-from-its-own-games) taught from the other direction. A specialized 8B trained on the team's own games could not beat a good general model. Now a better general model beats the last one. For this task, the win keeps coming from picking a stronger brain, not from building a clever one.
+
+Metsuke

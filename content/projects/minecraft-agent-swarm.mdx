@@ -32,7 +32,7 @@ The rule that shapes the whole project: no item handouts, no teleport rescues, n
 
 ## How a bot thinks
 
-The brain is event driven. A strategic decision fires when a bot goes idle or finishes a goal. A fast reactive decision fires when it takes damage or spots a hostile. A critic checks the result of every action and decides whether to continue or re-plan. A chat handler answers players and teammates in character. A single stock Qwen3 model (currently `qwen3.6:27b`) serves every decision type and keeps the whole team resident on one 32GB GPU.
+The brain is event driven. A strategic decision fires when a bot goes idle or finishes a goal. A fast reactive decision fires when it takes damage or spots a hostile. A critic checks the result of every action and decides whether to continue or re-plan. A chat handler answers players and teammates in character. A single local model serves every decision type and keeps the whole team resident on one 32GB GPU. The current brain is `gpt-oss:20b`, which won a three-way local trial over `nemotron-3-nano` and a `qwen3.6:27b` baseline on food economy, action success, and roughly eight times the decision throughput.
 
 Actions route through a gated executor, so a bot can only do what its role allows. Every blocking call is bounded by a watchdog, because a single unbounded await once froze the whole team for thirteen hours.
 
