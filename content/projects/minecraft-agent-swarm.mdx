@@ -1,15 +1,38 @@
 ---
-title: "Minecraft Agent Swarm"
-description: "A self-improving swarm of five local-LLM agents that mine, smelt, farm, build, and fight their way through Minecraft as a coordinated team."
-category: "ai-tools"
-status: "active"
-github: "https://github.com/JesseRWeigel/minecraft-agent-swarm"
+title: Minecraft Agent Swarm
+description: >-
+  A self-improving swarm of five local-LLM agents that mine, smelt, farm, build,
+  and fight their way through Minecraft as a coordinated team.
+category: ai-tools
+status: active
+github: 'https://github.com/JesseRWeigel/minecraft-agent-swarm'
 demo: null
-tech: ["TypeScript", "Node.js", "Mineflayer", "Ollama", "Voyager", "Python", "prismarine-viewer", "LoRA"]
-stars: 20
+tech:
+  - TypeScript
+  - Node.js
+  - Mineflayer
+  - Ollama
+  - Voyager
+  - Python
+  - prismarine-viewer
+  - LoRA
+stars: 24
 featured: true
-cover: "/projects/mineflayer-mission-control.png"
-images: ["/projects/swarm-thinking.png", "/projects/swarm-base.png"]
+role: Creator · systems architecture · evaluation
+timeframe: 2023 — present
+outcomes:
+  - value: '5'
+    label: specialized agents
+  - value: 140h
+    label: longest unattended run
+  - value: 344k+
+    label: measured actions
+  - value: '57'
+    label: sandboxed Voyager skills
+cover: /projects/mineflayer-mission-control.png
+images:
+  - /projects/swarm-thinking.png
+  - /projects/swarm-base.png
 ---
 
 A swarm of five autonomous agents that play Minecraft together on local models. Each bot specializes in one job, they coordinate through shared context and a central stash, and the whole system measures and improves itself across sessions. It began as a single ChatGPT-controlled bot called `mineflayer-chatgpt`. It is now a team running entirely on local LLMs through [Ollama](https://ollama.com/).

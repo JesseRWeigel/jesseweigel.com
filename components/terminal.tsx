@@ -20,19 +20,6 @@ export function Terminal() {
   useEffect(() => { if (isOpen) inputRef.current?.focus() }, [isOpen])
   useEffect(() => { scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight) }, [history])
 
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === '`' && !e.ctrlKey && !e.metaKey) {
-        const tag = (e.target as HTMLElement)?.tagName
-        if (tag === 'INPUT' || tag === 'TEXTAREA') return
-        e.preventDefault()
-        toggle()
-      }
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [toggle])
-
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim()) return
@@ -75,11 +62,15 @@ export function Terminal() {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-primary/20 bg-background/95 backdrop-blur-md">
+    <div
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-primary/20 bg-background/95 backdrop-blur-md"
+      role="dialog"
+      aria-label="Observatory terminal"
+    >
       <div className="mx-auto max-w-5xl px-4 py-3 sm:px-6 sm:py-4">
         <div className="flex items-center justify-between">
           <p className="font-mono text-xs text-primary">observatory terminal</p>
-          <button onClick={toggle} className="font-mono text-xs text-muted-foreground hover:text-foreground">[esc]</button>
+          <button type="button" onClick={toggle} className="font-mono text-xs text-muted-foreground hover:text-foreground">[esc]</button>
         </div>
         <div ref={scrollRef} className="mt-2 max-h-48 overflow-y-auto font-mono text-xs">
           {history.map((entry, i) => (

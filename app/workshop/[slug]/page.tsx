@@ -1,30 +1,47 @@
+import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getProjectBySlug, getProjects, getProjectStats } from '@/lib/content'
 import { Badge } from '@/components/ui/badge'
 import { MdxContent } from '@/components/mdx-content'
-import { ProjectMetrics } from '@/components/project-metrics'
 import { PageTransition } from '@/components/page-transition'
+import { ProjectMetrics } from '@/components/project-metrics'
+import { TrackedLink } from '@/components/tracked-link'
+import { getProjectBySlug, getProjects, getProjectStats } from '@/lib/content'
+import { SITE_URL } from '@/lib/site'
 
 export async function generateStaticParams() {
   const projects = await getProjects()
-  return projects.map((p) => ({ slug: p.slug }))
+  return projects.map((project) => ({ slug: project.slug }))
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
   const { slug } = await params
   const project = await getProjectBySlug(slug)
   if (!project) return {}
+
   return {
-    title: `${project.title} | Jesse Weigel`,
+    title: project.title,
     description: project.description,
+    alternates: { canonical: `/workshop/${slug}` },
+    openGraph: {
+      type: 'article',
+      url: `${SITE_URL}/workshop/${slug}`,
+      title: `${project.title} — Jesse Weigel`,
+      description: project.description,
+      images: project.cover ? [{ url: project.cover, alt: `${project.title} interface` }] : undefined,
+    },
   }
 }
 
-const statusColors: Record<string, string> = {
-  active: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-  experimental: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-  archived: 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20',
+const statusLabels: Record<string, string> = {
+  active: 'Active system',
+  experimental: 'Experiment',
+  archived: 'Archived project',
 }
 
 export default async function ProjectDetailPage({
@@ -34,100 +51,151 @@ export default async function ProjectDetailPage({
 }) {
   const { slug } = await params
   const project = await getProjectBySlug(slug)
-
   if (!project) notFound()
 
   const stats = await getProjectStats(slug)
+  const outcomes = project.outcomes ?? []
+  const projectJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareSourceCode',
+    name: project.title,
+    description: project.description,
+    url: `${SITE_URL}/workshop/${slug}`,
+    codeRepository: project.github,
+    programmingLanguage: project.tech,
+    author: { '@id': `${SITE_URL}/#jesse-weigel` },
+    image: project.cover ? `${SITE_URL}${project.cover}` : undefined,
+  }
 
   return (
     <PageTransition>
-    <main className="mx-auto max-w-3xl px-6 py-24">
-      <div className="mb-8">
-        <Link
-          href="/workshop"
-          className="text-xs text-muted-foreground transition-colors hover:text-foreground"
-        >
-          ← Workshop
-        </Link>
-      </div>
+      <main className="case-study-page">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(projectJsonLd).replace(/</g, '\\u003c'),
+          }}
+        />
 
-      <div className="space-y-6">
-        <div className="space-y-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <h1 className="text-3xl font-light tracking-tight">{project.title}</h1>
-            <span
-              className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${statusColors[project.status] ?? statusColors.archived}`}
-            >
-              {project.status}
-            </span>
-            <Badge variant="outline" className="text-xs capitalize">
-              {project.category.replace(/-/g, ' ')}
-            </Badge>
-          </div>
-          <p className="text-sm text-muted-foreground">{project.description}</p>
-        </div>
+        <div className="site-container">
+          <Link href="/workshop" className="case-study-back">← All work</Link>
 
-        {project.tech.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {project.tech.map((tag) => (
-              <Badge key={tag} variant="outline" className="text-xs">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        )}
+          <header className="case-study-header">
+            <div className="case-study-title-row">
+              <div>
+                <p className="eyebrow">
+                  {statusLabels[project.status]} · {project.category.replaceAll('-', ' ')}
+                </p>
+                <h1>{project.title}</h1>
+              </div>
+              <span className={`case-study-status status-${project.status}`}>{project.status}</span>
+            </div>
+            <p className="case-study-dek">{project.description}</p>
 
-        <div className="flex gap-4">
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            GitHub{project.stars > 0 ? ` ★${project.stars}` : ''}
-          </a>
-          {project.demo && (
-            <a
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Live Demo →
-            </a>
+            <div className="case-study-facts">
+              {project.role && (
+                <div><span>My role</span><strong>{project.role}</strong></div>
+              )}
+              {project.timeframe && (
+                <div><span>Timeline</span><strong>{project.timeframe}</strong></div>
+              )}
+              <div><span>Stack</span><strong>{project.tech.slice(0, 4).join(' · ')}</strong></div>
+            </div>
+
+            <div className="case-study-actions">
+              <TrackedLink
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button button-primary"
+                eventName="project_outbound"
+                eventData={{ project: project.slug, destination: 'github' }}
+              >
+                Inspect the source{project.stars > 0 ? ` · ★ ${project.stars}` : ''}
+              </TrackedLink>
+              {project.demo && (
+                <TrackedLink
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button button-secondary"
+                  eventName="project_outbound"
+                  eventData={{ project: project.slug, destination: 'demo' }}
+                >
+                  Open live demo ↗
+                </TrackedLink>
+              )}
+            </div>
+          </header>
+
+          {outcomes.length > 0 && (
+            <section className="outcome-grid" aria-label="Project outcomes">
+              {outcomes.map((outcome) => (
+                <div key={outcome.label}>
+                  <strong>{outcome.value}</strong>
+                  <span>{outcome.label}</span>
+                </div>
+              ))}
+            </section>
           )}
-        </div>
 
-        {project.cover && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={project.cover}
-            alt={`${project.title} preview`}
-            className="w-full rounded-lg border border-white/5"
-          />
-        )}
-
-        <hr className="border-white/5" />
-
-        <MdxContent source={project.content} />
-
-        {project.images && project.images.length > 0 && (
-          <div className="grid gap-3 sm:grid-cols-2">
-            {project.images.map((src) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={src}
-                src={src}
-                alt={`${project.title} screenshot`}
-                className="w-full rounded-lg border border-white/5"
+          {project.cover && (
+            <div className="case-study-cover">
+              <Image
+                src={project.cover}
+                alt={`${project.title} interface`}
+                width={1600}
+                height={1000}
+                sizes="(max-width: 1240px) 100vw, 1180px"
+                priority
               />
-            ))}
-          </div>
-        )}
+              <span>Interface capture · {project.title}</span>
+            </div>
+          )}
 
-        {stats && <ProjectMetrics stats={stats} />}
-      </div>
-    </main>
+          {stats && <ProjectMetrics stats={stats} />}
+
+          <div className="case-study-body-grid">
+            <aside className="case-study-aside">
+              <p className="eyebrow">Build notes</p>
+              <div className="case-study-tech">
+                {project.tech.map((tag) => (
+                  <Badge key={tag} variant="outline">{tag}</Badge>
+                ))}
+              </div>
+              <a href={project.github} target="_blank" rel="noopener noreferrer" className="quiet-link">
+                Browse repository ↗
+              </a>
+            </aside>
+            <article className="case-study-content">
+              <MdxContent source={project.content} />
+            </article>
+          </div>
+
+          {project.images && project.images.length > 0 && (
+            <section className="case-study-gallery" aria-label={`${project.title} gallery`}>
+              {project.images.map((src, index) => (
+                <figure key={src}>
+                  <Image
+                    src={src}
+                    alt={`${project.title} screenshot ${index + 1}`}
+                    width={1600}
+                    height={1000}
+                    sizes="(max-width: 800px) 100vw, 50vw"
+                  />
+                  <figcaption>System capture 0{index + 1}</figcaption>
+                </figure>
+              ))}
+            </section>
+          )}
+
+          <section className="case-study-next">
+            <p className="eyebrow">Next signal</p>
+            <h2>There&apos;s more in the workshop.</h2>
+            <Link href="/workshop" className="button button-secondary">Explore every project →</Link>
+          </section>
+        </div>
+      </main>
     </PageTransition>
   )
 }

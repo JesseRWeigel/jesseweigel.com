@@ -7,7 +7,52 @@ github: "https://github.com/JesseRWeigel/get-math-done"
 demo: null
 tech: ["Python", "AI", "Autonomous Research"]
 stars: 1
-featured: false
+featured: true
+role: "Creator · domain adaptation · verification design"
+timeframe: "2026"
+outcomes:
+  - value: "7"
+    label: "domain-specific copilots"
+  - value: "3"
+    label: "verification layers"
+  - value: "6"
+    label: "research phases"
+  - value: "100%"
+    label: "open workflows"
 ---
 
-A series of domain-specific AI research copilots adapted from the Get Physics Done architecture. Seven repos covering mathematics, law, quantitative finance, engineering, chemistry, biology, and policy research.
+Large language models can produce plausible research quickly. The harder problem is keeping a long investigation internally consistent, checking the failure modes unique to a field, and producing an evidence trail another person can audit.
+
+The Get-X-Done series adapts a verification-first autonomous research architecture into seven specialist copilots: mathematics, law, quantitative finance, engineering, computational chemistry, bioinformatics, and public policy.
+
+## One architecture, different definitions of truth
+
+Every copilot shares a three-layer design:
+
+1. **Core state engine** — phase lifecycle, git ratcheting, content-addressed artifacts, and durable project state.
+2. **Domain MCP servers** — conventions, protocols, verification rules, known errors, and reusable patterns.
+3. **Specialist agents** — planning, research, execution, verification, writing, and multi-perspective review.
+
+The reusable infrastructure matters, but the domain boundary matters more. A generic “review this” prompt is not enough when each discipline fails differently.
+
+## Convention locks
+
+Each system makes important assumptions explicit and carries them across every phase.
+
+- Mathematics locks notation and algebraic conventions, then searches for counterexamples and broken special cases.
+- Law locks jurisdiction, governing law, and citation format, then verifies that cited cases exist and still represent good law.
+- Quant finance locks pricing and compounding assumptions, then checks for look-ahead bias, survivorship bias, and no-arbitrage violations.
+- Engineering locks units, materials, safety factors, and code editions, then verifies dimensional consistency and conservation laws.
+- Chemistry locks basis sets, functionals, and convergence criteria before simulation.
+- Bioinformatics locks reference genomes, annotations, thresholds, and tool versions so downstream results remain reproducible.
+- Policy locks baselines, discount rates, time horizons, and population assumptions before comparing scenarios.
+
+## The research loop
+
+Work is decomposed into explicit phases with named deliverables. Plans are checked before expensive execution. Outputs are verified after execution. Gaps route back to the smallest responsible phase instead of restarting the whole project, and passing artifacts are committed so failed follow-up work cannot erase them.
+
+The point is not to claim that an AI system replaces a scientist, lawyer, or engineer. The point is to turn a model into a more inspectable research instrument: one with durable state, locked assumptions, field-specific checks, and artifacts that make human review possible.
+
+## What this became
+
+The same architecture has already produced open research artifacts in gravitational-wave classification, random graph theory, and K–12 tutoring analysis. Those artifacts live in the Research archive alongside their source repositories and methodology.

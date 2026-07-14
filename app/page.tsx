@@ -1,59 +1,144 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
-import { LandingFallback } from '@/components/landing-fallback'
-import { ParticleFieldLoader } from '@/components/particle-field-loader'
+import { FeaturedProjectCard } from '@/components/featured-project-card'
+import { MetricStrip } from '@/components/metric-strip'
+import { ObservatoryHero } from '@/components/observatory-hero'
+import { SectionHeading } from '@/components/section-heading'
+import { TrackedLink } from '@/components/tracked-link'
+import { getBlogPosts, getProjectBySlug, getProjectStats } from '@/lib/content'
+import { contactEmail, credibilityMarks, flagshipSlugs } from '@/lib/site'
+import type { Project } from '@/lib/types'
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: 'Jesse Weigel — Generative AI Engineer & Agent Systems Builder',
+  description:
+    'Generative AI engineer building autonomous agent teams, evaluation infrastructure, developer tools, and ambitious experiments.',
+  alternates: { canonical: '/' },
+}
+
+export default async function Home() {
+  const [projects, posts, stats] = await Promise.all([
+    Promise.all(flagshipSlugs.map((slug) => getProjectBySlug(slug))),
+    getBlogPosts(),
+    getProjectStats('minecraft-agent-swarm'),
+  ])
+
+  const flagshipProjects = projects.filter((project): project is Project => project !== null)
+  const latestPosts = posts.slice(0, 3)
+
   return (
     <main>
-      {/* Hero — scoped h-screen container so absolute children are bounded to viewport */}
-      <div className="relative h-screen w-full">
-        <ParticleFieldLoader />
-        {/* Overlay text */}
-        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <div className="absolute flex items-center justify-center">
-            <div className="h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
+      <ObservatoryHero />
+
+      <div className="site-container">
+        <MetricStrip
+          totalActions={stats?.totalActions ?? 344_117}
+          sessionCount={stats?.sessionCount ?? 111}
+          longestHours={Math.round((stats?.longestSessionSec ?? 507_058) / 3600)}
+        />
+
+        <section className="home-section" aria-labelledby="selected-work">
+          <SectionHeading
+            id="selected-work"
+            eyebrow="Selected systems"
+            title="Proof, not prototypes."
+            description="A few projects where the hard part was not generating a demo—it was building a system that could be measured, trusted, and improved."
+            action={
+              <Link href="/workshop" className="text-link">
+                View all work <span aria-hidden="true">→</span>
+              </Link>
+            }
+          />
+          <div className="featured-project-list">
+            {flagshipProjects.map((project, index) => (
+              <FeaturedProjectCard key={project.slug} project={project} priority={index === 0} />
+            ))}
           </div>
-          <h1 className="text-3xl font-light tracking-tight text-foreground sm:text-4xl">Jesse Weigel</h1>
-          <p className="mt-2 font-mono text-sm text-muted-foreground">The Observatory</p>
-          <p className="mt-1 font-mono text-xs text-muted-foreground/60">
-            Generative AI Engineer &middot; Community builder
-          </p>
-        </div>
-        {/* Scroll hint */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div className="flex flex-col items-center gap-2 text-muted-foreground/70">
-            <p className="font-mono text-[10px]">click a node to explore</p>
-            <div className="h-6 w-px bg-gradient-to-b from-muted-foreground/70 to-transparent" />
+        </section>
+
+        <section className="home-section credibility-section" aria-labelledby="public-work">
+          <SectionHeading
+            id="public-work"
+            eyebrow="Public record"
+            title="A decade of building—and explaining the build."
+            description="I learned in public, taught the mistakes as well as the wins, and found a career through community. That instinct still shapes how I work with teams today."
+          />
+          <div className="credibility-grid">
+            <div className="credibility-story">
+              <p className="pull-quote">
+                “Hundreds of hours of live coding taught me to make the work legible: explain the
+                tradeoffs, show the failed attempt, and leave a trail someone else can follow.”
+              </p>
+              <div className="credibility-actions">
+                <Link href="/transmissions" className="text-link">
+                  Talks, podcasts, and 226 episodes <span aria-hidden="true">→</span>
+                </Link>
+                <Link href="/about" className="quiet-link">
+                  Read my story
+                </Link>
+              </div>
+            </div>
+            <div className="credibility-marks" aria-label="Selected publications and conferences">
+              {credibilityMarks.map((mark) => (
+                <div key={mark} className="credibility-mark">
+                  {mark}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </div>
-      {/* Below-fold navigation */}
-      <section className="mx-auto max-w-3xl px-6 py-24">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            { href: '/workshop', label: 'Workshop', desc: 'Projects & experiments' },
-            { href: '/transmissions', label: 'Transmissions', desc: 'Talks, podcasts & streams' },
-            { href: '/archive', label: 'Archive', desc: 'Research papers & deep writing' },
-            { href: '/log', label: 'Log', desc: 'Dispatches from the observatory' },
-          ].map(({ href, label, desc }) => (
-            <Link
-              key={href}
-              href={href}
-              className="group rounded-xl border border-white/5 bg-white/[0.02] px-6 py-5 transition-all duration-700 hover:border-primary/20 hover:bg-white/[0.04] hover:shadow-[0_0_40px_-10px] hover:shadow-primary/20"
+        </section>
+
+        <section className="home-section" aria-labelledby="field-notes">
+          <SectionHeading
+            id="field-notes"
+            eyebrow="Field notes"
+            title="What the systems taught back."
+            description="Short engineering stories from long-running agents, model trials, and the bugs that only appear after everyone goes to sleep."
+            action={
+              <Link href="/log" className="text-link">
+                Read the log <span aria-hidden="true">→</span>
+              </Link>
+            }
+          />
+          <div className="field-notes-grid">
+            {latestPosts.map((post, index) => (
+              <Link key={post.slug} href={`/log/${post.slug}`} className="field-note-card">
+                <span className="field-note-index">0{index + 1}</span>
+                <div>
+                  <p className="eyebrow">{post.readingTime} · {post.tags[0]}</p>
+                  <h3>{post.title}</h3>
+                  <p>{post.excerpt}</p>
+                </div>
+                <span className="field-note-arrow" aria-hidden="true">↗</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="contact-panel" aria-labelledby="contact-title">
+          <div>
+            <p className="eyebrow">Open channel</p>
+            <h2 id="contact-title">Have a difficult AI systems problem?</h2>
+            <p>
+              I&apos;m interested in ambitious engineering roles, focused consulting, speaking,
+              and collaborations where the system has to do more than look good in a demo.
+            </p>
+          </div>
+          <div className="contact-panel-actions">
+            <TrackedLink
+              href="/contact"
+              className="button button-primary"
+              eventName="contact_cta"
+              eventData={{ location: 'homepage_footer' }}
             >
-              <p className="font-medium text-foreground transition-colors group-hover:text-primary">{label}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{desc}</p>
-            </Link>
-          ))}
-        </div>
-        <div className="mt-16 text-center">
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            Generative AI Engineer at TRACTIAN. Self-taught developer building autonomous systems,
-            games for my kids, and tools that make developers&apos; lives better. Previously at
-            American Express, DICK&apos;s Sporting Goods, and Tabella.
-          </p>
-        </div>
-      </section>
+              Start a conversation
+            </TrackedLink>
+            <a href={`mailto:${contactEmail}`} className="quiet-link">
+              {contactEmail}
+            </a>
+          </div>
+        </section>
+      </div>
     </main>
   )
 }

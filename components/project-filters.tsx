@@ -18,26 +18,20 @@ interface ProjectFiltersProps {
 
 export function ProjectFilters({ active, onFilter }: ProjectFiltersProps) {
   return (
-    <div className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:pb-0">
+    <div className="project-filters" aria-label="Filter projects by category">
       <button
+        type="button"
         onClick={() => onFilter(null)}
-        className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-          active === null
-            ? 'bg-primary text-primary-foreground'
-            : 'border border-white/10 text-muted-foreground hover:text-foreground'
-        }`}
+        aria-pressed={active === null}
       >
         All
       </button>
       {CATEGORIES.map(({ value, label }) => (
         <button
+          type="button"
           key={value}
           onClick={() => onFilter(value)}
-          className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-            active === value
-              ? 'bg-primary text-primary-foreground'
-              : 'border border-white/10 text-muted-foreground hover:text-foreground'
-          }`}
+          aria-pressed={active === value}
         >
           {label}
         </button>

@@ -11,7 +11,7 @@ async function syncStars() {
     if (!file.endsWith('.mdx')) continue
     const filePath = path.join(PROJECTS_DIR, file)
     const raw = await fs.readFile(filePath, 'utf-8')
-    const { data, content } = matter(raw)
+    const { data } = matter(raw)
 
     if (!data.github) continue
 
@@ -37,8 +37,11 @@ async function syncStars() {
       const stars = json.stargazers_count
 
       if (stars !== data.stars) {
-        data.stars = stars
-        const updated = matter.stringify(content, data)
+        const updated = raw.replace(/^stars:\s*\d+\s*$/m, `stars: ${stars}`)
+        if (updated === raw) {
+          console.error(`Could not find a stars field in ${file}`)
+          continue
+        }
         await fs.writeFile(filePath, updated)
         console.log(`Updated ${file}: ${stars} stars`)
       } else {

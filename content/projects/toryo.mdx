@@ -1,13 +1,69 @@
 ---
-title: "Toryo"
-description: "Intelligent agent orchestrator with trust-based delegation, quality ratcheting, and self-improving loops"
-category: "agent-orchestration"
-status: "active"
-github: "https://github.com/JesseRWeigel/toryo"
+title: Toryo
+description: >-
+  Intelligent agent orchestrator with trust-based delegation, quality
+  ratcheting, and self-improving loops
+category: agent-orchestration
+status: active
+github: 'https://github.com/JesseRWeigel/toryo'
 demo: null
-tech: ["TypeScript", "Node.js", "WebSocket", "Vitest"]
-stars: 10
+tech:
+  - TypeScript
+  - Node.js
+  - WebSocket
+  - Vitest
+stars: 11
 featured: true
+role: Creator · architecture · open-source maintainer
+timeframe: 2026 — present
+outcomes:
+  - value: '8'
+    label: agent tool adapters
+  - value: '4'
+    label: quality-gated phases
+  - value: 1 command
+    label: to run the demo
+  - value: MIT
+    label: open-source license
 ---
 
-The intelligent agent orchestrator. Toryo chains multiple AI coding agents (Claude Code, Aider, Gemini, Ollama) with spec-driven workflows, trust-based delegation, and quality ratcheting. Available as an npm package at `@jweigel/toryo`.
+Running coding agents in parallel is easy. Making their combined work trustworthy is the real problem. Toryo is my attempt to build the missing control system: an orchestrator that delegates work based on demonstrated ability, reviews what comes back, and only keeps changes that clear a quality gate.
+
+It connects Claude Code, Aider, Gemini CLI, Codex, Cursor, Cline, Ollama, and generic command-line agents behind one spec-driven workflow. The project is open source and ships with a no-provider demo, so the orchestration loop can be inspected without spending tokens or configuring an AI account.
+
+## The problem
+
+Most multi-agent demos optimize for visible activity. More terminals open, more agents moving, more output streaming. That says very little about whether the repository is getting better.
+
+Toryo optimizes for retained progress. A cycle moves through four explicit phases:
+
+1. **Plan** — turn the task specification into a bounded approach.
+2. **Research** — gather the context and constraints the executor needs.
+3. **Execute** — make the change with the best available agent for that task.
+4. **Review** — score the result against the specification and quality threshold.
+
+The result is committed only when review passes. Failed work is reverted, the review feedback is routed into a retry, and a second failure is discarded. The repository moves forward or stays where it was; it does not quietly accumulate damage.
+
+## Trust is earned, not configured
+
+Each agent builds a rolling record of scores. New agents begin in supervised mode, consistently strong agents graduate to guided and autonomous operation, and declining performance reduces their autonomy again.
+
+Task routing combines that trust score with declared strengths. A strong research agent should not automatically become the execution agent, and a familiar agent should not win a task over a better specialist simply because it ran last time.
+
+## The ratchet
+
+Every attempt becomes a structured result in a tab-separated experiment log. The record captures the task, agent, score, status, and reviewer explanation. That makes agent selection and workflow changes testable rather than anecdotal.
+
+```text
+Plan → Research → Execute → Review
+                          ↳ pass: commit
+                          ↳ fail: revert → retry → keep or discard
+```
+
+The pattern is deliberately simple: reversible attempts, explicit evaluation, and a hard boundary between activity and progress.
+
+## Built as infrastructure
+
+Toryo includes configuration validation, task specs with acceptance criteria, smart context truncation, automatic code extraction, a real-time dashboard, and pluggable adapters. The orchestration core does not care which model vendor wins next month; the adapter boundary is there so the workflow can outlive the current tools.
+
+Try the local demo with `npx @jweigel/toryo demo`, or inspect the full implementation on GitHub.

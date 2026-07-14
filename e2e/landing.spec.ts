@@ -2,13 +2,13 @@ import { test, expect } from '@playwright/test'
 
 test('landing page loads with title', async ({ page }) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: 'Jesse Weigel' }).first()).toBeVisible()
-  await expect(page.getByText('The Observatory').first()).toBeVisible()
+  await expect(page.getByRole('heading', { name: /I build AI systems that learn/i })).toBeVisible()
+  await expect(page.getByRole('link', { name: /Explore the agent swarm/i })).toBeVisible()
 })
 
-test('below-fold navigation cards are visible', async ({ page }) => {
+test('homepage foregrounds proof and a contact path', async ({ page }) => {
   await page.goto('/')
-  // Scroll down to see below-fold content
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
-  await expect(page.getByRole('link', { name: /Workshop/i }).first()).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Proof, not prototypes.' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Have a difficult AI systems problem/i })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Start a conversation' })).toBeVisible()
 })

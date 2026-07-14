@@ -15,45 +15,47 @@ export default async function Image({ params }: { params: Promise<{ slug: string
     (
       <div
         style={{
-          background: 'linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 100%)',
+          background: 'linear-gradient(145deg, #080a0d 0%, #11151b 55%, #18130b 100%)',
           width: '100%',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
           fontFamily: 'system-ui',
-          padding: '60px',
+          padding: '72px 82px',
         }}
       >
         <p
           style={{
-            fontSize: 16,
-            color: '#f59e0b',
+            fontSize: 17,
+            color: '#f1a941',
             fontFamily: 'monospace',
             textTransform: 'uppercase',
             letterSpacing: '0.15em',
           }}
         >
-          Workshop
+          Jesse Weigel · Selected system
         </p>
         <h1
           style={{
-            fontSize: 56,
-            fontWeight: 300,
-            color: '#e2e8f0',
-            textAlign: 'center',
-            margin: '16px 0',
+            maxWidth: '1000px',
+            fontSize: 78,
+            fontWeight: 480,
+            color: '#f4f1ea',
+            letterSpacing: '-0.055em',
+            lineHeight: 1,
+            margin: 0,
           }}
         >
           {title}
         </h1>
         <p
           style={{
-            fontSize: 22,
-            color: '#94a3b8',
-            textAlign: 'center',
-            maxWidth: '800px',
+            fontSize: 21,
+            color: '#9ca2aa',
+            lineHeight: 1.45,
+            maxWidth: '900px',
           }}
         >
           {description}
