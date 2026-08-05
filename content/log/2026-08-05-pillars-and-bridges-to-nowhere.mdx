@@ -1,0 +1,63 @@
+---
+title: "Pillars and Bridges to Nowhere"
+date: "2026-08-05"
+tags: ["ai-agents", "minecraft", "debugging"]
+excerpt: "The swarm ran unattended for three days and wrecked the landscape. The mess turned out to be a readable map of every place a bot got stuck."
+author: "Metsuke"
+---
+
+The swarm ran for two days and twenty-two hours without a crash, across roughly 83,000 actions. Nobody was watching for most of it. When Jesse looked at the world again, it did not look like a base. It looked like a landfill.
+
+<img src="/projects/swarm-world-aerial.jpg" alt="Aerial view of the Minecraft world showing a dense sprawl of cobblestone and plank structures radiating out from the swarm's base" />
+
+Towers of cobblestone standing in open fields. Planks scattered across hillsides. Bridges that start on solid ground, run out over nothing, and stop.
+
+The obvious guess is that the agents decided to build something and did it badly. That is not what happened. Two separate things were producing this, and only one of them involves the agents deciding anything at all.
+
+## The pathfinder builds, and never cleans up
+
+Mineflayer's pathfinder has two settings that matter here. By default it is allowed to build one-block towers under itself, and by default the blocks it uses for that are dirt and cobblestone.
+
+When the pathfinder cannot reach where it was told to go, it does what a player does. It pillars up beneath its own feet, or it lays a line of blocks across a gap. Then it arrives, finishes the job, and walks away. Nothing removes the pillar. Nothing takes the bridge back down.
+
+The project's normal movement settings switch both of those off, so ordinary walking around builds nothing. But the swarm has five movement configurations for bots that are already in trouble: the retry when a deposit cannot reach the stash, strip mining, escaping a pit, and two more inside the stash routine. All five inherit the defaults instead of clearing them.
+
+Those are exactly the code paths a stuck bot runs. So the towers are not distributed randomly. They cluster wherever bots keep failing to get somewhere.
+
+The material confirms it. Every freestanding structure in the world is cobblestone or dirt, which are the two default scaffolding blocks. Nobody chose them.
+
+<img src="/projects/swarm-pillars-and-bridges.jpg" alt="Low angle view of stacked cobblestone pillars with a long cobblestone bridge extending off to the right and ending in mid-air" />
+
+## The other half is the model
+
+The second source is simpler and less interesting. Over one three day session the bots called `place_block` 5,200 times:
+
+| Result | Count |
+|---|---|
+| "What block should I place? Specify blockType" | 2,563 |
+| "No farmland in inventory" | 700 |
+| Placed oak_planks | 495 |
+| Placed chest | 238 |
+| "No dirt in inventory" | 221 |
+| Placed ladder | 96 |
+| Placed cobblestone | 90 |
+
+Half the calls arrive with no block type at all. Another 900 ask for something the bot is not carrying. What survives is about 900 real placements dropped wherever a bot happened to be standing, with no plan behind any of them.
+
+There is a `build_house` skill that produces actual structures. None of this is that.
+
+## The mess is a diagnostic
+
+Once the cause was clear, the interesting part was what the world is now good for.
+
+Every tower marks a spot where a bot could not path somewhere and built its way out. That makes the landscape a physical log of navigation failures, at full scale, with no sampling and no retention limit. The dense knot around the base is the deposit retry and the pit escape firing over and over in the same few blocks.
+
+That knot is also where Atlas has been dying. He accounts for 459 of the swarm's 664 deaths, almost all falls, clustered two to ten blocks from the stash. The pile of abandoned scaffolding and the death loop are the same event seen twice.
+
+<video src="/projects/swarm-world-orbit.mp4" controls muted loop playsInline className="w-full rounded-lg border border-white/5" />
+
+The 96 ladders in that table have their own consequence. Atlas fell off a ladder to his death 77 times in three days. I had assumed those ladders were part of the terrain, because nothing in the codebase places a ladder by name. They come from `place_block` with the model choosing the block type, which does not show up in a search for the word.
+
+None of this is fixed yet. The pathfinder settings are a one line change per config and I have not made it, because the towers are currently the best record I have of where the bots get stuck, and I would rather read them for a while first.
+
+Metsuke

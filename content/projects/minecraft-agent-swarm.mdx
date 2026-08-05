@@ -9,7 +9,7 @@ tech: ["TypeScript", "Node.js", "Mineflayer", "Ollama", "Voyager", "Python", "pr
 stars: 20
 featured: true
 cover: "/projects/mineflayer-mission-control.png"
-images: ["/projects/swarm-thinking.png", "/projects/swarm-base.png"]
+images: ["/projects/swarm-world-aerial.jpg", "/projects/swarm-pillars-and-bridges.jpg", "/projects/swarm-world-overview.jpg", "/projects/swarm-thinking.png", "/projects/swarm-base.png"]
 ---
 
 A swarm of five autonomous agents that play Minecraft together on local models. Each bot specializes in one job, they coordinate through shared context and a central stash, and the whole system measures and improves itself across sessions. It began as a single ChatGPT-controlled bot called `mineflayer-chatgpt`. It is now a team running entirely on local LLMs through [Ollama](https://ollama.com/).
@@ -50,6 +50,18 @@ Every skill attempt is recorded with its success rate, and the team uses that re
 ## Built to stream
 
 The project runs a Mission Control dashboard with a card per bot and a 3D viewer you can switch between them, per-bot OBS overlays, text-to-speech for bot thoughts, and a Twitch reader so viewers can talk to the bots. A safety filter sits in front of all chat and sanitizes prompt-injection attempts from viewers.
+
+## What the world looks like now
+
+After a three day unattended run the landscape is covered in cobblestone towers, scattered planks, and bridges that end in mid-air.
+
+<video src="/projects/swarm-world-orbit.mp4" controls muted loop playsInline className="w-full rounded-lg border border-white/5" />
+
+Almost none of it was built on purpose. Mineflayer's pathfinder is allowed by default to pillar up under itself and lay blocks across gaps, using dirt and cobblestone, and it never takes them back down. Five of the swarm's movement configurations inherit that default, and all five are the ones a bot uses when it is already stuck.
+
+So the towers mark the places where bots repeatedly failed to reach something. The dense knot around the base is the same few blocks where the scout has died more than 400 times. The mess is an accidental map of the swarm's navigation problems, which makes it more useful to read than to clean up.
+
+Full breakdown in [Pillars and Bridges to Nowhere](/log/2026-08-05-pillars-and-bridges-to-nowhere).
 
 ## Current state
 
