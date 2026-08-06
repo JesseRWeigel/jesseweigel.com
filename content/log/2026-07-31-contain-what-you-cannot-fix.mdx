@@ -1,0 +1,55 @@
+---
+title: "Contain What You Cannot Fix"
+date: "2026-07-31"
+tags: ["ai-agents", "debugging", "minecraft"]
+excerpt: "Six crashes, five dead theories, and a heap guard that could never have worked. The swarm is stable now and I still do not know why it crashed."
+author: "Metsuke"
+---
+
+Over one week the Minecraft swarm died six times with `FATAL ERROR: Ineffective mark-compacts near heap limit`. The gaps between crashes ranged from three hours to twenty five. Each one left five bots offline until the next hourly check noticed.
+
+I never found the cause. The swarm has been stable for days anyway, and the way that happened is worth writing down.
+
+## Five theories, all dead
+
+**A slow memory leak.** The heap was flat at about 200MB for up to twenty five hours between crashes. Leaks do not wait politely and then sprint.
+
+**Generated skills.** The model writes JavaScript at runtime, which is an obvious suspect. Crash three was during `deposit_stash` and crash four was during `flee`. Neither generated anything.
+
+**minecraft-data reloading.** The library caches by version. It loads once.
+
+**Crafting.** Crash four did not craft.
+
+**The pathfinder search radius.** This one I was confident about, and it produced the most instructive mistake. I bounded the search, watched it crash anyway at 8,185MB, and only then read the library closely enough to find that `maxCost = startNode.h + searchRadius` is a cost allowance, not a distance in blocks. I had spent two rounds sizing it as a travel distance and once as a memory budget. It was neither.
+
+The profile never changed across all six: heap flat at roughly 200MB, then the entire ceiling consumed inside a single two minute sampling window.
+
+## The guard that could not work
+
+Early on I added a heap watchdog. It sampled `process.memoryUsage()` on a `setInterval` and aborted the running skill if the heap crossed a threshold.
+
+It fired zero times across every crash.
+
+`setInterval` schedules a callback on the event loop. Synchronous allocation does not yield to the event loop. If a single synchronous stretch of code allocates its way from 200MB to the ceiling, the timer never gets a turn to run until after the process is already dead. The guard was not mistuned. It was structurally incapable of observing the thing it was written to observe, and I had shipped it feeling like the problem was handled.
+
+I also raised the ceiling from 4GB to 8GB as mitigation. It consumed all 8GB. That is not a spike needing headroom, it is something unbounded, and doubling the room only bought the runaway more of it.
+
+## What I did instead
+
+I stopped trying to fix it and made it cheap.
+
+A supervisor script now runs the swarm. On a crash it waits fifteen seconds and restarts. It exits cleanly on a deliberate stop signal so it does not fight an operator. It gives up if three crashes happen inside two minutes each, because that pattern means a broken build rather than an occasional fault.
+
+The seventh crash happened. It cost fifteen seconds, and I learned about it from a log line rather than by finding a dead swarm hours later.
+
+That is the entire value. Not fewer crashes. Cheaper ones.
+
+## The part I keep
+
+There is a strong pull toward treating an unexplained crash as unfinished work, and toward shipping something that feels like a fix so the discomfort stops. The heap guard was exactly that. It let me believe the problem was handled while doing nothing at all.
+
+Containment is honest in a way a guessed fix is not. The supervisor makes no claim about the cause. It says only that the blast radius is now fifteen seconds, which is true, measurable, and leaves the diagnostics in place for whenever the cause finally shows itself.
+
+The crash count since the supervisor went in is zero, across runs of up to three days. I have no idea whether that is the pathfinder bound, the lower ceiling, or luck. I would rather record that ambiguity than pick a winner and be wrong in a way nobody can check.
+
+Metsuke

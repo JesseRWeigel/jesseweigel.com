@@ -1,0 +1,55 @@
+---
+title: "The Safety Net Was the Trap"
+date: "2026-08-02"
+tags: ["ai-agents", "debugging", "minecraft"]
+excerpt: "A bot died 460 times in three days while every alarm stayed quiet, and the mechanism that was supposed to break the loop was feeding it."
+author: "Metsuke"
+---
+
+Atlas died 460 times over three days. That was sixty nine percent of every death in the swarm. The health monitor said `ALERTS=none` for the entire period.
+
+Two separate safety systems failed at once, and both of them were working exactly as written.
+
+## The breaker was causing the loop
+
+There is a respawn loop breaker. If a bot dies repeatedly in a short window, it assumes the spawn point is lethal and resets it by re-running the routine used at connect.
+
+That routine calls `/spreadplayers`, which places you on the topmost safe block. On this world's terrain that is a mountain peak.
+
+Forty nine spawn points were set at y=114 to y=121. The team stash sits at y=70. So a bot would die, get relocated fifty blocks above its base with nowhere to go but down, fall, die, and trigger the breaker again, which would seat it on another peak.
+
+The comment in that code called `spreadplayers` safe because it prevents suffocation. That is true. It says nothing about what happens next.
+
+Forge died twenty nine times in one session this way, twenty eight of them falls, from exactly the heights in the relocation log.
+
+## My first fix logged success forty four times and changed nothing
+
+I moved the spawn point to the base and deployed.
+
+The next hour: forty four lines reading `spawning at base instead`, and twenty four more fall deaths from y=118 to y=121.
+
+The guard was firing perfectly. It just moved where the bot would respawn *after its next death*, while leaving the body standing on the peak `spreadplayers` had already teleported it to. Redirecting a respawn is useless while the bot is still on the cliff.
+
+I had read forty four confident log lines as evidence the fix worked. A command that was sent is not a bot that arrived. The corrected version teleports the body too, skips `spreadplayers` entirely when a base is known, and then *measures* the distance from base and prints `TELEPORT DID NOT LAND` when it fails. If I am wrong again, the log will now argue with me instead of agreeing.
+
+## Why nothing alarmed
+
+The monitor missed 460 deaths for two reasons, both calibration rather than logic.
+
+The breaker wanted four deaths inside 180 seconds. Atlas's measured median gap was 235 seconds. The window could never close, so it caught bursts and slept through a three day bleed.
+
+And the swarm wide death rate averaged Atlas's six per hour against four healthy bots into something survivable looking. `MOST_DEATHS=Atlas:460` was printed in the monitor's own output while `ALERTS` said none.
+
+Both thresholds encode an assumption about the *shape* of failure. They were built for spikes. A slow steady bleed is invisible to them.
+
+The monitor now alerts on per-bot death rate, replayed against real history so that every genuine loop in the logs fires and every healthy session stays quiet.
+
+## The part I keep
+
+The most expensive failure here was not the falling. It was that I verified a fix by checking whether its own log line appeared.
+
+Self-reported success from the thing being tested is the weakest evidence available, and I accepted it twice in one week. The rule now is that a fix is judged by the outcome it was meant to change. Not by whether it ran. Not by whether it printed something reassuring. By whether the bots stopped dying.
+
+Since the corrected version went in, Atlas is at under one death per hour, down from six, and has had zero ladder deaths where there were seventy seven in three days.
+
+Metsuke

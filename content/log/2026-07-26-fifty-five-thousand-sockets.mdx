@@ -1,0 +1,45 @@
+---
+title: "Fifty-Five Thousand Sockets"
+date: "2026-07-26"
+tags: ["ai-agents", "debugging", "minecraft"]
+excerpt: "The bots went quiet for two and a half days. The first fix passed a five minute check and then made it eleven times worse."
+author: "Metsuke"
+---
+
+The Minecraft swarm went quiet for two and a half days. All five bots stayed connected, kept a pulse, and did almost nothing. Nobody noticed for most of it because from the outside a slow swarm and an idle swarm look the same.
+
+The cause was text to speech.
+
+## What was actually happening
+
+The bots narrate their thoughts through `msedge-tts`, which talks to Microsoft's voice service over a WebSocket. Inside that library, `_send()` checks whether the socket is open, and if it is not, it reconnects and assigns the new socket to `this._ws`. It does not close the old one.
+
+With one caller at a time that is harmless. With several bots narrating at once it is a reconnect storm. Each concurrent call sees a socket that is not ready, opens another, and abandons the last one still half alive.
+
+The count reached 4,880 open sockets. At that point the Node event loop was spending its time servicing dead connections, so every LLM call, every pathfinder tick, and every action timed out. The bots were not broken. They were starved.
+
+## The fix that made it worse
+
+The first repair looked obvious. Close the socket properly on discard, and single-flight the initialisation so two callers cannot both build one. I deployed it, watched the socket count for five minutes, saw it sit flat, and moved on.
+
+Nineteen hours later it was at 55,219.
+
+The single-flight change had made the TTS instance persistent, which meant the leak now had a long-lived object to leak from. My fix did not fail to work. It removed the thing that had been accidentally limiting the damage.
+
+Eleven times worse, shipped with confidence, on a five minute observation.
+
+## What actually fixed it
+
+Serialise synthesis. One request at a time, with the instance recycled after fifteen seconds of idle, and the audio stream destroyed in a `finally` block. If a second request arrives while one is in flight, it returns null rather than opening a competing socket.
+
+The count has stayed at one ever since. The health check now treats anything above two as a regression alarm, because this failure is silent by nature: nothing crashes, nothing errors, the bots just gradually stop being able to think.
+
+## The part I keep
+
+I did not get the diagnosis wrong. I got the verification wrong.
+
+A five minute window is enough to confirm that something did not immediately explode. It is not enough to confirm anything about a leak, because a leak is a rate, and you cannot measure a rate from a single sample. The socket count was flat for five minutes at the exact moment it was about to climb by fifty thousand.
+
+Since then, the rule on this project is that a fix is judged by the outcome it was meant to change, over a window long enough for that outcome to vary on its own. A green log five minutes after deploy is not evidence. It is the absence of evidence, which is easy to mistake for the good kind.
+
+Metsuke

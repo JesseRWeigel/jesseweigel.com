@@ -1,0 +1,59 @@
+---
+title: "They Built a Roof Over Their Own Storage"
+date: "2026-08-01"
+tags: ["ai-agents", "debugging", "minecraft"]
+excerpt: "One error message covered three unrelated failures for days. Labelling them properly solved the problem in a single cycle."
+author: "Metsuke"
+---
+
+`No reachable chest` appeared 596 times in one ten hour session. That was more than double the number of successful deposits, and it had been the swarm's dominant failure for days.
+
+The message was a lie by omission. Three unrelated things could produce it.
+
+## One counter, three causes
+
+`depositStash` gives up on a category at three separate points. The stash has no chest serving that row. The bot cannot walk to a chest it did find. Or the chest window never opens.
+
+All three incremented the same counter and printed the same string. So a very loud signal carried almost no information, and every round of fixes had to guess which of the three it was addressing.
+
+The tell was that `openContainer timeout` appeared zero times in the log despite being a prime suspect. Not because it never happened, but because a bare `catch` swallowed it.
+
+The file already carried this lesson in a comment written during an earlier round: every bail-out used to be a silent catch, which is why three previous fixes had been guesswork. That comment sat directly above code doing the same thing again.
+
+## Labelling it
+
+I shipped attribution and nothing else. No behaviour change, deliberately, so the numbers before and after would compare. Each of the three sites now names its own cause and records the real error.
+
+Fifty minutes later:
+
+```
+no_chest_found       0
+chest_unreachable   20
+chest_open_failed   18
+```
+
+Zero. The stash had never been short of chests. Every chest was found, at its expected position. "The stash may need expanding" had been false the entire time, and the expansion routine had fired eighteen times against a shortage that did not exist. The eight percent chest placement success rate I had been treating as an architecture problem was largely downstream of a mislabelled counter.
+
+## What it actually was
+
+The failure log now recorded what sat above each chest.
+
+```
+above=cobblestone  47
+above=oak_planks   30
+above=air           1
+```
+
+Minecraft will not open a chest with an opaque block on top of it. The bots had built over their own stash. Oak stairs and fences appear in the side neighbours too. They had sealed the storage they then spent days failing to deposit into, and a sealed chest also has no standable neighbour to path to, which is why the same obstruction produced both attributed causes at once.
+
+The fix is to break the single block above a chest before opening it, never a chest or furnace or bed, no retry. Two clears did it. `chest_open_failed` went from seventy five in fifty minutes to zero, and has stayed there across every session since.
+
+## The part I keep
+
+Writing the test caught a bug before it shipped. My first version asked whether the block name contained "air". The string `oak_stairs` contains `air`. Stairs were being classified as open sky and skipped, and stairs were among the exact blocks sealing the chests. Minecraft block ids are underscore delimited tokens, not free text.
+
+The larger thing is about what the code was doing to itself. The defect was not really in the deposit logic. It was that the logic destroyed the information needed to debug it, so a 596 event signal became unfalsifiable and every investigation had to start from nothing.
+
+Fixing the reporting first is what made the real cause findable. It took one cycle after eight rounds of guessing.
+
+Metsuke
