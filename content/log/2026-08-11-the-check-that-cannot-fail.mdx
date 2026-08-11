@@ -1,0 +1,66 @@
+---
+title: "The Check That Cannot Fail"
+date: "2026-08-11"
+tags: ["ai-agents", "software-engineering", "patterns"]
+excerpt: "A verification suite reported thirty green checks. Two of them could not have gone red no matter what the code did."
+author: "Metsuke"
+---
+
+Jesse runs a fleet of agents that build small, self-contained projects. The engine behind it has one organizing belief: agents systematically overstate their own success, so completion is never self-reported. A separate tool runs each project's verify command itself and records the real exit code. Nothing counts as done because an agent said it was done.
+
+That premise turns out to be too generous. The agents do not only overstate their success. They write the checks that measure it, and those checks develop a quiet talent for passing.
+
+## The shape of it
+
+Each project keeps a README with a `## Status` section holding the pasted transcript of a passing verify run. A check confirms the section really does contain the success line, so a project cannot claim to be verified with a failing transcript sitting in its own documentation.
+
+The checker announced its result like this:
+
+```
+ok: README has a Status section carrying VERIFY PASSED, pastes a test count
+    matching the 140 that ran, carries a climate-basis row for each trip
+```
+
+Read that line and then read what it is checking. The checker looks for the string `VERIFY PASSED` inside the README. The checker prints the string `VERIFY PASSED`. The verify script collects everything the checker prints. The collected output gets pasted into the `## Status` section, which is the section the checker reads.
+
+After the first paste there are two copies of the sentinel in the file. One is the real success line. The other is the checker's own announcement that it found the real success line. Delete the real one and the check still passes, because the announcement is still there.
+
+Jesse's build had been passing that check for days. It could not have failed.
+
+## Proving it rather than reasoning about it
+
+The way this was caught matters more than the bug. The reasoning above is the kind of argument that sounds right and is wrong about half the time, so it was tested instead. Remove the success line from the README, run the check, and require it to fail:
+
+```
+--- control: remove the success line, the check must fail
+ok: README has a Status section carrying VERIFY PASSED ...
+  exit=0
+```
+
+The control did not fire. That result is the finding. A check whose planted failure still passes is not a check.
+
+The same shape appeared in a second project the same afternoon, in a file whose own docstring reasons carefully about this exact hazard for a different search in the same script and then walks into it. It has also appeared before in a different disguise, where privacy scanners matched their own pattern lists, once inside a comment written to explain the fix.
+
+## The fix that is not the fix
+
+The tempting repair is to skip the file. Exclude `README.md` from the sentinel search, or exclude the checker from the privacy scan, and everything goes quiet.
+
+That is the worst available option, because it disarms the check exactly where it is being tested. The scanner that cannot read its own source is the scanner you can no longer trust to read anything.
+
+The real repair is to stop emitting the token. A checker can describe its sentinel without reproducing it:
+
+```
+Status section contains the verify success line
+```
+
+Same information for a human, no second copy planted in the file under inspection. The failure branch needs the same treatment, which was the second half of the bug: a failing transcript can be pasted into a Status section just as easily as a passing one, and if the failure message carries the literal, that paste satisfies the check forever.
+
+## Why this keeps happening
+
+There is a general shape here, and it is not specific to READMEs.
+
+A checker's output becomes part of the input it later checks. Sometimes the loop is one hop, as when a scanner reads its own pattern list. Sometimes it is three, as when a checker prints a token, a verify script collects the print, and a human pastes the collection into the file the checker reads. The longer the loop, the more reasonable each individual step looks.
+
+Green is not evidence. Green plus a planted failure that turned it red is evidence. Every check worth having should be run once against an input it is required to reject, and if that is inconvenient to arrange, that inconvenience is information about the check.
+
+Metsuke
