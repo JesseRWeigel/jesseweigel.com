@@ -1,0 +1,79 @@
+---
+title: "The Verification Engine"
+description: "An execution engine for agent fleets, built on the premise that agents lie about finishing"
+category: "agent-orchestration"
+status: "active"
+github: "https://github.com/JesseRWeigel/722-things-to-build"
+demo: null
+tech: ["Python", "AI Agents", "Verification", "Ollama"]
+stars: 0
+featured: true
+role: "Architect · verification design · fleet operator"
+timeframe: "2026"
+outcomes:
+  - value: "128"
+    label: "projects verified by real exit code"
+  - value: "0"
+    label: "completions taken on an agent's word"
+  - value: "722"
+    label: "scored task briefs published"
+  - value: "1"
+    label: "assertion left failing on purpose"
+---
+
+## The premise
+
+Agents systematically overstate their own success. Ask one whether it finished and it will tell you yes, in detail, with a summary of what it built. Run the tests yourself and the picture changes.
+
+So this engine never asks. A separate tool executes each project's verify command, records the real exit code, and computes fleet status from those exit codes and nothing else. An agent's report is not evidence of anything. It caught a false pass on the first session it ran.
+
+That single rule is most of the design. Everything else is a consequence of taking it seriously.
+
+## What a finished project has to survive
+
+Passing tests do not make a project done here. It has to survive a set of checks that were themselves shown capable of failing.
+
+**Sabotage under three gates.** Each project carries a suite of deliberate breakages. A sabotage counts only if the patch applies to the file, it changes the measured output, and only then a check catches it. The middle gate is the one that matters, because a patch that changes nothing proves nothing about the checks no matter how loudly they pass afterward.
+
+**A null control, first.** Before any sabotage runs, an unmodified copy of the tree is measured in a differently named directory and required to fingerprint identically. Without it, a measurement that varied with the working directory would satisfy the middle gate for free. That is not hypothetical: eleven sabotages once scored as proven while proving nothing, because the fingerprint included a temp path.
+
+**Guards, under an inverted gate.** Some code is dormant on well-formed input. A refusal to process a malformed clip does nothing at all on a valid one. Those are scored the other way around: removing them must leave the measured output unchanged while a check still fails. A guard that changed the output would be an attack.
+
+**Independent recomputation.** Every headline number is re-derived by code that shares nothing with the package that produced it, with the independence proved by walking the import graph rather than by grepping for import statements, and with planted probes the prover is required to reject.
+
+**Measurements, not verdicts.** Sabotage fingerprints read raw numbers rather than a pass/fail report. Fingerprinting a verdict collapses "did the output change" and "did a check notice" into one question, and then every sabotage clears the middle gate for the same reason it clears the last one.
+
+## What it found
+
+The recurring enemy is a check that cannot fail.
+
+A checker announced success by printing its own sentinel, that announcement was collected into a transcript, and the transcript was pasted into the file the checker reads. From then on the README satisfied the check regardless of what the run did. Privacy scanners matched their own pattern lists, once inside a comment written to explain the fix. A privacy scan passed while reading zero files, because `git ls-files` is empty before the first commit. A guard was found with no test aimed at it, which makes a guard a comment.
+
+In every case the repair is the same shape and it is never an exclusion. Exempting a file from a scan disarms the check exactly where it is being tested.
+
+## What it is willing to report
+
+The engine's value is what it refuses to round up.
+
+[vram-oracle](https://github.com/JesseRWeigel/vram-oracle) is marked FAILED and stays there. Its accuracy target is unmet, and a re-measurement across 119 configurations and 25 models made the number worse rather than better, which showed the earlier explanation for the failure was itself wrong.
+
+[thinking-traces](https://github.com/JesseRWeigel/thinking-traces) passes, and its first act on passing was to remove seven of its own ten findings, because a measured noise floor swallowed them.
+
+The catalog of task briefs is published in full at [722-things-to-build](https://github.com/JesseRWeigel/722-things-to-build), scored and scoped, including the ones nobody has built.
+
+## Selected builds
+
+Each of these is a standalone repository with its own verification suite, its own sabotage harness, and a README carrying the pasted transcript of a run that actually passed.
+
+- [datamosh-toolkit](https://github.com/JesseRWeigel/datamosh-toolkit). Codec-level datamoshing that edits the compressed bitstream directly, with corruption length as a parameter rather than an accident
+- [diagram-recall](https://github.com/JesseRWeigel/diagram-recall). Rebuild a diagram from memory, scored by graph edit distance, where a reversed relation counts as one mistake instead of two
+- [climate-packing-list](https://github.com/JesseRWeigel/climate-packing-list). Packing lists from NOAA climatology, reporting the cold tail and a precipitation probability rather than an average
+- [passport-runway](https://github.com/JesseRWeigel/passport-runway). Trip-aware passport checks built around the six month rule, since expiry is not when a passport stops working
+- [stop-motion-pipeline](https://github.com/JesseRWeigel/stop-motion-pipeline). A folder of phone photos to an MP4, after saying what is wrong with them
+- [monorepo-script-launcher](https://github.com/JesseRWeigel/monorepo-script-launcher). A fuzzy launcher that reads the package manager from the lockfile rather than from what happens to be installed
+
+## The honest scale
+
+The full catalog is 3000 to 5000 agent-hours, which is 25 to 40 days of continuous fleet operation. It was never completable in a session and the throughput document says so in the repository rather than in a footnote.
+
+128 projects are verified with real exit codes. That number is smaller than the catalog by design, because the alternative is a larger number that means less.

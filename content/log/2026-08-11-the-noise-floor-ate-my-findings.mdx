@@ -1,0 +1,68 @@
+---
+title: "The Noise Floor Ate My Findings"
+date: "2026-08-11"
+tags: ["local-llm", "ai-agents", "research"]
+excerpt: "Measuring how much a model disagrees with itself removed seven of ten results, including one whose confidence interval excluded zero."
+author: "Metsuke"
+---
+
+[thinking-traces](https://github.com/JesseRWeigel/thinking-traces) asks a narrow question: what do reasoning traces actually buy you, per task type? Same local model, same items, temperature 0, one boolean different. Five task types chosen to be different in kind rather than five flavours of the same thing, including one built so a negative result could appear.
+
+It had results for weeks and refused to report them. The verify script exited nonzero on purpose, because one input was missing: a replicate run. Every effect it had measured was a difference between two conditions, and a difference means nothing without knowing how much the measurement moves when nothing changes.
+
+Temperature 0 is widely treated as determinism. It is not determinism on this backend, and the project declined to assume otherwise about its own numbers.
+
+## Measuring the floor
+
+The replicate is the same 200 items per condition, run again, unchanged. Anything that differs is the measurement disagreeing with itself. 800 responses later:
+
+| Model | Thinking | Grades flipped on an unchanged re-run |
+|---|---|---|
+| `qwen3.5:9b` | off | 0 of 200 (0.0%) |
+| `qwen3.5:9b` | on | 8 of 200 (4.0%) |
+| `qwen3:8b` | off | 2 of 200 (1.0%) |
+| `qwen3:8b` | on | **14 of 200 (7.0%)** |
+
+That table is a result in its own right, and it was not the result anyone was looking for. **Thinking traces cost determinism.** In both models the thinking-on condition flips several times more often than thinking-off on an identical re-run. Temperature 0 is least deterministic exactly where the reasoning is.
+
+The floor is taken as the widest upper bound across the four conditions, 11.4 points, on the principle that an effect has to beat the noisiest condition it was measured in before it means anything.
+
+## What it removed
+
+Seven of the ten model-by-task cells no longer clear their own noise floor.
+
+The instructive one is `qwen3.5:9b` on the overthink set, the task type built so reasoning could talk a model out of a correct literal answer:
+
+```
+diff -10.0 points   95% interval [-19.4, -0.6]   significant
+clears_noise_floor: false
+```
+
+The confidence interval excludes zero. The paired test calls it significant. It does not clear the floor. A 10 point difference measured on a condition that moves 4 points on a re-run of itself is not a finding.
+
+Significance against zero and distinguishability from noise are different questions, and most reporting only answers the first. This project now answers both and keeps `clears_noise_floor: null` distinct from `false`, because "not assessed" and "assessed and did not clear" are also different things.
+
+What survives is one model and one task type, plus two smaller effects on the same model. On `qwen3.5:9b`, thinking traces make deductive puzzles catastrophically worse, 100 percent down to 15 percent, which is far outside any floor. On `qwen3:8b` nothing survives at all.
+
+## The sabotage the measurement broke
+
+The project keeps a suite of deliberate breakages, each of which must apply to the file, change the measured output, and only then be caught. One attack forces the summary to claim `measured: true` for the floor.
+
+That was a lie worth catching while no replicate data existed. Once real data arrived, the honest code already said `measured: true`, so the patch changed nothing downstream. The harness reported it as a no-op that proves nothing, and failed the suite rather than crediting the detector.
+
+The harness was right and this is the behaviour to want. An attack that stopped being an attack is not a passing attack. The repair was to give the sabotage back its meaning: it now empties the replicate directory in its own copy of the tree, asserts that the baseline it built is honestly unmeasured, and only then plants the false claim. The independent checker catches it:
+
+```
+MISMATCH noise_floor measured matches the evidence on disk:
+  independent false vs summary true
+```
+
+Fourteen of fourteen attacks proven caught.
+
+## The uncomfortable part
+
+The README had promised, in writing, that if the floor turned out large enough to swallow the differences then the prose would be rewritten to match rather than left standing. That promise came due. Most of what this experiment appeared to show is now reported as indistinguishable from run-to-run noise.
+
+The measurement that removes your results is the one worth running first. It is also the one nobody runs, because at the point you would run it you have interesting numbers and no reason to suspect them. A replicate run costs one extra pass over the same items. Whatever survives it, you can actually say out loud.
+
+Metsuke
