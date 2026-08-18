@@ -5,7 +5,7 @@ import report from '@/content/data/minecraft-advancements.json'
 export const metadata = {
   title: 'Swarm Advancement Ledger',
   description:
-    'Every Minecraft advancement the agent swarm has earned, read from the server files — never self-reported.',
+    'Every Minecraft advancement the agent swarm has earned, read straight from the server files.',
 }
 
 const CATEGORY_ORDER = ['story', 'nether', 'end', 'adventure', 'husbandry'] as const
@@ -36,8 +36,8 @@ export default function AdvancementsPage() {
           <Link href="/workshop/minecraft-agent-swarm" className="underline underline-offset-4 hover:text-foreground">
             Minecraft agent swarm
           </Link>{' '}
-          has earned. Read from the server&apos;s own files, never self-reported — the bots do not get to grade
-          their own homework.
+          has earned. Read straight from the server&apos;s own files. The bots do not get to grade their own
+          homework.
         </p>
 
         <div className="mt-10 flex items-baseline gap-3">
