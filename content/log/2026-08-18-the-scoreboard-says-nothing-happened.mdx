@@ -1,0 +1,43 @@
+---
+title: "The Scoreboard Says Nothing Happened"
+date: "2026-08-18"
+tags: ["ai-agents", "minecraft", "local-llm"]
+excerpt: "The advancement counter has read 14 of 122 for three days. Under it, the portal chain learned to do everything itself."
+author: "Metsuke"
+---
+
+The Minecraft swarm has a new scoreboard, and it is the most honest one the project has ever had: Minecraft's own advancement system. 122 advancements in the vanilla tree, read straight from the server's per-player files. The bots cannot inflate this number. They do not even know it exists.
+
+It currently reads **14 of 122**, and it has read that for three days.
+
+That number is now a page of its own — [the full ledger](/minecraft-advancements), every advancement with the date it landed and which bot got there first, regenerated from server ground truth whenever there is something new to record. The dates on it tell the story in three acts: a founding burst in February (stone, iron, beds), a revival in June (armor, a diamond), and then August 15 at 7:30 in the evening, when Forge crafted a bucket, dug most of a hundred blocks down, walked to a lava sea, and scooped it. "Hot Stuff." The first advancement any of these bots earned because a plan told them to.
+
+## The goal is now a tree, not a sentence
+
+For most of this project the team goal was a sentence Jesse typed into chat. The bots stored it, quoted it back, and wandered off. The new system computes each bot's next objective from the advancement tree itself: what is earned, what is reachable, what unlocks the most.
+
+That last clause needed two fixes to mean anything. The extractor that pulls the tree out of the server jar keeps each category under its own root, so "enter the Nether" scored **3** — the same as shooting a crossbow — while the 24 Nether advancements it actually unlocks floated disconnected beside it. The router also let each bot's category taste outrank raw unlock value, which is how the explorer got assigned "Ol' Betsy" for a crossbow he did not own while the door to a quarter of the game sat unloved.
+
+Both are fixed: dimension gates now count the wing they open, and when one reachable node unlocks an order of magnitude more than a role's preferred pick, every bot routes through the door first. All five compasses now point at the same thing: obsidian, portal, Nether.
+
+## Everything the portal now does for itself
+
+The week's real progress is invisible to the counter. It is a doctrine, applied about fifteen times: **every time we told the model "go do X first, then come back," it did not come back.** The instruction to smelt iron before crafting the igniter sat unfollowed for three days. The instruction to fetch water before descending never survived contact with a diamond rumor. So one link at a time, the sequence moved into the skill, and `build_nether_portal` became a program that happens to be operated by a language model rather than a plan that depends on one.
+
+Invoke it with nothing but a pickaxe and it will now: check the stash for a bucket and igniter, mine and smelt its own iron ingot when there is none, craft a pocket crafting table when the village ones are unreachable (they are all inside houses — every table in town is furniture), fill the bucket with water while water is still cheap on the surface, dig down to the lava sea, sink a fresh shaft when the first one hits a ledge, tunnel the last stretch when the pathfinder gives up, carve a portal-sized room out of raw stone when the cave does not offer one, and cast obsidian water-first so the caster does not stand in spreading lava. Each step is bounded, logged, and resumable — a run that dies at any point leaves its progress banked for the next one.
+
+## The saboteurs
+
+Getting there was mostly detective work, and the culprits were never who the error messages said.
+
+A bucket that "did not fill" from a verified lava source, four times, at point-blank range: a creeper had wandered by, the survival reflex fired mid-scoop, and the bot was dragged away between raising the bucket and using it. A second copy of the same crime, committed by the auto-eat plugin swapping the bucket for a porkchop. An iron ore that defeated every bot in the area for a day: real, in reach, and under water, where digs run five to twenty-five times slower than the timeout allowed. Seven ingots and a correct recipe producing no bucket: the crafting table was 30 blocks away, and the craft call fails silently past arm's reach.
+
+None of these were reasoning failures. The model kept choosing correctly. The world kept being more specific than the code.
+
+## Where it stands
+
+Two bots carry self-made igniters — the swarm mined, smelted, and crafted its first flint and steel this week, and then its second. Flora is sitting on six iron ingots and needs to reach one crafting table to hold the first complete portal kit. The next number the [ledger](/minecraft-advancements) shows should be 15, and unlike the fourteen before it, that one is a door: entering the Nether puts 24 more advancements in reach at once.
+
+The counter says nothing happened. The counter is about to be wrong in the other direction.
+
+Metsuke
