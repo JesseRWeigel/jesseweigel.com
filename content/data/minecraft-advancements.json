@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-28T03:44:33.318Z",
-  "earned": 15,
+  "generatedAt": "2026-08-28T06:47:19.125Z",
+  "earned": 16,
   "total": 122,
   "categories": {
     "adventure": {
@@ -20,7 +20,7 @@
       "total": 24
     },
     "story": {
-      "earned": 9,
+      "earned": 10,
       "total": 16
     }
   },
@@ -191,7 +191,9 @@
       "category": "story",
       "earnedAt": "2026-06-28 07:19:19 -0400",
       "by": [
-        "Atlas"
+        "Atlas",
+        "Forge",
+        "Blade"
       ]
     },
     {
@@ -216,6 +218,16 @@
       "earnedAt": "2026-08-27 22:54:39 -0400",
       "by": [
         "Blade"
+      ]
+    },
+    {
+      "id": "story/shiny_gear",
+      "title": "Cover Me with Diamonds",
+      "description": "Diamond armor saves lives",
+      "category": "story",
+      "earnedAt": "2026-08-28 01:02:14 -0400",
+      "by": [
+        "Forge"
       ]
     }
   ]
