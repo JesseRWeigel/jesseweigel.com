@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-28T06:47:19.125Z",
-  "earned": 16,
+  "generatedAt": "2026-08-29T11:44:30.779Z",
+  "earned": 17,
   "total": 122,
   "categories": {
     "adventure": {
@@ -20,7 +20,7 @@
       "total": 24
     },
     "story": {
-      "earned": 10,
+      "earned": 11,
       "total": 16
     }
   },
@@ -193,6 +193,7 @@
       "by": [
         "Atlas",
         "Forge",
+        "Mason",
         "Blade"
       ]
     },
@@ -217,7 +218,8 @@
       "category": "adventure",
       "earnedAt": "2026-08-27 22:54:39 -0400",
       "by": [
-        "Blade"
+        "Blade",
+        "Atlas"
       ]
     },
     {
@@ -228,6 +230,16 @@
       "earnedAt": "2026-08-28 01:02:14 -0400",
       "by": [
         "Forge"
+      ]
+    },
+    {
+      "id": "story/form_obsidian",
+      "title": "Ice Bucket Challenge",
+      "description": "Obtain a block of Obsidian",
+      "category": "story",
+      "earnedAt": "2026-08-29 06:48:53 -0400",
+      "by": [
+        "Mason"
       ]
     }
   ]
