@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-01T04:13:00.227Z",
-  "earned": 19,
+  "generatedAt": "2026-09-01T05:00:49.758Z",
+  "earned": 20,
   "total": 122,
   "categories": {
     "adventure": {
@@ -16,7 +16,7 @@
       "total": 29
     },
     "nether": {
-      "earned": 1,
+      "earned": 2,
       "total": 24
     },
     "story": {
@@ -253,7 +253,8 @@
       "category": "nether",
       "earnedAt": "2026-09-01 00:09:55 -0400",
       "by": [
-        "Forge"
+        "Forge",
+        "Flora"
       ]
     },
     {
@@ -262,6 +263,17 @@
       "description": "Build, light and enter a Nether Portal",
       "category": "story",
       "earnedAt": "2026-09-01 00:09:55 -0400",
+      "by": [
+        "Forge",
+        "Flora"
+      ]
+    },
+    {
+      "id": "nether/find_bastion",
+      "title": "Those Were the Days",
+      "description": "Enter a Bastion Remnant",
+      "category": "nether",
+      "earnedAt": "2026-09-01 00:24:53 -0400",
       "by": [
         "Forge"
       ]
