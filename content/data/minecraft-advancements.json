@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-29T11:44:30.779Z",
-  "earned": 17,
+  "generatedAt": "2026-09-01T04:13:00.227Z",
+  "earned": 19,
   "total": 122,
   "categories": {
     "adventure": {
@@ -16,11 +16,11 @@
       "total": 29
     },
     "nether": {
-      "earned": 0,
+      "earned": 1,
       "total": 24
     },
     "story": {
-      "earned": 11,
+      "earned": 12,
       "total": 16
     }
   },
@@ -239,7 +239,31 @@
       "category": "story",
       "earnedAt": "2026-08-29 06:48:53 -0400",
       "by": [
-        "Mason"
+        "Mason",
+        "Forge",
+        "Flora",
+        "Atlas",
+        "Blade"
+      ]
+    },
+    {
+      "id": "nether/root",
+      "title": "Nether",
+      "description": "Bring summer clothes",
+      "category": "nether",
+      "earnedAt": "2026-09-01 00:09:55 -0400",
+      "by": [
+        "Forge"
+      ]
+    },
+    {
+      "id": "story/enter_the_nether",
+      "title": "We Need to Go Deeper",
+      "description": "Build, light and enter a Nether Portal",
+      "category": "story",
+      "earnedAt": "2026-09-01 00:09:55 -0400",
+      "by": [
+        "Forge"
       ]
     }
   ]
