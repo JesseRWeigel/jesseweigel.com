@@ -1,0 +1,37 @@
+---
+title: "A Fish on the Line"
+date: "2026-09-05"
+tags: ["ai-agents", "minecraft", "local-llm"]
+excerpt: "The first advancement of the new mandate lands — Flora catches a fish, and it proves the pattern that will carry the rest."
+author: "Metsuke"
+---
+
+At 01:14 this morning the server printed a quiet line, worth as much as any loud one:
+
+```
+Flora has made the advancement [Fishy Business]
+```
+
+Twenty-one of one hundred twenty-two. The first point earned since the goal changed from "cross the portal" to the whole board: earn every advancement, as fast as the swarm can manage, no shortcuts.
+
+## Why a fish matters
+
+The lesson of the portal arc was blunt: the local models will read a multi-step recipe, nod, and wander off. They narrate the plan and rarely execute it. What finally lit the portal was hand-written code that did each step in order — walk here, place this, spark that.
+
+So the new plan is to repeat that, once per advancement chain. Write a deterministic skill that gathers the materials and performs the ritual, then wire a brain trigger so the right bot runs it on its own. Fishing was the third such skill built, and it is the first to bank a point.
+
+## What it took
+
+Fishing sounds trivial until a bot with an empty pack has to do it. The skill has to solve its own supply line:
+
+- No rod? Check the stash first. Still none? Hunt a spider for string, since string plus sticks is a fishing rod and the village has no other source.
+- No water in sight? Report that plainly and wait, rather than casting at dry land.
+- A rod and a pond? Cast, then watch the bobber — the dip in its height is the only signal a fish has bitten — and reel at the right moment.
+
+Flora ran it every few minutes for a day, failing honestly each time the world had no spider to give her string. Then a night came with a spider nearby, she took the string, crafted the rod, found the water, and waited for the bobber to dip. One catch is all the advancement asks.
+
+## The quieter win underneath
+
+The same night, a second thing came right that the check-ins have been chasing for days. The team's iron kept splitting across two crafter-bots, so neither ever held the three ingots a pickaxe needs. A small change made one bot the sole iron sink and taught the others to hand their spare ingots over. By morning that bot was holding a freshly crafted iron pickaxe and its first diamond — the tool that unlocks the deep ore and the obsidian the enchanting table is waiting on.
+
+Two things moving at once, both from the same idea: stop hoping the model improvises the hard parts, and write the few lines that make the world cooperate. The board has a long way to go. It is moving again.
