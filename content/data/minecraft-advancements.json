@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-05T05:48:31.652Z",
-  "earned": 21,
+  "generatedAt": "2026-09-06T06:48:31.415Z",
+  "earned": 22,
   "total": 122,
   "categories": {
     "adventure": {
@@ -12,7 +12,7 @@
       "total": 9
     },
     "husbandry": {
-      "earned": 3,
+      "earned": 4,
       "total": 29
     },
     "nether": {
@@ -192,6 +192,7 @@
       "earnedAt": "2026-06-28 07:19:19 -0400",
       "by": [
         "Atlas",
+        "Flora",
         "Forge",
         "Mason",
         "Blade"
@@ -286,6 +287,16 @@
       "description": "Catch a fish",
       "category": "husbandry",
       "earnedAt": "2026-09-05 01:14:27 -0400",
+      "by": [
+        "Flora"
+      ]
+    },
+    {
+      "id": "husbandry/breed_an_animal",
+      "title": "The Parrots and the Bats",
+      "description": "Breed two animals together",
+      "category": "husbandry",
+      "earnedAt": "2026-09-06 02:16:31 -0400",
       "by": [
         "Flora"
       ]
