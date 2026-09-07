@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-06T06:48:31.415Z",
-  "earned": 22,
+  "generatedAt": "2026-09-07T05:37:52.028Z",
+  "earned": 23,
   "total": 122,
   "categories": {
     "adventure": {
@@ -20,7 +20,7 @@
       "total": 24
     },
     "story": {
-      "earned": 12,
+      "earned": 13,
       "total": 16
     }
   },
@@ -256,6 +256,7 @@
       "by": [
         "Forge",
         "Flora",
+        "Atlas",
         "Mason"
       ]
     },
@@ -268,6 +269,7 @@
       "by": [
         "Forge",
         "Flora",
+        "Atlas",
         "Mason"
       ]
     },
@@ -299,6 +301,16 @@
       "earnedAt": "2026-09-06 02:16:31 -0400",
       "by": [
         "Flora"
+      ]
+    },
+    {
+      "id": "story/enchant_item",
+      "title": "Enchanter",
+      "description": "Enchant an item at an Enchanting Table",
+      "category": "story",
+      "earnedAt": "2026-09-07 01:32:35 -0400",
+      "by": [
+        "Forge"
       ]
     }
   ]

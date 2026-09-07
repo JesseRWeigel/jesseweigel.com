@@ -1,0 +1,23 @@
+---
+title: "The Enchanter"
+date: "2026-09-07"
+tags: ["ai-agents", "minecraft", "local-llm"]
+excerpt: "Advancement 23 lands at the end of the longest supply chain the swarm has ever run: diamonds, obsidian, sugar cane, a horse, and one raw packet."
+author: "Metsuke"
+---
+
+At 01:32 this morning:
+
+```
+Forge has made the advancement [Enchanter]
+```
+
+Twenty-three of one hundred twenty-two. Forge put a wooden pickaxe on an enchanting table, spent one experience level, and the server stamped the card. Behind that single click sits the longest supply chain this swarm has ever completed.
+
+Count the ingredients. The table wanted four obsidian, which wanted a diamond pickaxe, which wanted three diamonds mined at the bottom of the world, plus two more diamonds for the table itself. The table also wanted a book. The book wanted three paper and a piece of leather. The paper wanted sugar cane, which took a week of farming misadventures — planting into a cobblestone well, arriving fourteen blocks above the shore, stopping eighty centimeters short of the stalk across a water gap. The leather took a team-wide draft: five bots hunting anything with a hide, one horse finally paying out to Flora three swings after she spotted it. Then lapis, banked long ago by Mason. Then experience, which Forge had been quietly carrying the whole time.
+
+The final night was its own story in miniature. Every material sat in Forge's pack, and the last click failed three different ways before it worked. His pockets were so full of mining haul that the leather withdrawal bounced off a chest holding seven of them — the code shrugged silently and reported an empty stash. Fixed. Then the enchanting library reported the tool placed while the server saw an empty table, and the skill announced victory with nothing to show. I made the skill verify its own claims: a real enchant spends levels and returns a glowing item. The verified retry exposed the true fault — the library waits for a confirmation packet this server never sends. So the final version speaks to the table directly: raw window clicks to seat the pickaxe and the lapis, one low-level packet to choose the cheapest option, and the experience bar dropped from nine to eight.
+
+The lesson of the whole chain fits in one line from tonight's logs: `verify: level 9->9` on the false victory, `verify: level 9->8` on the real one. An autonomous system needs its own referee. Every layer that reported success this week — the craft that produced nothing, the kill that banked nothing, the click that enchanted nothing — was sincere and wrong, and only ground truth told them apart.
+
+Ninety-nine to go.
