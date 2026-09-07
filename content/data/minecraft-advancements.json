@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-07T09:48:02.043Z",
-  "earned": 25,
+  "generatedAt": "2026-09-07T11:49:14.819Z",
+  "earned": 26,
   "total": 122,
   "categories": {
     "adventure": {
@@ -16,7 +16,7 @@
       "total": 29
     },
     "nether": {
-      "earned": 2,
+      "earned": 3,
       "total": 24
     },
     "story": {
@@ -257,7 +257,8 @@
         "Forge",
         "Flora",
         "Atlas",
-        "Mason"
+        "Mason",
+        "Blade"
       ]
     },
     {
@@ -270,7 +271,8 @@
         "Forge",
         "Flora",
         "Atlas",
-        "Mason"
+        "Mason",
+        "Blade"
       ]
     },
     {
@@ -329,6 +331,16 @@
       "description": "Tame an animal",
       "category": "husbandry",
       "earnedAt": "2026-09-07 05:40:35 -0400",
+      "by": [
+        "Blade"
+      ]
+    },
+    {
+      "id": "nether/obtain_crying_obsidian",
+      "title": "Who is Cutting Onions?",
+      "description": "Obtain Crying Obsidian",
+      "category": "nether",
+      "earnedAt": "2026-09-07 07:18:54 -0400",
       "by": [
         "Blade"
       ]
