@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-07T05:37:52.028Z",
-  "earned": 23,
+  "generatedAt": "2026-09-07T09:48:02.043Z",
+  "earned": 25,
   "total": 122,
   "categories": {
     "adventure": {
-      "earned": 4,
+      "earned": 5,
       "total": 44
     },
     "end": {
@@ -12,7 +12,7 @@
       "total": 9
     },
     "husbandry": {
-      "earned": 4,
+      "earned": 5,
       "total": 29
     },
     "nether": {
@@ -311,6 +311,26 @@
       "earnedAt": "2026-09-07 01:32:35 -0400",
       "by": [
         "Forge"
+      ]
+    },
+    {
+      "id": "adventure/shoot_arrow",
+      "title": "Take Aim",
+      "description": "Shoot something with an Arrow",
+      "category": "adventure",
+      "earnedAt": "2026-09-07 04:53:32 -0400",
+      "by": [
+        "Blade"
+      ]
+    },
+    {
+      "id": "husbandry/tame_an_animal",
+      "title": "Best Friends Forever",
+      "description": "Tame an animal",
+      "category": "husbandry",
+      "earnedAt": "2026-09-07 05:40:35 -0400",
+      "by": [
+        "Blade"
       ]
     }
   ]
