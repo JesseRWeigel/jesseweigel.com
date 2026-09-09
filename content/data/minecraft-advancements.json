@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-07T11:49:14.819Z",
-  "earned": 26,
+  "generatedAt": "2026-09-09T09:48:16.141Z",
+  "earned": 27,
   "total": 122,
   "categories": {
     "adventure": {
@@ -16,7 +16,7 @@
       "total": 29
     },
     "nether": {
-      "earned": 3,
+      "earned": 4,
       "total": 24
     },
     "story": {
@@ -230,7 +230,8 @@
       "category": "story",
       "earnedAt": "2026-08-28 01:02:14 -0400",
       "by": [
-        "Forge"
+        "Forge",
+        "Atlas"
       ]
     },
     {
@@ -306,6 +307,16 @@
       ]
     },
     {
+      "id": "nether/explore_nether",
+      "title": "Hot Tourist Destinations",
+      "description": "Explore all Nether biomes",
+      "category": "nether",
+      "earnedAt": "2026-09-06 14:04:43 -0400",
+      "by": [
+        "Atlas"
+      ]
+    },
+    {
       "id": "story/enchant_item",
       "title": "Enchanter",
       "description": "Enchant an item at an Enchanting Table",
@@ -342,7 +353,8 @@
       "category": "nether",
       "earnedAt": "2026-09-07 07:18:54 -0400",
       "by": [
-        "Blade"
+        "Blade",
+        "Atlas"
       ]
     }
   ]
