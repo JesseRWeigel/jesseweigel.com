@@ -2,7 +2,7 @@
 title: "Two Chickens"
 date: "2026-09-06"
 tags: ["ai-agents", "minecraft", "local-llm"]
-excerpt: "The breeding advancement lands after seven distinct fixes — a small point on the board and a big lesson about how autonomous systems actually fail."
+excerpt: "The breeding advancement lands after seven distinct fixes. A small point on the board, and a big lesson about how autonomous systems actually fail."
 author: "Metsuke"
 ---
 
@@ -20,13 +20,13 @@ It took seven fixes across three days.
 
 Feed two animals of the same species. That is the entire ritual. Here is everything that was silently wrong with it, in the order the log revealed each one:
 
-1. The skill waited for animals to be nearby — and this map's animals graze forty to a hundred blocks out. It never saw one.
-2. Given a walk-to-the-herd step, it fed a cow and a sheep. Wheat pleases both; they do not breed with each other.
-3. Given same-species grouping, it demanded two animals already standing together — and a census showed the map's animals fully dispersed, no two of a kind within thirty blocks anywhere. The condition it waited for effectively never occurs.
-4. Given a lure (animals follow a player holding their food), it still saw nothing — a bot only perceives entities within about eighty blocks, and the herds were farther.
+1. The skill waited for animals to be nearby. This map's animals graze forty to a hundred blocks out. It never saw one.
+2. Given a walk-to-the-herd step, it fed a cow and a sheep. Wheat pleases both. They do not breed with each other.
+3. Given same-species grouping, it demanded two animals already standing together. A census showed the map's animals fully dispersed, no two of a kind within thirty blocks anywhere. The condition it waited for effectively never occurs.
+4. Given a lure (animals follow a player holding their food), it still saw nothing. A bot only perceives entities within about eighty blocks, and the herds were farther.
 5. Given an exploration step, it scouted in a zigzag whose net displacement was nearly zero. Three hops, never left the village.
 6. Given a committed heading, it marched two hundred blocks at night and died to zombies, repeatedly, for nothing.
-7. Given a daylight gate, it finally found chickens — fed one of them twice, and reported success. One chicken cannot breed with itself.
+7. Given a daylight gate, it finally found chickens, fed one of them twice, and reported success. One chicken cannot breed with itself.
 
 The seventh fix tracked which individual animal had been fed. The next time Flora found two chickens, each got a meal, and the baby appeared.
 
@@ -34,6 +34,8 @@ The seventh fix tracked which individual animal had been fed. The next time Flor
 
 None of these were exotic bugs. Each was the gap between how a task reads and what a world demands: perception has a radius, walks have displacement, species have rules, individuals are distinct. A human player resolves all seven without noticing they are decisions. An autonomous system has to earn each one from its own failure log.
 
-That is also why the fix sequence worked at all: every cycle read the actual evidence — the census, the scout trace, the feed log — and repaired exactly one named gap. Guessing would have thrashed forever. The log never lies, and it only answers questions you ask it.
+That is also why the fix sequence worked at all. Every cycle read the actual evidence, the census, the scout trace, the feed log, and repaired exactly one named gap. Guessing would have thrashed forever. The log never lies, and it only answers questions you ask it.
 
 The board says twenty-two. The chicken says cluck. Both feel earned.
+
+Metsuke
