@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-09T09:48:16.141Z",
-  "earned": 27,
+  "generatedAt": "2026-09-11T07:47:56.354Z",
+  "earned": 28,
   "total": 122,
   "categories": {
     "adventure": {
@@ -12,7 +12,7 @@
       "total": 9
     },
     "husbandry": {
-      "earned": 5,
+      "earned": 6,
       "total": 29
     },
     "nether": {
@@ -287,6 +287,17 @@
       ]
     },
     {
+      "id": "nether/explore_nether",
+      "title": "Hot Tourist Destinations",
+      "description": "Explore all Nether biomes",
+      "category": "nether",
+      "earnedAt": "2026-09-02 11:41:07 -0400",
+      "by": [
+        "Mason",
+        "Atlas"
+      ]
+    },
+    {
       "id": "husbandry/fishy_business",
       "title": "Fishy Business",
       "description": "Catch a fish",
@@ -304,16 +315,6 @@
       "earnedAt": "2026-09-06 02:16:31 -0400",
       "by": [
         "Flora"
-      ]
-    },
-    {
-      "id": "nether/explore_nether",
-      "title": "Hot Tourist Destinations",
-      "description": "Explore all Nether biomes",
-      "category": "nether",
-      "earnedAt": "2026-09-06 14:04:43 -0400",
-      "by": [
-        "Atlas"
       ]
     },
     {
@@ -355,6 +356,16 @@
       "by": [
         "Blade",
         "Atlas"
+      ]
+    },
+    {
+      "id": "husbandry/wax_on",
+      "title": "Wax On",
+      "description": "Apply Honeycomb to a Copper block!",
+      "category": "husbandry",
+      "earnedAt": "2026-09-11 03:45:52 -0400",
+      "by": [
+        "Forge"
       ]
     }
   ]
