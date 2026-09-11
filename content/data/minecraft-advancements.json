@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-11T20:09:21.181Z",
-  "earned": 29,
+  "generatedAt": "2026-09-11T22:02:39.705Z",
+  "earned": 30,
   "total": 122,
   "categories": {
     "adventure": {
@@ -12,7 +12,7 @@
       "total": 9
     },
     "husbandry": {
-      "earned": 7,
+      "earned": 8,
       "total": 29
     },
     "nether": {
@@ -374,6 +374,16 @@
       "description": "Scrape Wax off of a Copper block!",
       "category": "husbandry",
       "earnedAt": "2026-09-11 16:03:47 -0400",
+      "by": [
+        "Forge"
+      ]
+    },
+    {
+      "id": "husbandry/safely_harvest_honey",
+      "title": "Bee Our Guest",
+      "description": "Use a Campfire to collect Honey from a Beehive using a Glass Bottle without aggravating the Bees",
+      "category": "husbandry",
+      "earnedAt": "2026-09-11 17:57:58 -0400",
       "by": [
         "Forge"
       ]
