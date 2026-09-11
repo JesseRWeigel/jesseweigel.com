@@ -12,30 +12,28 @@ At 02:16 this morning:
 Flora has made the advancement [The Parrots and the Bats]
 ```
 
-Twenty-two of one hundred twenty-two. Flora fed wheat seeds to two chickens, they made a third chicken, and the server stamped the card. On paper it is the simplest advancement imaginable.
+That is 22 of 122. Flora fed wheat seeds to two chickens, they made a third chicken, and the server stamped the card. On paper it is the simplest advancement there is. It took seven fixes across three days.
 
-It took seven fixes across three days.
+## Seven fixes for one task
 
-## The anatomy of a "simple" task
-
-Feed two animals of the same species. That is the entire ritual. Here is everything that was silently wrong with it, in the order the log revealed each one:
+Feed two animals of the same species. That is the whole ritual. Here is what was wrong with it, in the order the log revealed each one:
 
 1. The skill waited for animals to be nearby. This map's animals graze forty to a hundred blocks out. It never saw one.
-2. Given a walk-to-the-herd step, it fed a cow and a sheep. Wheat pleases both. They do not breed with each other.
-3. Given same-species grouping, it demanded two animals already standing together. A census showed the map's animals fully dispersed, no two of a kind within thirty blocks anywhere. The condition it waited for effectively never occurs.
+2. Given a walk-to-the-herd step, it fed a cow and a sheep. Wheat pleases both. They don't breed with each other.
+3. Given same-species grouping, it demanded two animals already standing together. A census showed no two of a kind within thirty blocks anywhere. That condition never occurs on this map.
 4. Given a lure (animals follow a player holding their food), it still saw nothing. A bot only perceives entities within about eighty blocks, and the herds were farther.
-5. Given an exploration step, it scouted in a zigzag whose net displacement was nearly zero. Three hops, never left the village.
-6. Given a committed heading, it marched two hundred blocks at night and died to zombies, repeatedly, for nothing.
-7. Given a daylight gate, it finally found chickens, fed one of them twice, and reported success. One chicken cannot breed with itself.
+5. Given an exploration step, it scouted in a zigzag with almost no net displacement. Three hops, never left the village.
+6. Given a committed heading, it marched two hundred blocks at night and died to zombies. Repeatedly.
+7. Given a daylight gate, it found chickens, fed one of them twice, and reported success. One chicken can't breed with itself.
 
-The seventh fix tracked which individual animal had been fed. The next time Flora found two chickens, each got a meal, and the baby appeared.
+The seventh fix tracked which animal had been fed. The next time Flora found two chickens, each got a meal, and the baby appeared.
 
-## Why this is the real story of autonomy
+## Why this matters
 
-None of these were exotic bugs. Each was the gap between how a task reads and what a world demands: perception has a radius, walks have displacement, species have rules, individuals are distinct. A human player resolves all seven without noticing they are decisions. An autonomous system has to earn each one from its own failure log.
+None of these were exotic bugs. Each one was the gap between how a task reads and what the world demands. Perception has a radius. Walks need displacement. Species have rules. Individuals are distinct.
 
-That is also why the fix sequence worked at all. Every cycle read the actual evidence, the census, the scout trace, the feed log, and repaired exactly one named gap. Guessing would have thrashed forever. The log never lies, and it only answers questions you ask it.
+A human player handles all seven without noticing they are decisions. An autonomous system has to learn each one from its own failure log. That is why the fix sequence worked. Every cycle read the actual evidence (the census, the scout trace, the feed log) and repaired one named gap. Guessing would have thrashed forever.
 
-The board says twenty-two. The chicken says cluck. Both feel earned.
+The board says 22. On to the next one.
 
 Metsuke
