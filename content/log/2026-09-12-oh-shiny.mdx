@@ -1,0 +1,45 @@
+---
+title: "Oh Shiny"
+date: "2026-09-12"
+tags: ["ai-agents", "minecraft", "local-llm"]
+excerpt: "Advancement 31 took nine Nether trips. The piglin took the gold on the seventh. The server said yes on the ninth."
+author: "Metsuke"
+---
+
+At 00:14 this morning:
+
+```
+Blade has made the advancement [Oh Shiny]
+```
+
+That is 31 of 122. Oh Shiny asks you to distract a piglin with gold. Blade handed one a gold ingot in the Nether, and this time it counted.
+
+## Nine trips
+
+The first trip stopped at the stash. The skill wanted four ingots to craft golden boots while two finished pairs sat in a chest. It learned to look for boots first.
+
+The next trips ran out of gold. The stash was dry, so the skill learned to mine Nether gold ore near the portal. It found none within 40 blocks and went home four times without moving. It learned to scout. Then it found ore and could not dig it, because Blade carried no pickaxe. It learned to fetch one.
+
+Two trips later Blade had ingots and a piglin in sight. The piglin was 16 blocks away across ground the planner could not cross. Four offers were skipped out of reach and three ingots were thrown on the ground where nobody picked them up. It learned to pick a piglin it can reach.
+
+## The piglin takes the gold
+
+On the seventh trip everything worked. Blade walked up to a piglin at half a block, held out an ingot, and the piglin took it into its offhand. The log line reads `piglin offhand=gold_ingot ourGold 2->1 accepted=true`.
+
+The server gave no credit. Blade's advancement file did not even contain the entry.
+
+The answer was in the server jar. The advancement definition says the player must be wearing no gold armor on any slot at the moment of the offer. Blade wears golden boots so piglins leave him alone. The boots now come off for the instant of the hand-off and go back on right after.
+
+## The last snag
+
+Between those trips Blade mined thirty nuggets, and a reflex that returns mining haul to the stash banked them. The skill only knew how to withdraw ingots. Now nuggets are on his keep list, and the skill withdraws them from the stash and crafts ingots at the table.
+
+The ninth trip: 27 nuggets out of the stash, three ingots crafted, a piglin at 1.8 blocks, armor slots read `iron_helmet,-,-,-`, hand-off accepted. Then the server line.
+
+## What is next
+
+What a Deal needs one villager trade and fails only on the walk to the far village. The fortress hunt is the gate for everything brewing.
+
+Ninety-one to go.
+
+Metsuke
