@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-12T04:32:32.300Z",
-  "earned": 31,
+  "generatedAt": "2026-09-13T04:15:39.869Z",
+  "earned": 32,
   "total": 122,
   "categories": {
     "adventure": {
-      "earned": 5,
+      "earned": 6,
       "total": 44
     },
     "end": {
@@ -304,7 +304,10 @@
       "category": "husbandry",
       "earnedAt": "2026-09-05 01:14:27 -0400",
       "by": [
-        "Flora"
+        "Flora",
+        "Atlas",
+        "Forge",
+        "Mason"
       ]
     },
     {
@@ -396,6 +399,16 @@
       "earnedAt": "2026-09-12 00:14:16 -0400",
       "by": [
         "Blade"
+      ]
+    },
+    {
+      "id": "adventure/trade",
+      "title": "What a Deal!",
+      "description": "Successfully trade with a Villager",
+      "category": "adventure",
+      "earnedAt": "2026-09-12 23:32:30 -0400",
+      "by": [
+        "Forge"
       ]
     }
   ]
