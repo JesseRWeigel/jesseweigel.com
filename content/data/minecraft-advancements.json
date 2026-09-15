@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-13T04:15:39.869Z",
-  "earned": 32,
+  "generatedAt": "2026-09-15T12:16:13.801Z",
+  "earned": 33,
   "total": 122,
   "categories": {
     "adventure": {
@@ -16,7 +16,7 @@
       "total": 29
     },
     "nether": {
-      "earned": 5,
+      "earned": 6,
       "total": 24
     },
     "story": {
@@ -129,7 +129,10 @@
       "earnedAt": "2026-06-13 12:42:21 -0400",
       "by": [
         "Blade",
-        "Atlas"
+        "Atlas",
+        "Flora",
+        "Forge",
+        "Mason"
       ]
     },
     {
@@ -307,7 +310,8 @@
         "Flora",
         "Atlas",
         "Forge",
-        "Mason"
+        "Mason",
+        "Blade"
       ]
     },
     {
@@ -409,6 +413,16 @@
       "earnedAt": "2026-09-12 23:32:30 -0400",
       "by": [
         "Forge"
+      ]
+    },
+    {
+      "id": "nether/return_to_sender",
+      "title": "Return to Sender",
+      "description": "Destroy a Ghast with a fireball",
+      "category": "nether",
+      "earnedAt": "2026-09-15 07:20:29 -0400",
+      "by": [
+        "Blade"
       ]
     }
   ]
