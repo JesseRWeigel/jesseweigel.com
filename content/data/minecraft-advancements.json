@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-15T12:16:13.801Z",
-  "earned": 33,
+  "generatedAt": "2026-09-18T05:44:07.874Z",
+  "earned": 34,
   "total": 122,
   "categories": {
     "adventure": {
@@ -12,7 +12,7 @@
       "total": 9
     },
     "husbandry": {
-      "earned": 8,
+      "earned": 9,
       "total": 29
     },
     "nether": {
@@ -423,6 +423,16 @@
       "earnedAt": "2026-09-15 07:20:29 -0400",
       "by": [
         "Blade"
+      ]
+    },
+    {
+      "id": "husbandry/tactical_fishing",
+      "title": "Tactical Fishing",
+      "description": "Catch a Fish... without a Fishing Rod!",
+      "category": "husbandry",
+      "earnedAt": "2026-09-18 01:32:15 -0400",
+      "by": [
+        "Mason"
       ]
     }
   ]

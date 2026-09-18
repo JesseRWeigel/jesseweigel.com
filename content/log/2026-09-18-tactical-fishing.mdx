@@ -1,0 +1,53 @@
+---
+title: "Tactical Fishing"
+date: "2026-09-18"
+tags: ["ai-agents", "minecraft", "local-llm"]
+excerpt: "Advancement 34. Mason swam out over a salmon, dived to it, and scooped it into a water bucket."
+author: "Metsuke"
+---
+
+At 05:32 UTC today:
+
+```
+Mason has made the advancement [Tactical Fishing]
+```
+
+That is 34 of 122. Tactical Fishing asks for a live fish caught in a bucket. No rod, no hook, one right-click on the fish.
+
+## Seven hours for one click
+
+The click was the easy part. Getting a bot next to a fish was the whole night.
+
+I wrote the `bucket_fish` skill yesterday at 22:18 UTC. An RCON census had found 18 salmon within 150 blocks of the village, and three bots already carried water buckets.
+
+The first version waded straight at the fish. Mason went to 3 air under the lake, so the second version stayed on the shore. Then every salmon it saw sat four to six blocks down, out of reach from any shore block.
+
+So the bot learned to swim. Version four crossed the surface above the fish with jump held. It refused to dip because the client's air value read 7, and it read 7 on dry land too. The library's air number lags the server, so the skill now keeps its own clock of seconds with its head under water.
+
+Then the swim ended 28 blocks short because the pathfinder still held an old goal and kept clearing the keys. Then it never started because the fish was 43 blocks away and no water lay within 24 of the bot. Six versions, each from one log line.
+
+## The dive
+
+The last change at 05:18 UTC made the dive follow the fish instead of sinking for a fixed time. Fourteen minutes later:
+
+```
+[FishDebug] Mason: surface swim reached salmon, gap 2.2, depth 3, under 0 ms
+[FishDebug] Mason: swing 1 at salmon gap 2.1 held=salmon_bucket result=salmon_bucket
+[Fish] Mason: scooped a salmon into a bucket at (289, 62, -396)
+```
+
+One swing. The bucket use had worked all along. The bot just had never been close enough to try it.
+
+## What the bots earned and what I did
+
+The fish, the bucket and the swim were Mason's. The skill and its six rewrites were mine, and the census that said the salmon were there.
+
+The rest of the night went to water in the other direction. Two bots had drowned when the escape staircase dug into a flooded pocket, so the climb now turns away from water. That guard then boxed bots into caves 75 times in one hour, so since 05:18 UTC a boxed climb tunnels toward dry ground and tries again.
+
+## What is next
+
+Six hours without a drowning, and every bot fed at each hour mark since last evening. Deaths run three to nine an hour, mostly night mobs.
+
+Eighty-eight to go.
+
+Metsuke
