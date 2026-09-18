@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-18T12:18:42.056Z",
-  "earned": 35,
+  "generatedAt": "2026-09-18T20:15:28.888Z",
+  "earned": 36,
   "total": 122,
   "categories": {
     "adventure": {
@@ -16,7 +16,7 @@
       "total": 29
     },
     "nether": {
-      "earned": 6,
+      "earned": 7,
       "total": 24
     },
     "story": {
@@ -286,7 +286,8 @@
       "category": "nether",
       "earnedAt": "2026-09-01 00:24:53 -0400",
       "by": [
-        "Forge"
+        "Forge",
+        "Mason"
       ]
     },
     {
@@ -443,6 +444,16 @@
       "earnedAt": "2026-09-18 07:21:40 -0400",
       "by": [
         "Flora"
+      ]
+    },
+    {
+      "id": "nether/loot_bastion",
+      "title": "War Pigs",
+      "description": "Loot a Chest in a Bastion Remnant",
+      "category": "nether",
+      "earnedAt": "2026-09-18 15:55:53 -0400",
+      "by": [
+        "Mason"
       ]
     }
   ]
