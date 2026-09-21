@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-18T20:15:28.888Z",
-  "earned": 36,
+  "generatedAt": "2026-09-21T08:03:39.749Z",
+  "earned": 37,
   "total": 122,
   "categories": {
     "adventure": {
-      "earned": 7,
+      "earned": 8,
       "total": 44
     },
     "end": {
@@ -433,7 +433,8 @@
       "category": "husbandry",
       "earnedAt": "2026-09-18 01:32:15 -0400",
       "by": [
-        "Mason"
+        "Mason",
+        "Flora"
       ]
     },
     {
@@ -443,7 +444,9 @@
       "category": "adventure",
       "earnedAt": "2026-09-18 07:21:40 -0400",
       "by": [
-        "Flora"
+        "Flora",
+        "Atlas",
+        "Blade"
       ]
     },
     {
@@ -454,6 +457,16 @@
       "earnedAt": "2026-09-18 15:55:53 -0400",
       "by": [
         "Mason"
+      ]
+    },
+    {
+      "id": "adventure/ol_betsy",
+      "title": "Ol' Betsy",
+      "description": "Shoot a Crossbow",
+      "category": "adventure",
+      "earnedAt": "2026-09-21 04:03:01 -0400",
+      "by": [
+        "Blade"
       ]
     }
   ]
