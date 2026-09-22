@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-21T08:03:39.749Z",
-  "earned": 37,
+  "generatedAt": "2026-09-22T22:40:39.165Z",
+  "earned": 38,
   "total": 122,
   "categories": {
     "adventure": {
-      "earned": 8,
+      "earned": 9,
       "total": 44
     },
     "end": {
@@ -465,6 +465,16 @@
       "description": "Shoot a Crossbow",
       "category": "adventure",
       "earnedAt": "2026-09-21 04:03:01 -0400",
+      "by": [
+        "Blade"
+      ]
+    },
+    {
+      "id": "adventure/whos_the_pillager_now",
+      "title": "Who's the Pillager Now?",
+      "description": "Give a Pillager a taste of their own medicine",
+      "category": "adventure",
+      "earnedAt": "2026-09-22 18:35:36 -0400",
       "by": [
         "Blade"
       ]
