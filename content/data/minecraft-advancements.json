@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-22T22:40:39.165Z",
-  "earned": 38,
+  "generatedAt": "2026-09-23T02:59:52.066Z",
+  "earned": 39,
   "total": 122,
   "categories": {
     "adventure": {
@@ -16,7 +16,7 @@
       "total": 29
     },
     "nether": {
-      "earned": 7,
+      "earned": 8,
       "total": 24
     },
     "story": {
@@ -477,6 +477,16 @@
       "earnedAt": "2026-09-22 18:35:36 -0400",
       "by": [
         "Blade"
+      ]
+    },
+    {
+      "id": "nether/find_fortress",
+      "title": "A Terrible Fortress",
+      "description": "Break your way into a Nether Fortress",
+      "category": "nether",
+      "earnedAt": "2026-09-22 22:56:04 -0400",
+      "by": [
+        "Mason"
       ]
     }
   ]
