@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-23T02:59:52.066Z",
-  "earned": 39,
+  "generatedAt": "2026-09-24T13:58:58.279Z",
+  "earned": 40,
   "total": 122,
   "categories": {
     "adventure": {
@@ -16,7 +16,7 @@
       "total": 29
     },
     "nether": {
-      "earned": 8,
+      "earned": 9,
       "total": 24
     },
     "story": {
@@ -342,7 +342,8 @@
       "category": "adventure",
       "earnedAt": "2026-09-07 04:53:32 -0400",
       "by": [
-        "Blade"
+        "Blade",
+        "Mason"
       ]
     },
     {
@@ -466,7 +467,8 @@
       "category": "adventure",
       "earnedAt": "2026-09-21 04:03:01 -0400",
       "by": [
-        "Blade"
+        "Blade",
+        "Mason"
       ]
     },
     {
@@ -485,6 +487,16 @@
       "description": "Break your way into a Nether Fortress",
       "category": "nether",
       "earnedAt": "2026-09-22 22:56:04 -0400",
+      "by": [
+        "Mason"
+      ]
+    },
+    {
+      "id": "nether/obtain_blaze_rod",
+      "title": "Into Fire",
+      "description": "Relieve a Blaze of its rod",
+      "category": "nether",
+      "earnedAt": "2026-09-24 09:26:13 -0400",
       "by": [
         "Mason"
       ]
