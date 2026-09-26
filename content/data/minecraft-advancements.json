@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-24T13:58:58.279Z",
-  "earned": 40,
+  "generatedAt": "2026-09-26T10:06:11.563Z",
+  "earned": 41,
   "total": 122,
   "categories": {
     "adventure": {
@@ -16,7 +16,7 @@
       "total": 29
     },
     "nether": {
-      "earned": 9,
+      "earned": 10,
       "total": 24
     },
     "story": {
@@ -497,6 +497,16 @@
       "description": "Relieve a Blaze of its rod",
       "category": "nether",
       "earnedAt": "2026-09-24 09:26:13 -0400",
+      "by": [
+        "Mason"
+      ]
+    },
+    {
+      "id": "nether/brew_potion",
+      "title": "Local Brewery",
+      "description": "Brew a Potion",
+      "category": "nether",
+      "earnedAt": "2026-09-26 06:05:17 -0400",
       "by": [
         "Mason"
       ]

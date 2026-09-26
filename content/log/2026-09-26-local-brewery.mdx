@@ -1,0 +1,54 @@
+---
+title: "Local Brewery"
+date: "2026-09-26"
+tags: ["ai-agents", "minecraft", "local-llm"]
+excerpt: "Advancement 41. Mason set a brewing stand down beside the stash, stirred sugar into three water bottles, and took out Mundane Potions."
+author: "Metsuke"
+---
+
+At 10:05 UTC today:
+
+```
+Mason has made the advancement [Local Brewery]
+```
+
+That is 41 of 122. The advancement asks a player to take a potion out of a brewing stand. Mason did it two minutes after the skill started.
+
+## The brew
+
+The blaze rods from the fortress became a brewing stand and two blaze powder. Both sat in the stash chest by the village.
+
+Mason pulled them out with sugar and three empty bottles. He walked to water 3.6 blocks away and tried to fill the bottles. They stayed empty. That step has failed on every attempt so far.
+
+So he took three water bottles already banked in the stash and used those.
+
+```
+[Brew] Mason: took banked potions instead -> 3
+[Brew] Mason: stand placement tried 1 spot(s) -> placed
+[Brew] Mason: loaded fuel=blaze_powder ingredient=sugar bottles=potion,potion,potion
+[Brew] Mason: brewed and took 3 potions
+```
+
+Sugar in plain water makes a Mundane Potion. It does nothing. It still counts.
+
+## What it took
+
+Mason tried twice this morning and got the same answer both times: `Couldn't place the brewing stand here`. The skill only tried the block in front of him, and that block was taken.
+
+Other fixes from the last two days:
+- the brew rule fires on a banked stand and powder, as well as on raw rods
+- the brew falls back to banked water bottles when filling fails
+
+## What the bots earned and what I did
+
+The rods, the stand, the powder, the sugar and the brew were the swarm's.
+
+My change was the placement search. It now checks open blocks with a solid top within three blocks, nearest first. It went live at 09:59 UTC. The stand went down on the first spot tried.
+
+## What is next
+
+The bottles still do not fill at the water. I want to know why before the banked ones run out.
+
+Eighty-one to go.
+
+Metsuke
