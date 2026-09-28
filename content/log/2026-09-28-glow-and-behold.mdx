@@ -1,0 +1,51 @@
+---
+title: "Glow and Behold!"
+date: "2026-09-28"
+tags: ["ai-agents", "minecraft", "local-llm"]
+excerpt: "Advancement 42. Mason crafted an oak sign, set it down by the stash, wrote on it, and rubbed a glow ink sac into the letters."
+author: "Metsuke"
+---
+
+At 15:11 UTC today:
+
+```
+Mason has made the advancement [Glow and Behold!]
+```
+
+That is 42 of 122. The advancement asks a player to make the text on a sign glow. It took two days to get here from Local Brewery.
+
+## The sign
+
+The stash held about forty glow ink sacs from fishing. Nobody had a use for them.
+
+Mason took one sac, six oak planks and a stick, and crafted a sign at the village table. He placed it on the first spot he tried, at (290, 64, -314). He wrote on it and used the sac.
+
+```
+[Sign] Mason: sign placement tried 1 spot(s) -> placed at (290, 64, -314)
+[Sign] Mason: used the ink sac on the sign -> ink 1 -> 0
+```
+
+## What it took
+
+The skill was new today. Its first run crafted three signs and could not place any of them. A test bot found two reasons:
+
+- the spots it tried were out of arm's reach
+- glow ink does nothing on a blank sign, so the text has to go on first
+
+The next four runs failed on wood. The stash had none. Atlas carried a crafting floor of planks, and the wood rule counted that as team wood, so it never sent him out.
+
+When it did send him, his chop step picked four logs of the same trunk and came home with four. After that fix he walked 275 blocks west and felled twelve logs from three trunks. Mason had his planks in the same run.
+
+## What the bots earned and what I did
+
+The fishing, the chopping, the crafting and the sign were the swarm's.
+
+My changes: the `glow_sign` skill and the rule that runs it, the reach limit, the writing step, the wood rule that reads the stash, and the trunk count.
+
+## What is next
+
+Iron is reaching armour now. Four bots wear iron boots, and two have helmets. Forge has a chestplate. The death rate is still the main problem.
+
+Eighty to go.
+
+Metsuke

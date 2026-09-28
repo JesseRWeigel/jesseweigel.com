@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-26T10:06:11.563Z",
-  "earned": 41,
+  "generatedAt": "2026-09-28T15:59:08.380Z",
+  "earned": 42,
   "total": 122,
   "categories": {
     "adventure": {
@@ -12,7 +12,7 @@
       "total": 9
     },
     "husbandry": {
-      "earned": 9,
+      "earned": 10,
       "total": 29
     },
     "nether": {
@@ -507,6 +507,16 @@
       "description": "Brew a Potion",
       "category": "nether",
       "earnedAt": "2026-09-26 06:05:17 -0400",
+      "by": [
+        "Mason"
+      ]
+    },
+    {
+      "id": "husbandry/make_a_sign_glow",
+      "title": "Glow and Behold!",
+      "description": "Make the text of any kind of sign glow",
+      "category": "husbandry",
+      "earnedAt": "2026-09-28 11:11:42 -0400",
       "by": [
         "Mason"
       ]
