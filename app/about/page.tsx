@@ -31,22 +31,11 @@ export default function AboutPage() {
           </div>
           <div className="about-intro">
             <p className="eyebrow">About Jesse</p>
-            <h1>I took the long way into engineering. I kept the curiosity.</h1>
+            <h1>About me</h1>
             <div className="about-prose">
-              <p>
-                I&apos;m a self-taught software engineer whose path into software began with years of
-                live coding and open-source community work. Over the last decade, I&apos;ve moved from
-                frontend development to engineering leadership to production generative AI systems.
-              </p>
-              <p>
-                My favorite work lives where models meet consequences: autonomous agents with
-                real tools, evaluation loops that expose failure, and systems that have to keep
-                working after the demo ends. My most recent role was Generative AI Engineer at TRACTIAN, through October 23, 2026. I&apos;m open to my next senior AI or full-stack engineering role.
-              </p>
-              <p>
-                I&apos;m also a husband, father of four, conference speaker, and the person most likely
-                to turn a game for my kids into a multi-year systems experiment.
-              </p>
+              <p>I’m a software engineer working on AI systems and full-stack apps. Most recently, I worked on generative AI at Tractian.</p>
+              <p>I also build a lot of things on my own. Some are tools for working with coding agents. Others are experiments, like getting a group of agents to play Minecraft and seeing what they do. The unexpected behavior is often the interesting part.</p>
+              <p>I’ve done live coding with freeCodeCamp and spoken at conferences. This site is where I share my projects, talks, and what I’m working on.</p>
             </div>
             <div className="hero-actions">
               <TrackedLink
@@ -59,35 +48,6 @@ export default function AboutPage() {
               </TrackedLink>
               <Link href="/resume" className="button button-secondary">View résumé</Link>
             </div>
-          </div>
-        </section>
-
-        <section className="about-section">
-          <SectionHeading
-            eyebrow="Operating principles"
-            title="How I like to build."
-          />
-          <div className="principles-grid">
-            <article>
-              <span>01</span>
-              <h3>Instrument the truth</h3>
-              <p>If a system cannot tell us how it failed, it is not ready to improve.</p>
-            </article>
-            <article>
-              <span>02</span>
-              <h3>Keep only forward progress</h3>
-              <p>Quality gates, reversible experiments, and evidence beat hopeful iteration.</p>
-            </article>
-            <article>
-              <span>03</span>
-              <h3>Make the work legible</h3>
-              <p>Strong systems and strong teams leave a trail others can understand and extend.</p>
-            </article>
-            <article>
-              <span>04</span>
-              <h3>Build for the real environment</h3>
-              <p>The useful lessons begin after the happy path meets latency, failure, and time.</p>
-            </article>
           </div>
         </section>
 
