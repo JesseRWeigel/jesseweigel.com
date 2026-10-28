@@ -92,7 +92,7 @@ export default function ResumePage() {
           <div>
             <h2>Education & community</h2>
             <p><strong>Udacity:</strong> React Nanodegree, 2017</p>
-            <p><strong>West Liberty State University:</strong> BS Business Administration, Summa Cum Laude, 2008</p>
+            <p><strong>West Liberty University:</strong> BS Business Administration, Summa Cum Laude, 2008</p>
             <p><strong>freeCodeCamp:</strong> 226 live-coding episodes and global developer mentorship</p>
             <p><strong>Conference speaker:</strong> React Loop, NDC Minnesota, DACHFest, Abstractions, and more</p>
           </div>
