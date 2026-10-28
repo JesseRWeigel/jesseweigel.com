@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = 'Jesse Weigel — The Observatory'
+export const alt = 'Jesse Weigel — AI systems that learn, coordinate, and survive reality'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -9,54 +9,53 @@ export default async function Image() {
     (
       <div
         style={{
-          background: 'linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 100%)',
+          background: 'linear-gradient(145deg, #080a0d 0%, #11151b 55%, #18130b 100%)',
           width: '100%',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          padding: '76px 84px',
           fontFamily: 'system-ui',
         }}
       >
         <div
           style={{
-            width: 80,
-            height: 80,
+            width: 440,
+            height: 440,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, #f59e0b33 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(241, 169, 65, 0.26) 0%, transparent 70%)',
             position: 'absolute',
+            right: -40,
+            bottom: -100,
           }}
         />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, color: '#f1a941', fontFamily: 'monospace', fontSize: 18, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
+          <span style={{ width: 9, height: 9, borderRadius: 99, background: '#f1a941' }} />
+          Jesse Weigel · Generative AI Engineer
+        </div>
         <h1
           style={{
-            fontSize: 64,
-            fontWeight: 300,
-            color: '#e2e8f0',
-            letterSpacing: '-0.02em',
+            maxWidth: 1010,
+            fontSize: 74,
+            fontWeight: 480,
+            color: '#f4f1ea',
+            letterSpacing: '-0.055em',
+            lineHeight: 1.02,
             margin: 0,
           }}
         >
-          Jesse Weigel
+          I build AI systems that learn, coordinate, and survive contact with reality.
         </h1>
         <p
           style={{
-            fontSize: 24,
-            color: '#f59e0b',
-            fontFamily: 'monospace',
-            marginTop: 12,
+            fontSize: 20,
+            color: '#9ca2aa',
+            margin: 0,
           }}
         >
-          The Observatory
-        </p>
-        <p
-          style={{
-            fontSize: 18,
-            color: '#94a3b8',
-            marginTop: 8,
-          }}
-        >
-          Generative AI Engineer · Community Builder
+          Agent systems · Evaluation infrastructure · Developer tools · Public experiments
         </p>
       </div>
     ),

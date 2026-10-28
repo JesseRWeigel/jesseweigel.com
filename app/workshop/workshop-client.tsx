@@ -15,20 +15,13 @@ export function WorkshopClient({ projects }: WorkshopClientProps) {
   const filtered = filter ? projects.filter((p) => p.category === filter) : projects
 
   return (
-    <div className="space-y-8">
-      <div className="space-y-2">
-        <h1 className="text-2xl font-light tracking-tight sm:text-3xl">Workshop</h1>
-        <p className="text-sm text-muted-foreground">
-          Projects, experiments, and things built in the open.
-        </p>
-      </div>
-
+    <div className="work-browser">
       <ProjectFilters active={filter} onFilter={setFilter} />
 
       {filtered.length === 0 ? (
         <p className="text-sm text-muted-foreground">No projects in this category yet.</p>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="project-card-grid">
           {filtered.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}

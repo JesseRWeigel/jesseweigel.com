@@ -1,25 +1,34 @@
 import Link from 'next/link'
 import type { BlogPost } from '@/lib/types'
 
-function toStardate(dateStr: string): string {
-  const d = new Date(dateStr)
-  const dayOfYear = Math.floor(
-    (d.getTime() - new Date(d.getFullYear(), 0, 0).getTime()) / 86400000
-  )
-  return `${d.getFullYear()}.${String(dayOfYear).padStart(3, '0')}`
+function formatDate(date: string) {
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(date))
 }
 
-export function BlogPostCard({ post }: { post: BlogPost }) {
+export function BlogPostCard({ post, index }: { post: BlogPost; index?: number }) {
   return (
-    <article className="group border-b border-white/5 py-6 first:pt-0 last:border-0">
-      <Link href={`/log/${post.slug}`} className="block">
-        <p className="font-mono text-xs text-muted-foreground">
-          <span className="text-primary">★</span> {toStardate(post.date)} &middot; {post.readingTime}
-        </p>
-        <h3 className="mt-1 text-xl font-medium text-foreground transition-colors group-hover:text-primary">
-          {post.title}
-        </h3>
-        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
+    <article className="log-card">
+      <Link href={`/log/${post.slug}`}>
+        <div className="log-card-meta">
+          <span>{index === undefined ? 'Field note' : String(index + 1).padStart(2, '0')}</span>
+          <time dateTime={post.date}>{formatDate(post.date)}</time>
+        </div>
+        <div className="log-card-copy">
+          <div className="tag-row" aria-label="Topics">
+            {post.tags.slice(0, 3).map((tag) => <span key={tag}>{tag}</span>)}
+          </div>
+          <h2>{post.title}</h2>
+          <p>{post.excerpt}</p>
+        </div>
+        <div className="log-card-footer">
+          <span>{post.author || 'Jesse Weigel'} · {post.readingTime}</span>
+          <span aria-hidden="true">Read note ↗</span>
+        </div>
       </Link>
     </article>
   )

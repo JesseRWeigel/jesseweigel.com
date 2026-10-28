@@ -6,12 +6,12 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   webServer: {
-    command: 'npm run dev',
-    port: 3000,
+    command: 'npm run dev -- --port 3100',
+    port: 3100,
     reuseExistingServer: !process.env.CI,
   },
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:3100',
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },

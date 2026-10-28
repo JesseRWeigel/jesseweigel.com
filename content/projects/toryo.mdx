@@ -1,13 +1,47 @@
 ---
-title: "Toryo"
-description: "Intelligent agent orchestrator with trust-based delegation, quality ratcheting, and self-improving loops"
-category: "agent-orchestration"
-status: "active"
-github: "https://github.com/JesseRWeigel/toryo"
+title: Toryo
+description: >-
+  A TypeScript coding-agent orchestrator with evidence-bound review,
+  configured checks, and reversible Git checkpoints.
+category: agent-orchestration
+status: active
+github: 'https://github.com/JesseRWeigel/toryo'
 demo: null
-tech: ["TypeScript", "Node.js", "WebSocket", "Vitest"]
-stars: 10
+tech:
+  - TypeScript
+  - Node.js
+  - WebSocket
+  - Vitest
+stars: 11
+starsCheckedAt: '2026-10-28T14:23:55.987Z'
 featured: true
+role: Creator · architecture · open-source maintainer
+timeframe: 2026 to present
+outcomes:
+  - value: '8'
+    label: agent tool adapters
+  - value: '4'
+    label: quality-gated phases
+  - value: 1 command
+    label: to run the demo
+  - value: MIT
+    label: open-source license
 ---
 
-The intelligent agent orchestrator. Toryo chains multiple AI coding agents (Claude Code, Aider, Gemini, Ollama) with spec-driven workflows, trust-based delegation, and quality ratcheting. Available as an npm package at `@jweigel/toryo`.
+I built Toryo to make coding-agent work reviewable: connect different agent tools, capture the change they made, run configured checks, and retain or reject the attempt through an explicit review gate.
+
+## Engineering decisions
+
+The TypeScript orchestrator separates planning, research, execution, and review. Tool adapters let the workflow use different coding agents without coupling its control flow to one provider.
+
+With Git enabled, the system checkpoints source changes before review. Review receives the exact diff and configured check results, each with a SHA-256 evidence ID. A structured JSON response must reference the captured evidence. A failed required check blocks acceptance even when a reviewer gives a passing score. Rejected attempts revert their verified checkpoint instead of hard-resetting history.
+
+## Evidence to inspect
+
+The [public source and structured review documentation](https://github.com/JesseRWeigel/toryo#structured-review-gate) describe validation, check timeouts, output limits, and per-attempt review artifacts. These records preserve the evidence and the review response for inspection.
+
+## Limits and demo
+
+The `npx @jweigel/toryo demo` command is scripted: it illustrates the workflow without calling a real coding agent. It is not a benchmark of agent performance.
+
+Checks are configured by the user; omitting them provides model review only. Evidence references improve auditability but do not prove the model inspected the evidence or contain prompt injection. Without Git checkpoints, captured worker output does not verify source changes. These are engineering boundaries, not claims of guaranteed correctness.

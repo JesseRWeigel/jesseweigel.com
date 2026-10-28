@@ -16,8 +16,16 @@ export interface ProjectFrontmatter {
   github: string
   demo: string | null
   tech: string[]
+  /** UTC timestamp of the last successful GitHub API star-count refresh. */
+  starsCheckedAt?: string
   stars: number
   featured: boolean
+  /** Jesse's role or primary contribution to the project. */
+  role?: string
+  /** Short project timeframe shown in the case-study header. */
+  timeframe?: string
+  /** Compact, evidence-focused results shown near the top of the case study. */
+  outcomes?: Array<{ value: string; label: string }>
   /** Optional hero image (path under /public), shown on the card and detail page. */
   cover?: string
   /** Optional additional images (paths under /public), shown as a gallery on the detail page. */
@@ -83,6 +91,8 @@ export interface BlogPostFrontmatter {
   date: string
   tags: string[]
   excerpt: string
+  /** Named author. Metsuke is Jesse's AI collaborator and site chronicler. */
+  author?: string
 }
 
 export interface BlogPost extends BlogPostFrontmatter {

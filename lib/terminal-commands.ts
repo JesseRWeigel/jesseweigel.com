@@ -1,19 +1,21 @@
+import { contactEmail } from '@/lib/site'
+
 type CommandHandler = (args: string) => string
 
 const PAGE_START_TIME = Date.now()
 
 const FORTUNES = [
-  "Any fool can write code that a computer can understand. Good programmers write code that humans can understand. — Martin Fowler",
-  "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it. — Brian W. Kernighan",
+  "Any fool can write code that a computer can understand. Good programmers write code that humans can understand. · Martin Fowler",
+  "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it. · Brian W. Kernighan",
   "The best code is no code at all.",
-  "It works on my machine. — every developer, forever",
-  "There are only two hard things in Computer Science: cache invalidation and naming things. — Phil Karlton",
-  "A language that doesn't affect the way you think about programming is not worth knowing. — Alan Perlis",
-  "The most disastrous thing that you can ever learn is your first programming language. — Alan Kay",
-  "Software is like entropy: it is difficult to grasp, weighs nothing, and obeys the Second Law of Thermodynamics; i.e., it always increases. — Norman Augustine",
-  "The function of good software is to make the complex appear to be simple. — Grady Booch",
-  "First, solve the problem. Then, write the code. — John Johnson",
-  "Code never lies, comments sometimes do. — Ron Jeffries",
+  "It works on my machine. · every developer, forever",
+  "There are only two hard things in Computer Science: cache invalidation and naming things. · Phil Karlton",
+  "A language that doesn't affect the way you think about programming is not worth knowing. · Alan Perlis",
+  "The most disastrous thing that you can ever learn is your first programming language. · Alan Kay",
+  "Software is like entropy: it is difficult to grasp, weighs nothing, and obeys the Second Law of Thermodynamics; i.e., it always increases. · Norman Augustine",
+  "The function of good software is to make the complex appear to be simple. · Grady Booch",
+  "First, solve the problem. Then, write the code. · John Johnson",
+  "Code never lies, comments sometimes do. · Ron Jeffries",
 ]
 
 const XKCD_JOKES = [
@@ -59,7 +61,7 @@ log/             Captain's log`,
     const file = args.trim()
     if (file === 'about') {
       return `Jesse Weigel
-Generative AI Engineer @ TRACTIAN
+Senior AI & full-stack engineer · open to roles
 Steubenville, Ohio
 
 Self-taught developer. Conference speaker. Live coding community builder.
@@ -242,7 +244,7 @@ Date:   $(date)
     feat: observe everything
 
 commit cafebabe
-Author: Jesse Weigel <jesse@jesseweigel.com>
+Author: Jesse Weigel <${contactEmail}>
 Date:   earlier
 
     init: the observatory awakens`

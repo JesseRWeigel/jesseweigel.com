@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { search, buildSearchIndex, type SearchResult } from '@/lib/search'
+import { search, buildSearchIndex } from '@/lib/search'
 import type { Project, Transmission, BlogPost, ArchiveEntry } from '@/lib/types'
 
 const typeLabels: Record<string, string> = {
@@ -49,6 +49,8 @@ export function SearchOverlay({
         const tag = (e.target as HTMLElement)?.tagName
         if (tag === 'INPUT' || tag === 'TEXTAREA') return
         e.preventDefault()
+        setQuery('')
+        setSelectedIndex(0)
         setOpen(true)
       }
       if (e.key === 'Escape') setOpen(false)
@@ -58,16 +60,8 @@ export function SearchOverlay({
   }, [])
 
   useEffect(() => {
-    if (open) {
-      inputRef.current?.focus()
-      setQuery('')
-      setSelectedIndex(0)
-    }
+    if (open) inputRef.current?.focus()
   }, [open])
-
-  useEffect(() => {
-    setSelectedIndex(0)
-  }, [results])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
@@ -90,7 +84,12 @@ export function SearchOverlay({
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-[90] flex items-start justify-center pt-[20vh]">
+    <div
+      className="fixed inset-0 z-[90] flex items-start justify-center pt-[20vh]"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Search the Observatory"
+    >
       <div
         className="absolute inset-0 bg-background/80 backdrop-blur-sm"
         onClick={() => setOpen(false)}
@@ -101,7 +100,10 @@ export function SearchOverlay({
           <input
             ref={inputRef}
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value)
+              setSelectedIndex(0)
+            }}
             onKeyDown={handleKeyDown}
             placeholder="Search projects, talks, posts..."
             className="flex-1 bg-transparent px-3 py-4 text-sm text-foreground outline-none placeholder:text-muted-foreground/50"
@@ -109,7 +111,9 @@ export function SearchOverlay({
             spellCheck={false}
           />
           <button
+            type="button"
             onClick={() => setOpen(false)}
+            aria-label="Close search"
             className="rounded border border-white/10 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground transition-colors hover:text-primary"
           >
             close
@@ -124,6 +128,7 @@ export function SearchOverlay({
             ) : (
               results.map((result, i) => (
                 <button
+                  type="button"
                   key={`${result.type}-${result.href}`}
                   onClick={() => {
                     setOpen(false)

@@ -1,31 +1,88 @@
-import Link from 'next/link'
-import { NavLogo } from '@/components/nav-logo'
+'use client'
 
-const links = [
-  { href: '/workshop', label: 'Workshop' },
-  { href: '/transmissions', label: 'Transmissions' },
-  { href: '/archive', label: 'Archive' },
-  { href: '/log', label: 'Log' },
-]
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { primaryNavigation, secondaryNavigation } from '@/lib/site'
+
+function isCurrentPath(pathname: string, href: string) {
+  return pathname === href || (href !== '/' && pathname.startsWith(`${href}/`))
+}
 
 export function Nav() {
+  const pathname = usePathname()
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [])
+
   return (
-    <nav className="fixed top-0 z-40 w-full border-b border-white/5 bg-background/80 backdrop-blur-md">
-      <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-        <NavLogo />
-        <div className="flex gap-4 sm:gap-6">
-          {links.map(({ href, label }) => (
+    <header className="site-header">
+      <nav className="site-nav" aria-label="Primary navigation">
+        <Link href="/" className="site-wordmark" aria-label="Jesse Weigel home">
+          <span>JW</span>
+          <span className="wordmark-name">Jesse Weigel</span>
+        </Link>
+
+        <div className="desktop-nav-links">
+          {primaryNavigation.map((item) => (
             <Link
-              key={href}
-              href={href}
-              className="text-xs text-muted-foreground transition-colors hover:text-foreground sm:text-sm"
+              key={item.href}
+              href={item.href}
+              aria-current={isCurrentPath(pathname, item.href) ? 'page' : undefined}
             >
-              {label}
+              {item.label}
             </Link>
           ))}
         </div>
-      </div>
-    </nav>
+
+        <div className="nav-actions">
+          <Link href="/contact" className="nav-contact">
+            Work with me
+          </Link>
+          <button
+            type="button"
+            className="menu-toggle"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span />
+            <span />
+          </button>
+        </div>
+      </nav>
+
+      {menuOpen && (
+        <div id="mobile-navigation" className="mobile-nav-panel">
+          <div className="mobile-nav-primary">
+            {primaryNavigation.map((item, index) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={isCurrentPath(pathname, item.href) ? 'page' : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                <span aria-hidden="true">0{index + 1}</span>
+                {item.label}
+              </Link>
+            ))}
+          </div>
+          <div className="mobile-nav-secondary">
+            {secondaryNavigation.map((item) => (
+              <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </header>
   )
 }

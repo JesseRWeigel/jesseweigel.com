@@ -30,7 +30,7 @@ describe('ProjectCard', () => {
   })
   it('renders status badge', () => {
     render(<ProjectCard project={mockProject} />)
-    expect(screen.getByText('active')).toBeInTheDocument()
+    expect(screen.getByText('Active')).toBeInTheDocument()
   })
   it('renders GitHub link', () => {
     render(<ProjectCard project={mockProject} />)

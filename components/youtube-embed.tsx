@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
 
 function getVideoId(url: string): string | null {
@@ -14,13 +15,13 @@ export function YouTubeEmbed({ url, title }: { url: string; title: string }) {
 
   if (playing) {
     return (
-      <div className="relative aspect-video w-full overflow-hidden rounded-lg">
+      <div className="youtube-frame">
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
           title={title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          className="absolute inset-0 h-full w-full"
+          className="youtube-iframe"
         />
       </div>
     )
@@ -28,18 +29,21 @@ export function YouTubeEmbed({ url, title }: { url: string; title: string }) {
 
   return (
     <button
+      type="button"
       onClick={() => setPlaying(true)}
-      className="group relative aspect-video w-full overflow-hidden rounded-lg bg-black"
+      className="youtube-poster"
+      aria-label={`Play ${title}`}
     >
-      <img
-        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-        alt={title}
-        className="h-full w-full object-cover transition-opacity group-hover:opacity-80"
-        loading="lazy"
+      <Image
+        src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+        alt=""
+        fill
+        sizes="(max-width: 640px) 100vw, 50vw"
+        className="youtube-poster-image"
       />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/90 transition-transform group-hover:scale-110">
-          <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-6 w-6 text-primary-foreground">
+      <div className="youtube-play-wrap">
+        <div className="youtube-play-button">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M8 5v14l11-7z" />
           </svg>
         </div>

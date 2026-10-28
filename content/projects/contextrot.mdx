@@ -1,0 +1,42 @@
+---
+title: Contextrot
+description: >-
+  A Python evaluation harness measuring fact loss across repeated summaries,
+  with deterministic grading, committed transcripts, and corrected grader bugs.
+category: research
+status: experimental
+github: 'https://github.com/JesseRWeigel/contextrot'
+demo: 'https://jesserweigel.github.io/contextrot/'
+tech:
+  - Python
+  - Ollama
+  - Evaluation
+stars: 0
+starsCheckedAt: '2026-10-28T14:23:53.380Z'
+featured: true
+role: Creator · evaluation design · grading and analysis
+timeframe: August 2026
+outcomes:
+  - value: '50'
+    label: invented seed facts
+  - value: '20'
+    label: summarization cycles per model
+  - value: '3'
+    label: local models in the recorded experiment
+---
+
+I built Contextrot to ask a narrow question: what happens to verifiable facts when a model repeatedly summarizes its own previous summary?
+
+## Design decisions
+
+The harness starts with fifty invented facts in five categories. A deterministic Python grader distinguishes facts that are kept, lost, or corrupted after each cycle. Invented facts reduce the chance that a model can reconstruct missing details from general knowledge. Every summary is committed, so analysis can be rerun without a model server.
+
+## The grader needed debugging too
+
+Inspecting the raw text exposed false losses caused by Unicode hyphens and Markdown emphasis. Normalizing punctuation and markup corrected the measurements. A seed self-check now refuses to start unless the grader finds all fifty original facts.
+
+The [repository](https://github.com/JesseRWeigel/contextrot) includes transcripts, grading code, unit tests, and a verification script. The [published curves](https://jesserweigel.github.io/contextrot/) show the recorded experiment rather than a live benchmark.
+
+## Limits
+
+This is one seed document, one summarization prompt, and three local models served by Ollama. It does not establish universal model behavior or measure whether a model can act on surviving facts. The lenient rewording list was created after inspecting transcripts and only covers negations; it cannot support a fair comparison across categories. The useful lesson is to inspect and test the measurement itself.

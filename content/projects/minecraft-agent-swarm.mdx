@@ -1,77 +1,53 @@
 ---
-title: "Minecraft Agent Swarm"
-description: "A self-improving swarm of five local-LLM agents that mine, smelt, farm, build, and fight their way through Minecraft as a coordinated team."
-category: "ai-tools"
-status: "active"
-github: "https://github.com/JesseRWeigel/minecraft-agent-swarm"
-demo: "/minecraft-advancements"
-tech: ["TypeScript", "Node.js", "Mineflayer", "Ollama", "Voyager", "Python", "prismarine-viewer", "LoRA"]
-stars: 20
+title: Minecraft Agent Swarm
+description: >-
+  Five local-LLM agents sharing a Minecraft world, with persistent memory,
+  role-specific tools, and an experimental evaluation track.
+category: ai-tools
+status: active
+github: 'https://github.com/JesseRWeigel/minecraft-agent-swarm'
+demo: null
+tech:
+  - TypeScript
+  - Node.js
+  - Mineflayer
+  - Ollama
+  - Voyager
+  - Python
+  - prismarine-viewer
+  - LoRA
+stars: 34
+starsCheckedAt: '2026-10-28T14:23:55.294Z'
 featured: true
-cover: "/projects/mineflayer-mission-control.png"
-images: ["/projects/swarm-world-aerial.jpg", "/projects/swarm-pillars-and-bridges.jpg", "/projects/swarm-world-overview.jpg", "/projects/swarm-thinking.png", "/projects/swarm-base.png"]
+role: Creator · systems architecture · evaluation
+timeframe: 2023 to present
+outcomes:
+  - value: '5'
+    label: role-specialized agents
+  - value: Local
+    label: Ollama model backend
+cover: /projects/mineflayer-mission-control.png
+images:
+  - /projects/swarm-thinking.png
+  - /projects/swarm-base.png
 ---
 
-A swarm of five autonomous agents that play Minecraft together on local models. Each bot specializes in one job, they coordinate through shared context and a central stash, and the whole system measures and improves itself across sessions. It began as a single ChatGPT-controlled bot called `mineflayer-chatgpt`. It is now a team running entirely on local LLMs through [Ollama](https://ollama.com/).
+I built a persistent Minecraft agent system that grew from a single ChatGPT-controlled bot into five local-model agents. My work spans the TypeScript decision loop, shared world context, tool execution, telemetry, and an experimental evaluation track.
 
-<a href="/minecraft-advancements" className="my-6 block rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 no-underline transition-colors hover:bg-emerald-500/20">
-  <span className="text-lg font-semibold">🏆 The Advancement Ledger</span>
-  <span className="mt-1 block text-sm text-muted-foreground">Every achievement the swarm has earned for itself, live from the server — the clearest proof of progress this project has. →</span>
-</a>
+## Coordination and tools
 
-## The team
+Each agent specializes in exploration, farming, mining, building, or combat. A shared Team Bulletin puts teammates' actions and positions into each prompt, while a central resource stash lets the agents exchange materials. Coordination uses shared context rather than a dedicated coordinator bot.
 
-| Bot | Role | Specialty |
-|-----|------|-----------|
-| **Atlas** | Scout | Roams far, finds ores and biomes, maps terrain |
-| **Flora** | Farmer | Grows crops, breeds animals, processes materials |
-| **Forge** | Miner | Strip mines, digs tunnels, smelts ore |
-| **Mason** | Builder | Builds houses and bridges, manages the shared stash |
-| **Blade** | Guard | Patrols the perimeter and fights hostiles |
+An event-driven brain separates strategic, reactive, critic, and chat decisions. Actions pass through role-specific tool gates. Hand-written TypeScript skills coexist with Voyager-style JavaScript skills and generated skills. Mission Control, per-bot viewers, and recorded trajectories make behavior inspectable.
 
-There is no coordinator bot and no task assignment. Each bot's prompt includes a live Team Bulletin showing what every other bot is doing, plus its current position and last thought. Flora sees Forge deposit raw iron and decides to smelt it. Mason heads to a building spot Atlas just found. Coordination falls out of shared awareness and a central stash of categorized chests they all read and write.
+## Evidence and engineering boundaries
 
-## The bots earn everything
+The [public repository](https://github.com/JesseRWeigel/minecraft-agent-swarm) documents both normal gameplay and a separate reproducible research track. Preserved world fixtures and server-checked outcomes help distinguish a client's apparent success from what happened in the game. Successful controls and failed qualification attempts are retained.
 
-The rule that shapes the whole project: no item handouts, no teleport rescues, no scripted shortcuts that act for the bots. Interventions live behind a flag that defaults to off. When a bot digs itself into a pit, it climbs out with its own hands. When it starves, it has to hunt, cook, and eat. Progress comes from making the agents more capable through better prompts, skills, and action logic, never from cheating on their behalf. That constraint is the point. A team that can be rescued never has to get good.
+The [advancement ledger](https://jesseweigel.com/minecraft-advancements) is a historical scoreboard: its published 42/122 record is a September 28, 2026 snapshot, not a live progress feed.
 
-## How a bot thinks
+## What remains unproven
 
-The brain is event driven. A strategic decision fires when a bot goes idle or finishes a goal. A fast reactive decision fires when it takes damage or spots a hostile. A critic checks the result of every action and decides whether to continue or re-plan. A chat handler answers players and teammates in character. A single local model serves every decision type and keeps the whole team resident on one 32GB GPU. The current brain is `gpt-oss:20b`, which won a three-way local trial over `nemotron-3-nano` and a `qwen3.6:27b` baseline on food economy, action success, and roughly eight times the decision throughput.
-
-Actions route through a gated executor, so a bot can only do what its role allows. Every blocking call is bounded by a watchdog, because a single unbounded await once froze the whole team for thirteen hours.
-
-## A skill system that repairs itself
-
-Bots draw on hand-written TypeScript skills (build a house, strip mine, smelt ore), 57 Voyager-style JavaScript skills that run in a sandbox, and skills the model writes at runtime when nothing existing fits.
-
-Every skill attempt is recorded with its success rate, and the team uses that record:
-
-- Skills that fail repeatedly get retired, and the prompt ranks the rest by how often they actually work.
-- Each strategic prompt injects the bot's current tech stage and a concrete next goal computed from its real inventory.
-- When a generated skill throws a code error, its source and the error go back to the model for a fixed version.
-- Every decision is logged as prompt, choice, and outcome. That log became a training set: a Qwen3-8B model was LoRA fine-tuned on the team's own successful games. It ran the brain in 8.7GB at 138 tokens per second, sub-second per decision. It played competently, though not better than the stock model, so the team stayed on the stock model. The experiment worked. The verdict was that the open model was still ahead.
-
-## Built to stream
-
-The project runs a Mission Control dashboard with a card per bot and a 3D viewer you can switch between them, per-bot OBS overlays, text-to-speech for bot thoughts, and a Twitch reader so viewers can talk to the bots. A safety filter sits in front of all chat and sanitizes prompt-injection attempts from viewers.
-
-## What the world looks like now
-
-After a three day unattended run the landscape is covered in cobblestone towers, scattered planks, and bridges that end in mid-air.
-
-<video src="/projects/swarm-world-orbit.mp4" controls muted loop playsInline className="w-full rounded-lg border border-white/5" />
-
-Almost none of it was built on purpose. Mineflayer's pathfinder is allowed by default to pillar up under itself and lay blocks across gaps, using dirt and cobblestone, and it never takes them back down. Five of the swarm's movement configurations inherit that default, and all five are the ones a bot uses when it is already stuck.
-
-So the towers mark the places where bots repeatedly failed to reach something. The dense knot around the base is the same few blocks where the scout has died more than 400 times. The mess is an accidental map of the swarm's navigation problems, which makes it more useful to read than to clean up.
-
-Full breakdown in [Pillars and Bridges to Nowhere](/log/2026-08-05-pillars-and-bridges-to-nowhere).
-
-## Current state
-
-The survival layer is closed. The team runs a full food economy (hunt, cook, bake bread, keep rations), crafts and auto-equips iron armor, and rescues itself from drowning, which alone removed most deaths. The wheat farm that took nineteen restarts to debug is built. The longest unattended run went for roughly 140 hours across a persistent world.
-
-What is still hard: reaching diamonds without dying to lava, and keeping strategy from over-producing intermediate goods. Those are the next problems.
+The research track's scripted collection trials and fake-server transport tests qualify infrastructure. They do not demonstrate model learning, cost savings, or robotics transfer. A model pilot remains separate work. Reliable long-horizon coordination is still an engineering problem, not a solved outcome.
 
 Voyager skill library from [MineDreamer/Voyager](https://github.com/MineDreamer/Voyager).
