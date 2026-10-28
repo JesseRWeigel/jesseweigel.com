@@ -57,10 +57,6 @@ export default async function Home() {
           />
           <div className="credibility-grid">
             <div className="credibility-story">
-              <p className="pull-quote">
-                “Hundreds of hours of live coding taught me to make the work legible: explain the
-                tradeoffs, show the failed attempt, and leave a trail someone else can follow.”
-              </p>
               <div className="credibility-actions">
                 <Link href="/transmissions" className="text-link">
                   Talks, podcasts, and 226 episodes <span aria-hidden="true">→</span>
