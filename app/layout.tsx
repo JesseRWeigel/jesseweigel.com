@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Jesse Weigel — Generative AI Engineer & Agent Systems Builder',
+    default: 'Jesse Weigel | Senior AI & Full-Stack Engineer',
     template: '%s | Jesse Weigel',
   },
   description:
@@ -50,15 +50,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    siteName: 'Jesse Weigel — The Observatory',
-    title: 'Jesse Weigel — Generative AI Engineer & Agent Systems Builder',
+    siteName: 'Jesse Weigel | The Observatory',
+    title: 'Jesse Weigel | Senior AI & Full-Stack Engineer',
     description:
       'Autonomous agent teams, evaluation infrastructure, developer tools, and ambitious experiments.',
   },
   twitter: {
     card: 'summary_large_image',
     creator: '@JesseRWeigel',
-    title: 'Jesse Weigel — Generative AI Engineer & Agent Systems Builder',
+    title: 'Jesse Weigel | Senior AI & Full-Stack Engineer',
     description:
       'Autonomous agent teams, evaluation infrastructure, developer tools, and ambitious experiments.',
   },
@@ -75,12 +75,7 @@ const personJsonLd = {
   name: 'Jesse Weigel',
   url: SITE_URL,
   image: 'https://avatars.githubusercontent.com/u/11077930?v=4',
-  jobTitle: 'Generative AI Engineer',
-  worksFor: {
-    '@type': 'Organization',
-    name: 'TRACTIAN',
-    url: 'https://tractian.com',
-  },
+  jobTitle: 'Senior AI and full-stack engineer',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Steubenville',
@@ -103,7 +98,7 @@ const websiteJsonLd = {
   '@type': 'WebSite',
   '@id': `${SITE_URL}/#website`,
   url: SITE_URL,
-  name: 'Jesse Weigel — The Observatory',
+  name: 'Jesse Weigel | The Observatory',
   description:
     'Autonomous systems, developer tools, research experiments, talks, and field notes by Jesse Weigel.',
   author: { '@id': `${SITE_URL}/#jesse-weigel` },

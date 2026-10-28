@@ -34,14 +34,14 @@ export default function AboutPage() {
             <h1>I took the long way into engineering. I kept the curiosity.</h1>
             <div className="about-prose">
               <p>
-                I&apos;m a self-taught software engineer who started learning in public and never
-                really stopped. Over the last decade, I&apos;ve moved from frontend development to
-                engineering leadership to production generative AI systems.
+                I&apos;m a self-taught software engineer whose path into software began with years of
+                live coding and open-source community work. Over the last decade, I&apos;ve moved from
+                frontend development to engineering leadership to production generative AI systems.
               </p>
               <p>
                 My favorite work lives where models meet consequences: autonomous agents with
                 real tools, evaluation loops that expose failure, and systems that have to keep
-                working after the demo ends. I&apos;m currently a Generative AI Engineer at TRACTIAN.
+                working after the demo ends. My most recent role was Generative AI Engineer at TRACTIAN, through October 23, 2026. I&apos;m open to my next senior AI or full-stack engineering role.
               </p>
               <p>
                 I&apos;m also a husband, father of four, conference speaker, and the person most likely
@@ -81,7 +81,7 @@ export default function AboutPage() {
             <article>
               <span>03</span>
               <h3>Make the work legible</h3>
-              <p>Strong systems—and strong teams—leave a trail others can understand and extend.</p>
+              <p>Strong systems and strong teams leave a trail others can understand and extend.</p>
             </article>
             <article>
               <span>04</span>

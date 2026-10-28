@@ -17,10 +17,10 @@ const signals = [
     className: 'signal-two',
   },
   {
-    href: '/workshop/get-x-done',
+    href: '/workshop/contextrot',
     index: '03',
-    label: 'Autonomous research',
-    detail: 'Specialized copilots working across science, math, law, and policy.',
+    label: 'Contextrot',
+    detail: 'Inspectable experiments in what repeated summarization preserves and loses.',
     className: 'signal-three',
   },
 ]
@@ -34,24 +34,25 @@ export function ObservatoryHero() {
       <div className="hero-copy">
         <div className="hero-status">
           <span className="status-dot" />
-          Generative AI engineer · systems online
+          The Observatory · Open to senior engineering roles
         </div>
         <h1 id="hero-title">
-          I build AI systems that learn, coordinate, and{' '}
-          <span>survive contact with reality.</span>
+          Jesse Weigel.{' '}
+          <span>Senior AI &amp; full-stack engineer.</span>
         </h1>
         <p className="hero-lede">
-          I&apos;m Jesse Weigel. I build autonomous agent teams, evaluation infrastructure,
-          and ambitious experiments—currently at TRACTIAN, always in the open when I can be.
+          I build agent systems, evaluation tools, and full-stack products with TypeScript,
+          Python, React, and Next.js. I&apos;m looking for my next senior engineering role
+          and sharing the decisions, evidence, and lessons behind my work.
         </p>
         <div className="hero-actions">
           <TrackedLink
-            href="/workshop/minecraft-agent-swarm"
+            href="#selected-work"
             className="button button-primary"
             eventName="hero_cta"
-            eventData={{ destination: 'minecraft-agent-swarm' }}
+            eventData={{ destination: 'selected-work' }}
           >
-            Explore the agent swarm
+            Explore selected work
             <span aria-hidden="true">↗</span>
           </TrackedLink>
           <TrackedLink
@@ -60,11 +61,15 @@ export function ObservatoryHero() {
             eventName="hero_cta"
             eventData={{ destination: 'contact' }}
           >
-            Work with me
+            Contact me
           </TrackedLink>
         </div>
+        <nav className="hero-actions" aria-label="More about Jesse">
+          <Link href="/resume" className="text-link">View résumé →</Link>
+          <Link href="/transmissions" className="quiet-link">Speaking &amp; teaching</Link>
+        </nav>
         <p className="hero-footnote">
-          Over a decade shipping software · father of four · learning in public since 2017
+          Over a decade shipping software · 226 live-coding episodes · production AI engineering
         </p>
       </div>
 
@@ -78,11 +83,6 @@ export function ObservatoryHero() {
           <circle cx="602" cy="474" r="3" />
           <circle cx="308" cy="546" r="3" />
         </svg>
-
-        <div className="signal-core" aria-hidden="true">
-          <span>JW</span>
-          <small>observatory</small>
-        </div>
 
         {signals.map((signal) => (
           <Link

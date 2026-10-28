@@ -1,6 +1,6 @@
 export const SITE_URL = 'https://jesseweigel.com'
 
-export const contactEmail = 'jesse@jesseweigel.com'
+export const contactEmail = 'jesseweigel@gmail.com'
 
 export const socialLinks = {
   github: 'https://github.com/JesseRWeigel',
@@ -22,51 +22,51 @@ export const secondaryNavigation = [
 ]
 
 export const flagshipSlugs = [
-  'minecraft-agent-swarm',
   'toryo',
-  'get-x-done',
+  'minecraft-agent-swarm',
+  'contextrot',
 ] as const
 
 export const experience = [
   {
     company: 'TRACTIAN',
     role: 'Generative AI Engineer',
-    period: '2025 — present',
+    period: '2025 to October 23, 2026',
     summary:
-      'Building production multi-agent systems, evaluation infrastructure, and ML pipelines operating at industrial scale.',
+      'Built production multi-agent systems, evaluation infrastructure, and ML pipelines operating at industrial scale.',
   },
   {
     company: 'Independent',
     role: 'AI Engineering Consultant',
-    period: '2024 — 2025',
+    period: '2024 to 2025',
     summary:
       'Designed multi-agent pipelines, retrieval systems, model-routing infrastructure, and AI products for clients.',
   },
   {
     company: 'The Motley Fool',
     role: 'Senior Software Engineer',
-    period: '2024 — 2025',
+    period: '2024 to 2025',
     summary:
       'Improved test coverage, GraphQL architecture, federation readiness, and TypeScript adoption.',
   },
   {
     company: 'American Express',
     role: 'Senior Software Engineer',
-    period: '2021 — 2024',
+    period: '2021 to 2024',
     summary:
       'Shipped accessible React and TypeScript applications and helped evaluate AI-assisted engineering workflows.',
   },
   {
     company: 'Tabella',
     role: 'Head of Engineering',
-    period: '2020 — 2021',
+    period: '2020 to 2021',
     summary:
       'Led a distributed team building a cross-platform social product for web, iOS, and Android.',
   },
   {
     company: "DICK'S Sporting Goods",
     role: 'Senior Software Engineer',
-    period: '2018 — 2020',
+    period: '2018 to 2020',
     summary:
       'Built a React Native Web point-of-sale experience for resource-constrained retail hardware.',
   },

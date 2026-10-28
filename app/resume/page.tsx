@@ -5,7 +5,7 @@ import { capabilities, contactEmail, experience, socialLinks } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Résumé',
-  description: 'Jesse Weigel — Generative AI Engineer and senior software engineer.',
+  description: 'Jesse Weigel | Generative AI Engineer and senior software engineer.',
   alternates: { canonical: '/resume' },
 }
 
@@ -14,7 +14,7 @@ const projects = [
     title: 'Minecraft Agent Swarm',
     href: '/workshop/minecraft-agent-swarm',
     description:
-      'Five autonomous local-LLM agents with shared context, dynamic skills, evaluation telemetry, and a 140-hour unattended run.',
+      'Five local-LLM agents with shared context, role-specific tools, trajectory capture, and a separate experimental evaluation track.',
   },
   {
     title: 'Toryo',
@@ -23,10 +23,10 @@ const projects = [
       'Open-source coding-agent orchestrator with trust-based delegation, quality ratcheting, and pluggable tool adapters.',
   },
   {
-    title: 'Get-X-Done',
-    href: '/workshop/get-x-done',
+    title: 'Tenshu',
+    href: '/workshop/tenshu',
     description:
-      'Seven domain-specific autonomous research copilots spanning mathematics, law, quant, engineering, science, and policy.',
+      'Real-time dashboard for monitoring AI agent teams, experiment results, activity, and system resources.',
   },
 ]
 
@@ -91,10 +91,10 @@ export default function ResumePage() {
           </div>
           <div>
             <h2>Education & community</h2>
-            <p><strong>Udacity</strong> — React Nanodegree, 2017</p>
-            <p><strong>West Liberty State University</strong> — BS Business Administration, Summa Cum Laude, 2008</p>
-            <p><strong>freeCodeCamp</strong> — 226 live-coding episodes and global developer mentorship</p>
-            <p><strong>Conference speaker</strong> — React Loop, NDC Minnesota, DACHFest, Abstractions, and more</p>
+            <p><strong>Udacity:</strong> React Nanodegree, 2017</p>
+            <p><strong>West Liberty State University:</strong> BS Business Administration, Summa Cum Laude, 2008</p>
+            <p><strong>freeCodeCamp:</strong> 226 live-coding episodes and global developer mentorship</p>
+            <p><strong>Conference speaker:</strong> React Loop, NDC Minnesota, DACHFest, Abstractions, and more</p>
           </div>
         </section>
       </article>

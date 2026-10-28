@@ -1,8 +1,8 @@
 ---
 title: Toryo
 description: >-
-  Intelligent agent orchestrator with trust-based delegation, quality
-  ratcheting, and self-improving loops
+  A TypeScript coding-agent orchestrator with evidence-bound review,
+  configured checks, and reversible Git checkpoints.
 category: agent-orchestration
 status: active
 github: 'https://github.com/JesseRWeigel/toryo'
@@ -13,9 +13,10 @@ tech:
   - WebSocket
   - Vitest
 stars: 11
+starsCheckedAt: '2026-10-28T14:23:55.987Z'
 featured: true
 role: Creator · architecture · open-source maintainer
-timeframe: 2026 — present
+timeframe: 2026 to present
 outcomes:
   - value: '8'
     label: agent tool adapters
@@ -27,43 +28,20 @@ outcomes:
     label: open-source license
 ---
 
-Running coding agents in parallel is easy. Making their combined work trustworthy is the real problem. Toryo is my attempt to build the missing control system: an orchestrator that delegates work based on demonstrated ability, reviews what comes back, and only keeps changes that clear a quality gate.
+I built Toryo to make coding-agent work reviewable: connect different agent tools, capture the change they made, run configured checks, and retain or reject the attempt through an explicit review gate.
 
-It connects Claude Code, Aider, Gemini CLI, Codex, Cursor, Cline, Ollama, and generic command-line agents behind one spec-driven workflow. The project is open source and ships with a no-provider demo, so the orchestration loop can be inspected without spending tokens or configuring an AI account.
+## Engineering decisions
 
-## The problem
+The TypeScript orchestrator separates planning, research, execution, and review. Tool adapters let the workflow use different coding agents without coupling its control flow to one provider.
 
-Most multi-agent demos optimize for visible activity. More terminals open, more agents moving, more output streaming. That says very little about whether the repository is getting better.
+With Git enabled, the system checkpoints source changes before review. Review receives the exact diff and configured check results, each with a SHA-256 evidence ID. A structured JSON response must reference the captured evidence. A failed required check blocks acceptance even when a reviewer gives a passing score. Rejected attempts revert their verified checkpoint instead of hard-resetting history.
 
-Toryo optimizes for retained progress. A cycle moves through four explicit phases:
+## Evidence to inspect
 
-1. **Plan** — turn the task specification into a bounded approach.
-2. **Research** — gather the context and constraints the executor needs.
-3. **Execute** — make the change with the best available agent for that task.
-4. **Review** — score the result against the specification and quality threshold.
+The [public source and structured review documentation](https://github.com/JesseRWeigel/toryo#structured-review-gate) describe validation, check timeouts, output limits, and per-attempt review artifacts. These records preserve the evidence and the review response for inspection.
 
-The result is committed only when review passes. Failed work is reverted, the review feedback is routed into a retry, and a second failure is discarded. The repository moves forward or stays where it was; it does not quietly accumulate damage.
+## Limits and demo
 
-## Trust is earned, not configured
+The `npx @jweigel/toryo demo` command is scripted: it illustrates the workflow without calling a real coding agent. It is not a benchmark of agent performance.
 
-Each agent builds a rolling record of scores. New agents begin in supervised mode, consistently strong agents graduate to guided and autonomous operation, and declining performance reduces their autonomy again.
-
-Task routing combines that trust score with declared strengths. A strong research agent should not automatically become the execution agent, and a familiar agent should not win a task over a better specialist simply because it ran last time.
-
-## The ratchet
-
-Every attempt becomes a structured result in a tab-separated experiment log. The record captures the task, agent, score, status, and reviewer explanation. That makes agent selection and workflow changes testable rather than anecdotal.
-
-```text
-Plan → Research → Execute → Review
-                          ↳ pass: commit
-                          ↳ fail: revert → retry → keep or discard
-```
-
-The pattern is deliberately simple: reversible attempts, explicit evaluation, and a hard boundary between activity and progress.
-
-## Built as infrastructure
-
-Toryo includes configuration validation, task specs with acceptance criteria, smart context truncation, automatic code extraction, a real-time dashboard, and pluggable adapters. The orchestration core does not care which model vendor wins next month; the adapter boundary is there so the workflow can outlive the current tools.
-
-Try the local demo with `npx @jweigel/toryo demo`, or inspect the full implementation on GitHub.
+Checks are configured by the user; omitting them provides model review only. Evidence references improve auditability but do not prove the model inspected the evidence or contain prompt injection. Without Git checkpoints, captured worker output does not verify source changes. These are engineering boundaries, not claims of guaranteed correctness.

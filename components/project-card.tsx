@@ -1,3 +1,4 @@
+import { GitHubStars } from '@/components/github-stars'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Project } from '@/lib/types'
@@ -41,7 +42,7 @@ export function ProjectCard({ project }: { project: Project }) {
           <Link href={`/workshop/${project.slug}`}>Case study →</Link>
           <div>
             <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`GitHub repository for ${project.title}`}>
-              GitHub{project.stars > 0 ? ` · ★${project.stars}` : ''}
+              GitHub<GitHubStars count={project.stars} checkedAt={project.starsCheckedAt} />
             </a>
             {project.demo && (
               <a href={project.demo} target="_blank" rel="noopener noreferrer" aria-label={`Demo for ${project.title}`}>Demo ↗</a>

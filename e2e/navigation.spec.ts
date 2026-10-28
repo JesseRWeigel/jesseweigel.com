@@ -22,7 +22,8 @@ test('mobile menu exposes the full primary navigation', async ({ page }) => {
 
 test('keyboard tools remain available on demand', async ({ page }) => {
   await page.goto('/')
-  await page.keyboard.press('Backquote')
+  await page.waitForLoadState('networkidle')
+  await page.keyboard.press('`')
   await expect(page.getByText('observatory terminal')).toBeVisible()
   await page.keyboard.press('Escape')
   await page.keyboard.press('/')

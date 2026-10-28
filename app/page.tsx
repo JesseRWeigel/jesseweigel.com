@@ -1,26 +1,24 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FeaturedProjectCard } from '@/components/featured-project-card'
-import { MetricStrip } from '@/components/metric-strip'
 import { ObservatoryHero } from '@/components/observatory-hero'
 import { SectionHeading } from '@/components/section-heading'
 import { TrackedLink } from '@/components/tracked-link'
-import { getBlogPosts, getProjectBySlug, getProjectStats } from '@/lib/content'
+import { getBlogPosts, getProjectBySlug } from '@/lib/content'
 import { contactEmail, credibilityMarks, flagshipSlugs } from '@/lib/site'
 import type { Project } from '@/lib/types'
 
 export const metadata: Metadata = {
-  title: 'Jesse Weigel — Generative AI Engineer & Agent Systems Builder',
+  title: 'Jesse Weigel | Senior AI & Full-Stack Engineer',
   description:
     'Generative AI engineer building autonomous agent teams, evaluation infrastructure, developer tools, and ambitious experiments.',
   alternates: { canonical: '/' },
 }
 
 export default async function Home() {
-  const [projects, posts, stats] = await Promise.all([
+  const [projects, posts] = await Promise.all([
     Promise.all(flagshipSlugs.map((slug) => getProjectBySlug(slug))),
     getBlogPosts(),
-    getProjectStats('minecraft-agent-swarm'),
   ])
 
   const flagshipProjects = projects.filter((project): project is Project => project !== null)
@@ -31,18 +29,12 @@ export default async function Home() {
       <ObservatoryHero />
 
       <div className="site-container">
-        <MetricStrip
-          totalActions={stats?.totalActions ?? 344_117}
-          sessionCount={stats?.sessionCount ?? 111}
-          longestHours={Math.round((stats?.longestSessionSec ?? 507_058) / 3600)}
-        />
-
         <section className="home-section" aria-labelledby="selected-work">
           <SectionHeading
             id="selected-work"
             eyebrow="Selected systems"
-            title="Proof, not prototypes."
-            description="A few projects where the hard part was not generating a demo—it was building a system that could be measured, trusted, and improved."
+            title="Selected work, with the evidence."
+            description="Agent orchestration, a persistent Minecraft world, and a summarization experiment. Each case study explains what I built, how it works, and what remains unproven."
             action={
               <Link href="/workshop" className="text-link">
                 View all work <span aria-hidden="true">→</span>
@@ -60,8 +52,8 @@ export default async function Home() {
           <SectionHeading
             id="public-work"
             eyebrow="Public record"
-            title="A decade of building—and explaining the build."
-            description="I learned in public, taught the mistakes as well as the wins, and found a career through community. That instinct still shapes how I work with teams today."
+            title="A decade of building and explaining the build."
+            description="For several years, I learned in public and taught the mistakes as well as the wins. That chapter helped shape my career and still influences how I make complex work legible to teams."
           />
           <div className="credibility-grid">
             <div className="credibility-story">

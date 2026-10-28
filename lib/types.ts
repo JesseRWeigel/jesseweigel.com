@@ -16,6 +16,8 @@ export interface ProjectFrontmatter {
   github: string
   demo: string | null
   tech: string[]
+  /** UTC timestamp of the last successful GitHub API star-count refresh. */
+  starsCheckedAt?: string
   stars: number
   featured: boolean
   /** Jesse's role or primary contribution to the project. */

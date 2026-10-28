@@ -1,3 +1,4 @@
+import { GitHubStars } from '@/components/github-stars'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Project } from '@/lib/types'
@@ -7,21 +8,27 @@ const projectMeta: Record<
   { number: string; eyebrow: string; highlights: string[]; accent: string }
 > = {
   'minecraft-agent-swarm': {
-    number: '01',
+    number: '02',
     eyebrow: 'Autonomous systems · flagship',
     highlights: ['5 specialized agents', 'Local models', 'Self-repairing skills'],
     accent: 'amber',
   },
   toryo: {
-    number: '02',
+    number: '01',
     eyebrow: 'Agent infrastructure',
     highlights: ['8 tool adapters', 'Quality ratcheting', 'Trust-based delegation'],
     accent: 'cyan',
   },
-  'get-x-done': {
+  contextrot: {
     number: '03',
-    eyebrow: 'Autonomous research',
-    highlights: ['7 specialist copilots', 'Reproducible workflows', 'Open artifacts'],
+    eyebrow: 'Evaluation engineering',
+    highlights: ['Deterministic grading', 'Committed transcripts', 'Explicit limitations'],
+    accent: 'violet',
+  },
+  tenshu: {
+    number: '03',
+    eyebrow: 'Agent observability',
+    highlights: ['Live activity feeds', 'Experiment tracking', 'Real-time monitoring'],
     accent: 'violet',
   },
 }
@@ -34,7 +41,7 @@ export function FeaturedProjectCard({
   priority?: boolean
 }) {
   const meta = projectMeta[project.slug] ?? {
-    number: '—',
+    number: '·',
     eyebrow: project.category,
     highlights: project.tech.slice(0, 3),
     accent: 'amber',
@@ -59,7 +66,7 @@ export function FeaturedProjectCard({
             Read the case study <span aria-hidden="true">→</span>
           </Link>
           <a href={project.github} target="_blank" rel="noopener noreferrer" className="quiet-link">
-            GitHub{project.stars > 0 ? ` · ★ ${project.stars}` : ''}
+            GitHub<GitHubStars count={project.stars} checkedAt={project.starsCheckedAt} />
           </a>
         </div>
       </div>
@@ -87,6 +94,20 @@ export function FeaturedProjectCard({
 }
 
 function ProjectSystemGraphic({ slug }: { slug: string }) {
+  if (slug === 'contextrot') {
+    return (
+      <div className="system-graphic" aria-hidden="true">
+        <div className="system-label">REPEATED SUMMARIZATION</div>
+        <div className="system-node">50 SEED FACTS</div>
+        <span>↓</span>
+        <div className="system-node active">20 CYCLES</div>
+        <span>↓</span>
+        <div className="system-node">GRADE THE TRANSCRIPTS</div>
+        <div className="system-result">One seed · three local models · inspectable evidence</div>
+      </div>
+    )
+  }
+
   if (slug === 'toryo') {
     return (
       <div className="system-graphic toryo-graphic" aria-hidden="true">
@@ -98,7 +119,30 @@ function ProjectSystemGraphic({ slug }: { slug: string }) {
         <div className="system-node active">EXECUTE</div>
         <span>→</span>
         <div className="system-node">REVIEW</div>
-        <div className="system-result">score 8.4 · commit retained</div>
+        <div className="system-result">Illustration · acceptance requires configured checks</div>
+      </div>
+    )
+  }
+
+  if (slug === 'tenshu') {
+    return (
+      <div className="system-graphic tenshu-graphic" aria-hidden="true">
+        <div className="system-label">AGENT COMMAND CENTER</div>
+        <div className="tenshu-status-row">
+          <span>3 AGENTS ONLINE</span>
+          <span>RUN 024</span>
+        </div>
+        <div className="tenshu-agent-grid">
+          <div><strong>PLAN</strong><small>active</small></div>
+          <div><strong>BUILD</strong><small>working</small></div>
+          <div><strong>REVIEW</strong><small>queued</small></div>
+        </div>
+        <div className="tenshu-activity">
+          <span style={{ width: '82%' }} />
+          <span style={{ width: '64%' }} />
+          <span style={{ width: '91%' }} />
+        </div>
+        <div className="system-result">live telemetry · quality trend +12%</div>
       </div>
     )
   }

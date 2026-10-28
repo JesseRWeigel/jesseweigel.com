@@ -1,3 +1,4 @@
+import { GitHubStars } from '@/components/github-stars'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -31,7 +32,7 @@ export async function generateMetadata({
     openGraph: {
       type: 'article',
       url: `${SITE_URL}/workshop/${slug}`,
-      title: `${project.title} — Jesse Weigel`,
+      title: `${project.title} | Jesse Weigel`,
       description: project.description,
       images: project.cover ? [{ url: project.cover, alt: `${project.title} interface` }] : undefined,
     },
@@ -111,7 +112,7 @@ export default async function ProjectDetailPage({
                 eventName="project_outbound"
                 eventData={{ project: project.slug, destination: 'github' }}
               >
-                Inspect the source{project.stars > 0 ? ` · ★ ${project.stars}` : ''}
+                Inspect the source<GitHubStars count={project.stars} checkedAt={project.starsCheckedAt} />
               </TrackedLink>
               {project.demo && (
                 <TrackedLink

@@ -4,6 +4,7 @@ import { SectionHeading } from '@/components/section-heading'
 import { TransmissionCard } from '@/components/transmission-card'
 import { YouTubeEmbed } from '@/components/youtube-embed'
 import { getTransmissions } from '@/lib/content'
+import { contactEmail } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Speaking & Media',
@@ -32,7 +33,7 @@ export default async function TransmissionsPage() {
                 and a global mentoring community. The subject was code; the real work was making
                 difficult ideas feel possible.
               </p>
-              <a href="mailto:jesse@jesseweigel.com?subject=Speaking%20invitation" className="button button-primary">
+              <a href={`mailto:${contactEmail}?subject=Speaking%20invitation`} className="button button-primary">
                 Invite me to speak
               </a>
             </div>
